@@ -1,0 +1,23 @@
+name: antmarky-generate
+on: [push]
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: ⚙️ Setup node.js
+      uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: 📦 Install npm packages
+        run: npm i
+
+      - name: 📚 Generate documentation
+        run: npm run build
+
+      - name: 🚀 Deploy to GitHub Pages 
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
