@@ -1,0 +1,10 @@
+<h4 class="list_title"><i class="fas fa-list"></i> Table of contents</h4>
+<ul class="sidebar_list">
+  <% pages.forEach(page => { %>
+    <% if (page.name == name) { %>
+      <li class="list_item"><a class="active" href="<%= page.name %>.html"><%= page.name %></a></li>
+    <% } else { %>
+      <li class="list_item"><a href="<%= page.name %>.html"><%= page.name %></a></li>
+    <% } %>
+  <% }) %>
+</ul>
