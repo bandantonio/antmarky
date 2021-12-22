@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300;700&family=Oswald&display=swap');
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 3em;
+}
+
+.navbar-brand {
+  margin-left: 1.5em;
+}
+
+.navbar-brand:hover {
+  color: #fad000;
+}
+
+.list_title {
+  font-family: 'Oswald', sans-serif;
+  margin-left: 1em;
+  font-size: 90%;
+  text-transform: uppercase;
+}
+
+.sidebar {
+  border-right: #2d2b57 dotted 1px;
+}
+
+.toc {
+  border-left: #2d2b57 dotted 1px;
+}
+
+.sidebar_list, .toc_list {
+  font-size: 80%;
+  list-style: none;
+}
+
+.sidebar_list a.active {
+  color: #DB504A;
+  text-decoration: underline;
+}
+
+.sidebar_list a:hover, .toc_list a:hover, a {
+  color: #DB504A;
+}
+
+.sidebar_list a, .toc_list a {
+  color: #2d2b57;
+  text-decoration: none;
+}
+
+.full_content {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.content_area {
+  margin: 0 2em;
+}
+
+.navbar, .footer, pre, code {
+  background-color: #2d2b57;
+}
+
+.navbar-brand, .footer, .footer a {
+  color: #fad000;
+}
+
+.footer {
+  font-size: 70%;
+  position: absolute;
+  bottom: 0;
+}
+
+.footer a {
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #DB504A;
+  font-weight: 500;
+}
+
+h1::after, h2::after, h3::after, h4::after, h5::after, h6::after {
+}
+
+strong {
+  color: #2d2b57;
+}
+
+code {
+  padding: 1px 2px;
+}
+
+code {
+  color: #fad000;
+}
+
+li p {
+  margin: 0;
+}
+
+blockquote {
+  border-left: #6c757d solid 7px;
+  margin-left: 1em;
+  padding: 10px;
+  color: #343a40;
+  background-color: #dee2e6;
+}
+
+blockquote p {
+  margin: 0 5px;
+}
+
+img {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.callout {
+  padding: 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #e9ecef;
+  border-left-width: .25rem;
+  border-radius:.25rem
+}
+
+
+.callout-info {
+  border-left-color: #0d6efd;
+}
+
+.callout-info .callout-title {
+  color: #0d6efd;
+}
+
+.callout-warning {
+  border-left-color: #ffc107;
+}
+
+.callout-warning .callout-title {
+  color: #ffc107;
+}
+
+.callout-danger {
+  border-left-color: #d9534f;
+}
+
+.callout-danger .callout-title {
+  color: #d9534f;
+}
+
+.callout-tip {
+  border-left-color: #198754;
+}
+
+.callout-tip .callout-title {
+  color: #198754;
+}
+
+.callout-secondary {
+  border-left-color: #565e64;
+}
+
+.callout-secondary .callout-title {
+  color: #565e64;
+}
+
+.octicon {
+  display: inline-block;
+  vertical-align: text-top;
+  fill: currentColor;
+  overflow: visible;
+}
