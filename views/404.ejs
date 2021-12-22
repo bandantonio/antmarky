@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head'); %>
+</head>
+<body>
+<header>
+  <%- include('./partials/nav'); %>
+</header>
+
+<div class="container-fluid">
+  <div class="full_content row">
+    <div class="sidebar col-2">
+      <div class="sidebar_list">
+        <%= text %>
+      </div>
+    </div>
+    <div class="content_area col">
+      <h1><%- title %></h1>
+      <br />
+      <p>Return to <a href="/">Home page</a></p>
+    </div>
+    <%- include('./partials/footer'); %>
+  </div>
+</div>
+
+<%- include('./partials/scripts'); %>
+</body>
+</html>
