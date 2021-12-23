@@ -8,14 +8,15 @@ let { buildToc } = require('../toc');
 let { errorPage } = require('../data/defaults');
 
 // LOCATE MARKDOWN FILES
-let findMdFiles = async () => {
-  const directoryPath = path.join(process.cwd());
+let findMdFiles = async (docsDir = 'docs') => {
+  const directoryPath = (docsDir) ? path.join(process.cwd() + `/${docsDir}`) : path.join(process.cwd());
   try {
     let files = await fsp.readdir(directoryPath);
     return files.filter(file => path.extname(file) == '.md').map(mdFile => {
+      let filePath = path.resolve(`${directoryPath}/${mdFile}`)
       return {
         name: mdFile.substring(0, mdFile.lastIndexOf('.')),
-        path: path.resolve(mdFile)
+        path: filePath
       }
     });
   } catch (err) {
@@ -56,8 +57,8 @@ let saveHtmlContent = (filename, htmlContent) => {
   fs.writeFileSync(`${basePath}/${filename}`, htmlContent);
 }
 
-let buildContent = async () => {
-  let locatedMdFiles = await findMdFiles();
+let buildContent = async (docsDir) => {
+  let locatedMdFiles = await findMdFiles(docsDir);
   let allPages = locatedMdFiles;
   let filesMdContent = await getFilesContent(locatedMdFiles);
   let htmlContent = convertMdToHtml(filesMdContent);
@@ -83,12 +84,11 @@ let copyStaticAssets = (staticFolder = 'src/assets') => {
   fse.copySync(path.resolve(staticFolder), path.resolve('public'));
 }
 
-let buildStaticFiles = async () => {
+let buildStaticFiles = async (docsDir) => {
   removeOutputDirectory();
   const templatesPath = path.join(process.cwd() + '/views');
-  let generatedContent = await buildContent();
+  let generatedContent = await buildContent(docsDir);
   let sidebarListOfPages = generatedContent.allPages.filter(page => page.name !== 'README');
-  console.log(sidebarListOfPages);
   try {
     let items = await fsp.readdir(templatesPath);
     items.filter(item => path.extname(item) == '.ejs').forEach(template => {
