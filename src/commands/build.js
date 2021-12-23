@@ -1,3 +1,3 @@
 let { buildStaticFiles } = require('../common/prepare-content')
 
-buildStaticFiles();
+buildStaticFiles(process.argv[2]);
