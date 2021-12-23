@@ -92,13 +92,14 @@ let buildStaticFiles = async () => {
   removeOutputDirectory();
   const templatesPath = path.join(process.cwd() + '/views');
   let generatedContent = await buildContent();
-  let sidebarListOfPages = generatedContent.allPages.filter(page => page.link !== 'index');
+  let sidebarListOfPages = generatedContent.allPages.filter(page => page.name !== 'README');
+  console.log(sidebarListOfPages);
   try {
     let items = await fsp.readdir(templatesPath);
     items.filter(item => path.extname(item) == '.ejs').forEach(template => {
       if (template == 'page.ejs') {
         let compiledTemplate = compileTemplate(templatesPath, template);
-        let pageContent = generatedContent.htmlContent.filter(content => content.name !== 'index');
+        let pageContent = generatedContent.htmlContent.filter(content => content.name !== 'README');
         pageContent.forEach(page => {
           let readyHtml = compiledTemplate({
             name: page.name,
@@ -111,7 +112,7 @@ let buildStaticFiles = async () => {
         })
       } else if (template == 'index.ejs') {
         let compiledTemplate = compileTemplate(templatesPath, template);
-        let indexPage = generatedContent.htmlContent.find(content => content.name == 'index');
+        let indexPage = generatedContent.htmlContent.find(content => content.name == 'README');
         if (indexPage) {
           let readyHtml = compiledTemplate({
             name: indexPage.name,
