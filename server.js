@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
   let specificPageData = res.locals.files_data.find(page => page.name == 'README');
   renderData.name = (specificPageData) ? specificPageData.name : '/';
   renderData.title = (specificPageData) ? specificPageData.title : 'Home';
-  renderData.content = (specificPageData) ? specificPageData.html : md.makeHtml(fs.readFileSync(path.resolve('src/data/README.md'), 'utf-8'));
+  renderData.content = (specificPageData) ? specificPageData.html : md.makeHtml(fs.readFileSync(path.resolve('README.md'), 'utf-8'));
   renderData.pages = res.locals.all_pages.filter(page => page.name !== 'README');
   res.render('index', renderData);
 });
