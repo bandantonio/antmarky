@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Antmarky | markdown </title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/shades-of-purple.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-expand-sm mb-2">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="./"><i class="fas fa-check-square"></i> Antmarky</a>
+  </div>
+</nav>
+</header>
+
+<div class="container-fluid">
+  <div class="full_content row">
+    <div class="sidebar col-2">
+      <h4 class="list_title"><i class="fas fa-list"></i> Table of contents</h4>
+<ul class="sidebar_list">
+  
+    
+      <li class="list_item"><a href="features.html">features</a></li>
+    
+  
+    
+      <li class="list_item"><a class="active" href="markdown.html">markdown</a></li>
+    
+  
+    
+      <li class="list_item"><a href="quickstart.html">quickstart</a></li>
+    
+  
+</ul>
+    </div>
+    <div class="content_area col-8">
+      <h1 id="markdown-support">Markdown support</h1>
+<p>Antmarky uses <code>GitHub</code> flavor for the Markdown parser. The parser supports the following syntax:</p>
+<ul>
+<li><a href="#automatic-heading-ids">Automatic heading ids</a></li>
+<li><a href="#emojis">Emojis</a> 🎉</li>
+<li><a href="#image-dimensions">Images with inline dimensions attributes</a></li>
+<li><a href="#reference-links">Reference links</a></li>
+<li><a href="#strikethrough">Strikethrough</a></li>
+<li><a href="#subscript">Subscript</a></li>
+<li><a href="#superscript">Superscript</a></li>
+<li><a href="#tables">Tables</a></li>
+</ul>
+<h2 id="automatic-heading-ids">Automatic heading ids</h2>
+<p>The following heading:</p>
+<pre><code class="md language-md"># Automatic heading ids
+</code></pre>
+<p>will automatically be transformed into the following HTML:</p>
+<pre><code class="html language-html">&lt;a href="#automatic-heading-ids"&gt;Automatic heading ids&lt;/a&gt;
+</code></pre>
+<h2 id="emojis">Emojis</h2>
+<pre><code class="md language-md">Learning JavaScript is :no_entry_sign: a :rocket: :man_scientist:
+</code></pre>
+<p>Learning JavaScript is 🚫 a 🚀 👨&zwj;🔬</p>
+<h2 id="image-dimensions">Image dimensions</h2>
+<pre><code class="md language-md">![Alt text](url/to/image =250x250 "Optional title")
+</code></pre>
+<h2 id="reference-links">Reference links</h2>
+<pre><code class="md language-md">[Link to google][refer]
+
+[refer]: https://google.com
+</code></pre>
+<h2 id="strikethrough">Strikethrough</h2>
+<pre><code class="md language-md">a ~~strikethrough~~ element
+</code></pre>
+<p>a <del>strikethrough</del> element</p>
+<h2 id="subscript">Subscript</h2>
+<pre><code class="md language-md">H<sub>2</sub>O
+</code></pre>
+<p>H<sub>2</sub>O</p>
+<h2 id="superscript">Superscript</h2>
+<pre><code class="md language-md">x<sup>2</sup> * y<sup>2</sup>
+</code></pre>
+<p>x<sup>2</sup> * y<sup>2</sup></p>
+<h2 id="tables">Tables</h2>
+<pre><code class="md language-md">| Tables    | Are            | Cool  |
+|-----------|:--------------:|------:|
+| **row 1** | center-aligned | $1000 |
+| row 2     | *centered*     |   $10 |
+| row 3     | ~~centered~~   |    $1 |
+</code></pre>
+<table class="table">
+<thead>
+<tr>
+<th>Tables</th>
+<th style="text-align:center;">Are</th>
+<th style="text-align:right;">Cool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>row 1</strong></td>
+<td style="text-align:center;">center-aligned</td>
+<td style="text-align:right;">$1000</td>
+</tr>
+<tr>
+<td>row 2</td>
+<td style="text-align:center;"><em>centered</em></td>
+<td style="text-align:right;">$10</td>
+</tr>
+<tr>
+<td>row 3</td>
+<td style="text-align:center;"><del>centered</del></td>
+<td style="text-align:right;">$1</td>
+</tr>
+</tbody>
+</table>
+    </div>
+    <div class="toc col">
+      <h4 class="list_title"><i class="fas fa-align-justify"></i> On this page</h4>
+<ul class="toc_list">
+  
+    <li class="list_item"><a href="#markdown-support">Markdown support</a></li>
+  
+    <li class="list_item"><a href="#automatic-heading-ids">Automatic heading ids</a></li>
+  
+    <li class="list_item"><a href="#emojis">Emojis</a></li>
+  
+    <li class="list_item"><a href="#image-dimensions">Image dimensions</a></li>
+  
+    <li class="list_item"><a href="#reference-links">Reference links</a></li>
+  
+    <li class="list_item"><a href="#strikethrough">Strikethrough</a></li>
+  
+    <li class="list_item"><a href="#subscript">Subscript</a></li>
+  
+    <li class="list_item"><a href="#superscript">Superscript</a></li>
+  
+    <li class="list_item"><a href="#tables">Tables</a></li>
+  
+</ul>
+    </div>
+    <footer class="footer mt-auto py-3">
+  <span>
+    <a href="https://github.com/bandantonio/antmarky"><i class="fas fa-check-square"></i> Antmarky.</a> <i class="fa-solid fa-code"></i> with <i class="fa-solid fa-heart"></i> by <a href="https://mister-gold.pro">Anton Zolotukhin</a>
+  </span>
+</footer>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
