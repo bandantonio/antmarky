@@ -92,10 +92,10 @@ h4 { font-size: 1.3em; }
 h5 { font-size: 1.1em; }
 h6 { font-size: 1em; }
 
-h1::after, h2::after, h3::after, h4::after, h5::after, h6::after {
-}
+/* h1::after, h2::after, h3::after, h4::after, h5::after, h6::after {
+} */
 
-p {
+.content_area li, p {
   font-size: 95%;
 }
 
