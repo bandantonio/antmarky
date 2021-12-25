@@ -2,7 +2,7 @@
 
 Antmarky uses `GitHub` flavor for the Markdown parser. The parser supports the following syntax:
 
-* [Automatic heading ids](#automatic-heading-ids)
+* [Heading ids](#heading-ids)
 * [Emojis](#emojis) :tada:
 * [Images with inline dimensions attributes](#image-dimensions)
 * [Reference links](#reference-links)
@@ -11,18 +11,18 @@ Antmarky uses `GitHub` flavor for the Markdown parser. The parser supports the f
 * [Superscript](#superscript)
 * [Tables](#tables)
 
-## Automatic heading ids
+## Heading ids
 
 The following heading:
 
 ```md
-# Automatic heading ids
+# Heading ids
 ```
 
 will automatically be transformed into the following HTML:
 
 ```html
-<a href="#automatic-heading-ids">Automatic heading ids</a>
+<a href="#heading-ids">Heading ids</a>
 ```
 
 ## Emojis

@@ -7,8 +7,8 @@ Antmarky is a static-site generator for Markdown based on Node.js/EJS.
 * Zero configuration
 * Fully static (doesn't require web server to work)
 * No language frameworks included
-* Markdown flavor: `GitHub`. Supported syntax:
-    * Automatic heading ids
+* [Markdown][markdown] flavor: `GitHub`. Supported syntax:
+    * Heading ids
     * Emojis :tada:
     * Images with inline dimensions attributes
     * Reference links
@@ -16,8 +16,13 @@ Antmarky is a static-site generator for Markdown based on Node.js/EJS.
     * Subscript
     * Superscript
     * Tables
-* Admonitions
-* Automatic code syntax highlighting
-* Font Awesome
-* Automatic table of contents for pages
-* Task lists (todo lists)
+* [Admonitions][admonitions]
+* [Syntax highlighting][syntax-highlight]
+* [FontAwesome][fa]
+* [Task lists][tasks-list]
+
+[markdown]: markdown.md
+[admonitions]: features.md#admonitions
+[syntax-highlight]: features.md#syntax-highlighting
+[fa]: features.md#fontawesome
+[tasks-list]: features.md#task-lists
