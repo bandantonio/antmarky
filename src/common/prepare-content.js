@@ -44,7 +44,6 @@ let convertCrossLinks = (mdText) => {
 let convertMdToHtml = (mdTextArray) => {  
   return mdTextArray.map(mdText => {
     let linksInContent = convertCrossLinks(mdText.content);
-    console.log(linksInContent);
     let html = md.makeHtml(linksInContent);
     let tableOfCOntents = buildToc(html);
     return {
