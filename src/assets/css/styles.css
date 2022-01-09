@@ -189,3 +189,68 @@ img {
   fill: currentColor;
   overflow: visible;
 }
+
+@media (max-width: 576px) {
+  #sidebarToggler {
+    text-align: center;
+  }
+  .navbar-toggler {
+    color: #fad000;
+  }
+  [aria-expanded="false"]::before {
+    font-family: 'Font Awesome 6 Free';
+    content: '\f0c9';
+  }
+  [aria-expanded="true"]::before {
+    font-family: 'Font Awesome 6 Free';
+    content: '\f00d';
+  }
+  #sidebarToggler .list_title {
+    color: #dee2e6;
+  }
+  .sidebar_list a {
+    color: #fad000;
+  }
+  .sidebar {
+    display: none;
+  }
+  .toc {
+    display: none;
+  }
+  .content_area {
+    width: 85%;
+  }
+}
+
+@media (min-width: 992px) {
+  #sidebarToggler {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  #sidebarToggler {
+    display: none !important;
+  }
+  .sidebar_list, .toc_list {
+    padding-left: 1em;
+  }
+  .content_area {
+    width: 65%;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  #sidebarToggler {
+    display: none !important;
+  }
+  .sidebar_list {
+    padding-left: 1em;
+  }
+  .content_area {
+    width: 70%;
+  }
+  .toc {
+    display: none;
+  }
+}
