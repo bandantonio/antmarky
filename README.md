@@ -5,6 +5,7 @@ Antmarky is a static-site generator for Markdown based on Node.js/EJS.
 ## Features
 
 * Zero configuration
+* Fully responsive layout
 * Fully static (doesn't require web server to work)
 * No language frameworks included
 * [Markdown][markdown] flavor: `GitHub`. Supported syntax:
