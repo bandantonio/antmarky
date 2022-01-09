@@ -134,14 +134,16 @@ let buildStaticFiles = async (docsDir) => {
       } else if (template == '404.ejs') {
         let compiledTemplate = compileTemplate(templatesPath, template);
         let readyHtml = compiledTemplate({
+          name: '404',
           text: errorPage.text,
-          title: errorPage.title
+          title: errorPage.title,
+          pages: sidebarListOfPages
         });
         saveHtmlContent('404.html', readyHtml);
       }
     })
   } catch (err) {
-    console.log(err);
+    throw err;
   }
   copyStaticAssets();
 }
