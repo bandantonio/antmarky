@@ -141,7 +141,7 @@ let buildStaticFiles = async (docsDir) => {
       }
     })
   } catch (err) {
-    console.log(err);
+    throw err;
   }
   copyStaticAssets();
 }
