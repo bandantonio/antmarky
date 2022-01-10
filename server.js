@@ -38,8 +38,10 @@ app.get('/:pageName.html', (req, res) => {
     })
   } else {
     res.status(404).render('404', {
+      name: '404',
       text: errorPage.text,
-      title: errorPage.title
+      title: errorPage.title,
+      pages: res.locals.all_pages.filter(page => page.name !== 'README')
     });
   }
 });
