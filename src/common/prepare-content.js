@@ -126,7 +126,7 @@ let buildStaticFiles = async (docsDir) => {
           let readyHtml = compiledTemplate({
             name: '/',
             title: 'Home',
-            content: md.makeHtml(fs.readFileSync(path.resolve('README.md'), 'utf-8')),
+            content: md.makeHtml(convertCrossLinks(fs.readFileSync(path.resolve('README.md'), 'utf-8'))),
             pages: sidebarListOfPages
           });
           saveHtmlContent('index.html', readyHtml);
