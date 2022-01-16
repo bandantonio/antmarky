@@ -134,14 +134,13 @@ img {
 }
 
 .callout {
-  padding: 1.25rem;
+  padding: .5rem 1.25rem;
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
   border: 1px solid #e9ecef;
   border-left-width: .25rem;
   border-radius:.25rem
 }
-
 
 .callout-info {
   border-left-color: #0d6efd;
@@ -181,6 +180,10 @@ img {
 
 .callout-secondary .callout-title {
   color: #565e64;
+}
+
+.callout p {
+  margin:.5em;
 }
 
 .octicon {
