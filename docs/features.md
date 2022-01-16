@@ -2,55 +2,61 @@
 
 ## Admonitions
 
-### Info
+**info**
 
 ```md
-!!! info "Test info"
+::: info "Test info"
 Info admonition body
+:::
 ```
 
-!!! info "Test info"
-Info admonition body
-
-### Warning
+**warning**
 
 ```md
-!!! warning "Test warning"
+::: warning "Test warning"
 Warning admonition body
+:::
 ```
 
-!!! warning "Test warning"
-Warning admonition body
-
-### Danger
+**danger**
 
 ```md
-!!! danger "Test danger"
+::: danger "Test danger"
 Danger admonition body
+:::
 ```
 
-!!! danger "Test danger"
-Danger admonition body
-
-### Tip
+**tip**
 
 ```md
-!!! tip "Test tip"
+::: tip "Test tip"
 Tip admonition body
+:::
 ```
 
-!!! tip "Test tip"
-Tip admonition body
+**secondary**
 
-### Secondary
-
-```
-!!! secondary "Test secondary"
+```md
+::: secondary "Test secondary"
 Secondary admonition body
+:::
 ```
 
-!!! secondary "Test secondary"
-Secondary admonition body
+### Example
+
+::: info "Test info"
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean interdum ullamcorper nibh sed bibendum. Fusce consectetur, velit eu tempus consequat, enim libero consequat sem, `vitae` interdum velit urna eget nunc.
+
+Sed mollis sed turpis in porttitor. Fusce ac `lectus turpis`. Fusce tortor arcu, eleifend nec elit id, sagittis sodales velit. Vestibulum pretium tortor metus, a sollicitudin velit facilisis ut.
+
+`test code line`
+
+```js
+let greeting = 'Hello World!';
+
+console.log(greeting);
+```
+:::
 
 ## Syntax highlighting
 
