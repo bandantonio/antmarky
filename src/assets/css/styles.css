@@ -30,6 +30,22 @@ body {
   border-left: #2d2b57 dotted 1px;
 }
 
+.list_item.ind-3 {
+  padding-left: 1em;
+}
+
+.list_item.ind-4 {
+  padding-left: 2em;
+}
+
+.list_item.ind-5 {
+  padding-left: 3em;
+}
+
+.list_item.ind-6 {
+  padding-left: 4em;
+}
+
 .sidebar_list, .toc_list {
   font-size: 80%;
   list-style: none;
