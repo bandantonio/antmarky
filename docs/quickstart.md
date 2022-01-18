@@ -22,5 +22,6 @@ Local server will be launched at `http://localhost:8000`.
 
 ### Docker
 
-!!! info "Docker image"
+::: info "Docker image"
 Coming soon
+:::
