@@ -2,6 +2,8 @@
 
 Antmarky is a static-site generator for Markdown based on Node.js/EJS.
 
+![Docker Pulls](https://img.shields.io/docker/pulls/bandantonio/antmarky)
+
 ## Features
 
 * Zero configuration

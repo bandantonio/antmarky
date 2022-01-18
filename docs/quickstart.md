@@ -22,5 +22,22 @@ Local server will be launched at `http://localhost:8000`.
 
 ### Docker
 
-!!! info "Docker image"
-Coming soon
+#### serve
+
+```
+docker run --rm \
+  --name antmarky-ssg \
+  -v ${PWD}/docs:/antmarky/docs \
+  -p 8000:8000 \
+  bandantonio/antmarky
+```
+
+#### build
+
+```
+docker run --rm \
+  --name antmarky-ssg \
+  -v ${PWD}/docs:/antmarky/docs \
+  -v ${PWD}/public:/antmarky/public \
+  bandantonio/antmarky build
+```
