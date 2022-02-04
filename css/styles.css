@@ -143,12 +143,6 @@ blockquote p {
   margin: 0 5px;
 }
 
-img {
-  display: block;
-  width: 50%;
-  margin: 0 auto;
-}
-
 .callout {
   padding: .5rem 1.25rem;
   margin-top: 1.25rem;
