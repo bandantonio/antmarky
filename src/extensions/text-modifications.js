@@ -1,5 +1,11 @@
 let markyText = (text) => {
   return [
+    // CROSS-FILES LINKS md -> html
+    {
+      type: 'output',
+      regex: /<a href="([\s\S]*?).md(#[\s\S]*?)?">([\s\S]*?)<\/a>/g,
+      replace: '<a href="$1.html$2">$3</a>'
+    },
     // ADMONITIONS
     {
       type: 'output',
@@ -29,7 +35,7 @@ let markyText = (text) => {
       type: 'output',
       regex: /==(.*)==/g,
       replace: '<mark>$1</mark>'
-    },
+    }
   ]
 }
 
