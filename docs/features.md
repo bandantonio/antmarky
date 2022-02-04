@@ -1,5 +1,28 @@
 # Features
 
+## Remote markdown files
+
+You can include remote Markdown files in **raw** format from **GitHub** and **BitBucket** public repositories using `!!+` directive:
+
+```
+!!+ github.com/link/to/your/raw/markdown/file.md
+!!+ bitbucket.org/link/to/your/raw/markdown/file.md
+```
+
+::: tip "What is raw format"
+**GitHub raw format**
+
+```
+https://github.com/<username>/<repo>/raw/<branch>/filename.md
+```
+
+**BitBucket raw format**
+
+```
+https://bitbucket.org/<username>/<repo>/raw/<branch>/filename.md
+```
+:::
+
 ## Admonitions
 
 **info**
