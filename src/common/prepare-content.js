@@ -4,6 +4,7 @@ const fse = require('fs-extra');
 const fsp = require('fs/promises');
 let { md } = require('./md-parser');
 const path = require('path');
+let { embedRemoteMarkdown } = require('./embed-remote-markdown');
 let { buildToc } = require('../toc');
 let { errorPage } = require('../data/defaults');
 
@@ -36,15 +37,10 @@ let getFilesContent = async (fileDetails) => {
   })
 }
 
-let convertCrossLinks = (mdText) => {
-  return mdText.replace(/\.md/g, '.html')
-}
-
 // CONVERT MARKDOWN FILES TO HTML
 let convertMdToHtml = (mdTextArray) => {  
   return mdTextArray.map(mdText => {
-    let linksInContent = convertCrossLinks(mdText.content);
-    let html = md.makeHtml(linksInContent);
+    let html = md.makeHtml(mdText.content);
     let tableOfCOntents = buildToc(html);
     return {
       name: mdText.name,
@@ -65,8 +61,9 @@ let saveHtmlContent = (filename, htmlContent) => {
 let buildContent = async (docsDir) => {
   let locatedMdFiles = await findMdFiles(docsDir);
   let allPages = locatedMdFiles;
-  let filesMdContent = await getFilesContent(locatedMdFiles);
-  let htmlContent = convertMdToHtml(filesMdContent);
+  let mdFilesContent = await getFilesContent(locatedMdFiles);
+  let mdFilesWithRemoteContent = await embedRemoteMarkdown(mdFilesContent);
+  let htmlContent = convertMdToHtml(mdFilesWithRemoteContent);
   return {
     allPages: allPages,
     htmlContent: htmlContent
@@ -126,7 +123,7 @@ let buildStaticFiles = async (docsDir) => {
           let readyHtml = compiledTemplate({
             name: '/',
             title: 'Home',
-            content: md.makeHtml(convertCrossLinks(fs.readFileSync(path.resolve('README.md'), 'utf-8'))),
+            content: md.makeHtml(fs.readFileSync(path.resolve('README.md'), 'utf-8')),
             pages: sidebarListOfPages
           });
           saveHtmlContent('index.html', readyHtml);
@@ -151,7 +148,6 @@ let buildStaticFiles = async (docsDir) => {
 module.exports = {
   findMdFiles: findMdFiles,
   getFilesContent: getFilesContent,
-  convertCrossLinks: convertCrossLinks,
   convertMdToHtml: convertMdToHtml,
   buildStaticFiles: buildStaticFiles
 }
