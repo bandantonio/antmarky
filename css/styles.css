@@ -56,7 +56,7 @@ body {
   text-decoration: underline;
 }
 
-.sidebar_list a:hover, .toc_list a:hover, a {
+.sidebar_list a:hover, .toc_list a:hover {
   color: #DB504A;
 }
 
@@ -72,6 +72,26 @@ body {
 
 .content_area {
   margin: 0 2em;
+}
+
+.content_area a {
+  color: #DB504A;
+  text-decoration: underline;
+}
+
+.content_area a:hover {
+  color: #DB504A;
+  text-decoration: none;
+}
+
+.content_area a code {
+  color: #fad000;
+  text-decoration: underline;
+}
+
+.content_area a:hover code {
+  color: #DB504A;
+  text-decoration: none;
 }
 
 .navbar, .footer, pre, code {

@@ -30,10 +30,6 @@
       <li class="list_item"><a href="markdown.html">markdown</a></li>
     
   
-    
-      <li class="list_item"><a href="quickstart.html">quickstart</a></li>
-    
-  
 </ul>
     </div>
   </div>
@@ -52,10 +48,6 @@
   
     
       <li class="list_item"><a href="markdown.html">markdown</a></li>
-    
-  
-    
-      <li class="list_item"><a href="quickstart.html">quickstart</a></li>
     
   
 </ul>
@@ -84,6 +76,27 @@
 <li><a href="features.html#fontawesome">FontAwesome</a></li>
 <li><a href="features.html#task-lists">Task lists</a></li>
 </ul>
+<h2 id="quickstart">Quickstart</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li><a href="https://docs.docker.com/get-docker/">Docker</a></li>
+</ul>
+<h3 id="serve-content">Serve content</h3>
+<pre><code>docker run --rm \
+  --name antmarky-ssg \
+  -v ${PWD}/docs:/antmarky/docs \
+  -p 8000:8000 \
+  bandantonio/antmarky
+</code></pre>
+<p>Local server will be launched at <code>http://localhost:8000</code>.</p>
+<h3 id="build-content">Build content</h3>
+<pre><code>docker run --rm \
+  --name antmarky-ssg \
+  -v ${PWD}/docs:/antmarky/docs \
+  -v ${PWD}/public:/antmarky/public \
+  bandantonio/antmarky build
+</code></pre>
+<p>Website static files will be generated in the <code>public</code> folder.</p>
     </div>
     <footer class="footer mt-auto py-3">
   <span>
