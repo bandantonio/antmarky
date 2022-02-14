@@ -1,5 +1,8 @@
 name: antmarky-generate
-on: [push]
+on:
+  push:
+    branches:
+      - main
 jobs:
   generate-docs:
     runs-on: ubuntu-latest
