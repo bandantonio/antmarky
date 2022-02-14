@@ -4,4 +4,4 @@
   command = "npm run build"
 
 [context.branch-deploy]
-  command = "echo branch"
+  command = "echo branch deploy"
