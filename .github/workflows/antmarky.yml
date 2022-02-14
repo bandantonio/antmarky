@@ -1,8 +1,5 @@
 name: antmarky-generate
 on:
-  pull_request:
-    branches:    
-      - main
   push:
     branches:    
       - main
