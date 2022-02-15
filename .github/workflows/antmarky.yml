@@ -3,8 +3,12 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 jobs:
   generate-docs:
+    name: Generate documentation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -28,3 +32,32 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  build-docker-image:
+    name: Build and push Docker image
+    needs: generate-docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get Docker metadata
+        id: docker_meta
+        uses: docker/metadata-action@v3
+        with:
+          images: bandantonio/antmarky
+      
+      - name: Login to Docker Hub
+        # if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          # push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
