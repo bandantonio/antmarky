@@ -1,7 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300;700&family=Oswald&display=swap');
+@font-face {
+  font-family: SegoeUI;
+  src:
+      local("Segoe UI"),
+      url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2) format("woff2"),
+      url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff) format("woff"),
+      url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.ttf) format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: SegoeUI;
+  src:
+      local("Segoe UI Semibold"),
+      url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff2) format("woff2"),
+      url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff) format("woff"),
+      url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.ttf) format("truetype");
+  font-weight: 700;
+}
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'SegoeUI', sans-serif;
+  color: #3b454e;
   min-height: 100vh;
   position: relative;
   padding-bottom: 3em;
@@ -16,18 +35,21 @@ body {
 }
 
 .list_title {
-  font-family: 'Oswald', sans-serif;
-  margin-left: 1em;
-  font-size: 90%;
+  font-family: 'SegoeUI', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
   text-transform: uppercase;
+  margin-bottom: 1em;
+  margin-left: 1em;
+  color: #2d2b57;
 }
 
 .sidebar {
-  border-right: #2d2b57 dotted 1px;
+  border-right: #8899a8 dotted 1px;
 }
 
 .toc {
-  border-left: #2d2b57 dotted 1px;
+  border-left: #8899a8 dotted 1px;
 }
 
 .list_item.ind-3 {
@@ -117,16 +139,17 @@ body {
   font-weight: 500;
 }
 
-h1, h2, h3, h4, h5, h5 {
-  color: rgba(0,0,0,0.75);
+h1, h2, h3, h4, h5, h5, h6 {
+  font-weight: 700;
+  color: #3b454e;
 }
 
 h1 { font-size: 2em; }
-h2 { font-size: 1.8em; }
-h3 { font-size: 1.5em; }
-h4 { font-size: 1.3em; }
-h5 { font-size: 1.1em; }
-h6 { font-size: 1em; }
+h2 { font-size: 1.6em; }
+h3 { font-size: 1.4em; }
+h4 { font-size: 1.2em; }
+h5 { font-size: 1em; }
+h6 { font-size: .8em; }
 
 /* h1::after, h2::after, h3::after, h4::after, h5::after, h6::after {
 } */
@@ -145,6 +168,10 @@ code {
 
 code {
   color: #fad000;
+}
+
+pre {
+  border-radius: 5px;
 }
 
 li p {
