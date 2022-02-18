@@ -33,3 +33,33 @@ The main idea behind creating Antmarky was to have a generator with *zero config
 [syntax-highlight]: features.md#syntax-highlighting
 [fa]: features.md#fontawesome
 [tasks-list]: features.md#task-lists
+
+## Quickstart
+
+### Prerequisites
+
+* [Docker](https://docs.docker.com/get-docker/)
+
+### Serve content
+
+```
+docker run --rm \
+  --name antmarky-ssg \
+  -v ${PWD}/docs:/antmarky/docs \
+  -p 8000:8000 \
+  bandantonio/antmarky
+```
+
+Local server will be launched at `http://localhost:8000`.
+
+### Build content
+
+```
+docker run --rm \
+  --name antmarky-ssg \
+  -v ${PWD}/docs:/antmarky/docs \
+  -v ${PWD}/public:/antmarky/public \
+  bandantonio/antmarky build
+```
+
+Website static files will be generated in the `public` folder.
