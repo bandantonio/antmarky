@@ -12,6 +12,18 @@ let markyText = (text) => {
       regex: /\<p>::: (\w*) "(.*)"\n([\S\s]*?):::<\/p>/g,
       replace: '<div class="callout callout-$1"><strong class="callout-title">$2</strong><p>$3</p></div>'
     },
+    // LANGUAGE LABEL IN CODE BLOCK
+    {
+      type: 'output',
+      regex: /<pre><code class="(\w*) language-(\w*)">/g,
+      replace: '<pre data-language="$2"><code class="$1 language-$2">'
+    },
+    // DEFAULT LANGUAGE LABEL IN CODE BLOCK
+    {
+      type: 'output',
+      regex: /<pre><code>/g,
+      replace: '<pre data-language="text"><code>'
+    },
     // SUBSCRIPT
     {
       type: 'output',

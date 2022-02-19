@@ -42,7 +42,7 @@ The main idea behind creating Antmarky was to have a generator with *zero config
 
 ### Serve content
 
-```
+```sh
 docker run --rm \
   --name antmarky-ssg \
   -v ${PWD}/docs:/antmarky/docs \
@@ -54,7 +54,7 @@ Local server will be launched at `http://localhost:8000`.
 
 ### Build content
 
-```
+```sh
 docker run --rm \
   --name antmarky-ssg \
   -v ${PWD}/docs:/antmarky/docs \
