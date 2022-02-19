@@ -67,7 +67,7 @@
 </code></pre>
 <p></p></div>
 <h2 id="admonitions">Admonitions</h2>
-<p>Supported admonitions: <code>info</code>, <code>warning</code>, <code>danger</code>, <code>tip</code>, <code>secondary</code>.</p>
+<p>Supported admonitions: <code>info</code>, <code>warning</code>, <code>danger</code>, <code>tip</code>, <code>example</code>, <code>quote</code>.</p>
 <div class="callout callout-info"><strong class="callout-title">Test info</strong><p></p>
 <pre data-language="md"><code class="md language-md">::: info "Test info"
 Info admonition body
@@ -116,9 +116,21 @@ Tip admonition body
 console.log(greeting);
 </code></pre>
 <p></p></div>
-<div class="callout callout-secondary"><strong class="callout-title">Test secondary</strong><p></p>
-<pre data-language="md"><code class="md language-md">::: secondary "Test secondary"
-Secondary admonition body
+<div class="callout callout-example"><strong class="callout-title">Test example</strong><p></p>
+<pre data-language="md"><code class="md language-md">::: example "Test example"
+Example admonition body
+:::
+</code></pre>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean interdum ullamcorper nibh sed bibendum. Fusce consectetur, velit eu tempus consequat, enim libero consequat sem, <code>vitae interdum</code> velit urna eget nunc.</p>
+<p><code>test code line</code></p>
+<pre data-language="js"><code class="js language-js">let greeting = 'Hello World!';
+
+console.log(greeting);
+</code></pre>
+<p></p></div>
+<div class="callout callout-quote"><strong class="callout-title">Test quote</strong><p></p>
+<pre data-language="md"><code class="md language-md">::: quote "Test quote"
+Quote admonition body
 :::
 </code></pre>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean interdum ullamcorper nibh sed bibendum. Fusce consectetur, velit eu tempus consequat, enim libero consequat sem, <code>vitae interdum</code> velit urna eget nunc.</p>
