@@ -152,6 +152,19 @@ code {
 
 pre {
   border-radius: 5px;
+  position: relative;
+}
+
+pre::before {
+  content: attr(data-language);
+  opacity: .75;
+  background-color: #f7df1e;
+  color: #2d2b57;
+  border-radius: 0 0 5px 5px;
+  font-size: 12px;
+  padding: .1em .4em;
+  position: absolute;
+  right: 1em;
 }
 
 li p {
