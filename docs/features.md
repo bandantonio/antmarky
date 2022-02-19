@@ -4,7 +4,7 @@
 
 You can include remote Markdown files in **raw** format from **GitHub** and **BitBucket** public repositories using `!!+` directive:
 
-```
+```md
 !!+ github.com/link/to/your/raw/markdown/file.md
 !!+ bitbucket.org/link/to/your/raw/markdown/file.md
 ```
