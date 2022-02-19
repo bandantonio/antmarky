@@ -84,7 +84,7 @@
 <li><a href="https://docs.docker.com/get-docker/">Docker</a></li>
 </ul>
 <h3 id="serve-content">Serve content</h3>
-<pre><code>docker run --rm \
+<pre data-language="sh"><code class="sh language-sh">docker run --rm \
   --name antmarky-ssg \
   -v ${PWD}/docs:/antmarky/docs \
   -p 8000:8000 \
@@ -92,7 +92,7 @@
 </code></pre>
 <p>Local server will be launched at <code>http://localhost:8000</code>.</p>
 <h3 id="build-content">Build content</h3>
-<pre><code>docker run --rm \
+<pre data-language="sh"><code class="sh language-sh">docker run --rm \
   --name antmarky-ssg \
   -v ${PWD}/docs:/antmarky/docs \
   -v ${PWD}/public:/antmarky/public \

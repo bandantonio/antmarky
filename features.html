@@ -56,39 +56,39 @@
       <h1 id="features">Features</h1>
 <h2 id="remote-markdown-files">Remote markdown files</h2>
 <p>You can include remote Markdown files in <strong>raw</strong> format from <strong>GitHub</strong> and <strong>BitBucket</strong> public repositories using <code>!!+</code> directive:</p>
-<pre><code>!!+ github.com/link/to/your/raw/markdown/file.md
+<pre data-language="md"><code class="md language-md">!!+ github.com/link/to/your/raw/markdown/file.md
 !!+ bitbucket.org/link/to/your/raw/markdown/file.md
 </code></pre>
 <div class="callout callout-tip"><strong class="callout-title">What is raw format</strong><p><strong>GitHub raw format</strong></p>
-<pre><code>https://github.com/&lt;username&gt;/&lt;repo&gt;/raw/&lt;branch&gt;/filename.md
+<pre data-language="text"><code>https://github.com/&lt;username&gt;/&lt;repo&gt;/raw/&lt;branch&gt;/filename.md
 </code></pre>
 <p><strong>BitBucket raw format</strong></p>
-<pre><code>https://bitbucket.org/&lt;username&gt;/&lt;repo&gt;/raw/&lt;branch&gt;/filename.md
+<pre data-language="text"><code>https://bitbucket.org/&lt;username&gt;/&lt;repo&gt;/raw/&lt;branch&gt;/filename.md
 </code></pre>
 <p></p></div>
 <h2 id="admonitions">Admonitions</h2>
 <p><strong>info</strong></p>
-<pre><code class="md language-md">::: info "Test info"
+<pre data-language="md"><code class="md language-md">::: info "Test info"
 Info admonition body
 :::
 </code></pre>
 <p><strong>warning</strong></p>
-<pre><code class="md language-md">::: warning "Test warning"
+<pre data-language="md"><code class="md language-md">::: warning "Test warning"
 Warning admonition body
 :::
 </code></pre>
 <p><strong>danger</strong></p>
-<pre><code class="md language-md">::: danger "Test danger"
+<pre data-language="md"><code class="md language-md">::: danger "Test danger"
 Danger admonition body
 :::
 </code></pre>
 <p><strong>tip</strong></p>
-<pre><code class="md language-md">::: tip "Test tip"
+<pre data-language="md"><code class="md language-md">::: tip "Test tip"
 Tip admonition body
 :::
 </code></pre>
 <p><strong>secondary</strong></p>
-<pre><code class="md language-md">::: secondary "Test secondary"
+<pre data-language="md"><code class="md language-md">::: secondary "Test secondary"
 Secondary admonition body
 :::
 </code></pre>
@@ -96,7 +96,7 @@ Secondary admonition body
 <div class="callout callout-info"><strong class="callout-title">Test info</strong><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean interdum ullamcorper nibh sed bibendum. Fusce consectetur, velit eu tempus consequat, enim libero consequat sem, <code>vitae</code> interdum velit urna eget nunc.</p>
 <p>Sed mollis sed turpis in porttitor. Fusce ac <code>lectus turpis</code>. Fusce tortor arcu, eleifend nec elit id, sagittis sodales velit. Vestibulum pretium tortor metus, a sollicitudin velit facilisis ut.</p>
 <p><code>test code line</code></p>
-<pre><code class="js language-js">let greeting = 'Hello World!';
+<pre data-language="js"><code class="js language-js">let greeting = 'Hello World!';
 
 console.log(greeting);
 </code></pre>
@@ -106,7 +106,7 @@ console.log(greeting);
 <h2 id="fontawesome">FontAwesome</h2>
 <p>Antmarky supports the latest version of <a href="https://fontawesome.com/v6.0/icons?m=free">FontAwesome icon set</a>.</p>
 <h2 id="task-lists">Task lists</h2>
-<pre><code class="md language-md"> - [x] checked list item
+<pre data-language="md"><code class="md language-md"> - [x] checked list item
  - [ ] unchecked list item
 </code></pre>
 <ul>
