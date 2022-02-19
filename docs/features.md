@@ -25,7 +25,7 @@ https://bitbucket.org/<username>/<repo>/raw/<branch>/filename.md
 
 ## Admonitions
 
-Supported admonitions: `info`, `warning`, `danger`, `tip`, `secondary`.
+Supported admonitions: `info`, `warning`, `danger`, `tip`, `example`, `quote`.
 
 ::: info "Test info"
 
@@ -103,11 +103,30 @@ console.log(greeting);
 ```
 :::
 
-::: secondary "Test secondary"
+::: example "Test example"
 
 ```md
-::: secondary "Test secondary"
-Secondary admonition body
+::: example "Test example"
+Example admonition body
+:::
+```
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean interdum ullamcorper nibh sed bibendum. Fusce consectetur, velit eu tempus consequat, enim libero consequat sem, `vitae interdum` velit urna eget nunc.
+
+`test code line`
+
+```js
+let greeting = 'Hello World!';
+
+console.log(greeting);
+```
+:::
+
+::: quote "Test quote"
+
+```md
+::: quote "Test quote"
+Quote admonition body
 :::
 ```
 
