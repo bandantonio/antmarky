@@ -207,49 +207,55 @@ blockquote p {
   padding: .5rem 1.25rem;
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
-  border: 1px solid #e9ecef;
+  border-left: 1px solid #e9ecef;
   border-left-width: .25rem;
-  border-radius:.25rem
+  border-radius:.25rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
 .callout-info {
-  border-left-color: #0d6efd;
+  border-left-color: #0059FF;
+  background-color: #DBE7FF;
 }
 
 .callout-info .callout-title {
-  color: #0d6efd;
+  color: #0059FF;
 }
 
 .callout-warning {
-  border-left-color: #ffc107;
+  border-left-color: #FFBF00;
+  background-color: #FFF6DB;
 }
 
 .callout-warning .callout-title {
-  color: #ffc107;
+  color: #FFBF00;
 }
 
 .callout-danger {
-  border-left-color: #d9534f;
+  border-left-color: #FF0800;
+  background-color: #FFDCDB;
 }
 
 .callout-danger .callout-title {
-  color: #d9534f;
+  color: #FF0800;
 }
 
 .callout-tip {
-  border-left-color: #198754;
+  border-left-color: #04B31B;
+  background-color: #D1FED7;
 }
 
 .callout-tip .callout-title {
-  color: #198754;
+  color: #04B31B;
 }
 
 .callout-secondary {
-  border-left-color: #565e64;
+  border-left-color: #3D3D3D;
+  background-color: #E3E3E3;
 }
 
 .callout-secondary .callout-title {
-  color: #565e64;
+  color: #3D3D3D;
 }
 
 .callout p {

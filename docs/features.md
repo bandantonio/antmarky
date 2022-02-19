@@ -25,7 +25,9 @@ https://bitbucket.org/<username>/<repo>/raw/<branch>/filename.md
 
 ## Admonitions
 
-**info**
+Supported admonitions: `info`, `warning`, `danger`, `tip`, `secondary`.
+
+::: info "Test info"
 
 ```md
 ::: info "Test info"
@@ -33,7 +35,18 @@ Info admonition body
 :::
 ```
 
-**warning**
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean interdum ullamcorper nibh sed bibendum. Fusce consectetur, velit eu tempus consequat, enim libero consequat sem, `vitae interdum` velit urna eget nunc.
+
+`test code line`
+
+```js
+let greeting = 'Hello World!';
+
+console.log(greeting);
+```
+:::
+
+::: warning "Test warning"
 
 ```md
 ::: warning "Test warning"
@@ -41,7 +54,18 @@ Warning admonition body
 :::
 ```
 
-**danger**
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean interdum ullamcorper nibh sed bibendum. Fusce consectetur, velit eu tempus consequat, enim libero consequat sem, `vitae interdum` velit urna eget nunc.
+
+`test code line`
+
+```js
+let greeting = 'Hello World!';
+
+console.log(greeting);
+```
+:::
+
+::: danger "Test danger"
 
 ```md
 ::: danger "Test danger"
@@ -49,7 +73,18 @@ Danger admonition body
 :::
 ```
 
-**tip**
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean interdum ullamcorper nibh sed bibendum. Fusce consectetur, velit eu tempus consequat, enim libero consequat sem, `vitae interdum` velit urna eget nunc.
+
+`test code line`
+
+```js
+let greeting = 'Hello World!';
+
+console.log(greeting);
+```
+:::
+
+::: tip "Test tip"
 
 ```md
 ::: tip "Test tip"
@@ -57,7 +92,18 @@ Tip admonition body
 :::
 ```
 
-**secondary**
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean interdum ullamcorper nibh sed bibendum. Fusce consectetur, velit eu tempus consequat, enim libero consequat sem, `vitae interdum` velit urna eget nunc.
+
+`test code line`
+
+```js
+let greeting = 'Hello World!';
+
+console.log(greeting);
+```
+:::
+
+::: secondary "Test secondary"
 
 ```md
 ::: secondary "Test secondary"
@@ -65,12 +111,7 @@ Secondary admonition body
 :::
 ```
 
-### Example
-
-::: info "Test info"
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean interdum ullamcorper nibh sed bibendum. Fusce consectetur, velit eu tempus consequat, enim libero consequat sem, `vitae` interdum velit urna eget nunc.
-
-Sed mollis sed turpis in porttitor. Fusce ac `lectus turpis`. Fusce tortor arcu, eleifend nec elit id, sagittis sodales velit. Vestibulum pretium tortor metus, a sollicitudin velit facilisis ut.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean interdum ullamcorper nibh sed bibendum. Fusce consectetur, velit eu tempus consequat, enim libero consequat sem, `vitae interdum` velit urna eget nunc.
 
 `test code line`
 
