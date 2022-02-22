@@ -58,7 +58,7 @@ let saveHtmlContent = (filename, htmlContent) => {
   fs.writeFileSync(`${basePath}/${filename}`, htmlContent);
 }
 
-let buildContent = async (docsDir) => {
+let buildContent = async (docsDir = 'docs') => {
   let locatedMdFiles = await findMdFiles(docsDir);
   let allPages = locatedMdFiles;
   let mdFilesContent = await getFilesContent(locatedMdFiles);
@@ -79,14 +79,14 @@ let compileTemplate = (templatesPath, template) => {
 } 
 
 let removeOutputDirectory = (outputDirectory = 'public') => {
-  fs.rmSync(path.resolve(outputDirectory), { recursive: true, force: true });
+  fse.emptyDirSync(path.resolve(outputDirectory));
 }
 
 let copyStaticAssets = (staticFolder = 'src/assets') => {
   fse.copySync(path.resolve(staticFolder), path.resolve('public'));
 }
 
-let buildStaticFiles = async (docsDir) => {
+let buildStaticFiles = async (docsDir = 'docs') => {
   removeOutputDirectory();
   const templatesPath = path.join(process.cwd() + '/views');
   let generatedContent = await buildContent(docsDir);
