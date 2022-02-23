@@ -147,6 +147,25 @@ h4 { font-size: 1.2em; }
 h5 { font-size: 1em; }
 h6 { font-size: .8em; }
 
+a.anchor-link {
+  font-family: 'Font Awesome 6 Free';
+  font-size: 70%;
+  opacity: 0;
+  display: inline-block;
+  padding-left: .5em;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.h-anchor:hover .anchor-link {
+  opacity: .5;
+  transition:ease-in
+}
+
+.h-anchor .anchor-link:hover {
+   opacity: 1;
+ }
+
 .content_area li, p {
   font-size: 95%;
 }
@@ -301,6 +320,9 @@ blockquote p {
 }
 
 @media (max-width: 576px) {
+  .h-anchor {
+    scroll-margin-top: 60px;
+  }
   #sidebarToggler {
     text-align: center;
   }
@@ -343,6 +365,9 @@ blockquote p {
 }
 
 @media (min-width: 992px) {
+  .h-anchor {
+    scroll-margin-top: 76px;
+  }
   #sidebarToggler {
     display: none !important;
   }
