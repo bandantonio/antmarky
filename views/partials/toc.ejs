@@ -1,6 +1,6 @@
 <div class="list_title"><i class="fas fa-align-justify"></i> On this page</div>
 <ul class="toc_list">
   <% toc.forEach(heading => { %>
-    <li class="list_item ind-<%= heading.id %>"><a href="#<%- heading.link %>"><%= heading.title %></a></li>
+    <li class="list_item ind-<%= heading.id %>"><a class="nav-link" href="#<%- heading.link %>"><%= heading.title %></a></li>
   <% }) %>
 </ul>
