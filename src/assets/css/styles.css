@@ -98,6 +98,17 @@ body {
   text-decoration: none;
 }
 
+.toc_list a.active {
+  color: #DB504A;
+  font-weight: 700;
+}
+
+/* Override default Bootstrap styling */
+.nav-link {
+  display: inherit;
+  padding: inherit;
+}
+
 .full_content {
   margin-top: 2em;
   margin-bottom: 2em;
