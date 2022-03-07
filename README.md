@@ -10,7 +10,7 @@ The main idea behind creating Antmarky was to have a generator with *zero config
 
 * Zero configuration
 * Fully responsive layout
-* Fully static (doesn't require web server to work)
+* Fully static (doesn't require a web server to work)
 * No language frameworks included
 * [Include remote Markdown files from GitHub and BitBucket][remote-md-files]
 * [Markdown][markdown] flavor: `GitHub`. Supported syntax:
