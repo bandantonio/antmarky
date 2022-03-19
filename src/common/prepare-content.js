@@ -10,31 +10,63 @@ let { errorPage } = require('../data/defaults');
 
 // LOCATE MARKDOWN FILES
 let findMdFiles = async (docsDir = 'docs') => {
-  const directoryPath = (docsDir) ? path.join(process.cwd() + `/${docsDir}`) : path.join(process.cwd());
-  try {
-    let files = await fsp.readdir(directoryPath);
-    return files.filter(file => path.extname(file) == '.md').map(mdFile => {
-      let filePath = path.resolve(`${directoryPath}/${mdFile}`)
-      return {
-        name: mdFile.substring(0, mdFile.lastIndexOf('.')),
-        path: filePath
+  const baseDirectoryPath = (docsDir) ? path.join(process.cwd() + `/${docsDir}`) : path.join(process.cwd());
+  let fileTree = [];
+  let traverseDirectoryTree = (dir) => {
+    let dirItems = fs.readdirSync(dir);
+    for (let item of dirItems) {
+      let relativePath = path.relative(baseDirectoryPath, dir);
+      let absolutePath = path.join(dir, item);
+
+      let dirLevel = (relativePath == "") ? 0 : relativePath.split('/').length;
+      let pathToDirFull = (relativePath == '') ? 'home' : relativePath ;
+      let dirClass = pathToDirFull.substring(pathToDirFull.lastIndexOf('/') + 1, pathToDirFull.length);
+      let dirName = dirClass[0].toUpperCase() + dirClass.substring(1, dirClass.length);
+
+      if (fs.statSync(absolutePath).isDirectory()) {
+        traverseDirectoryTree(absolutePath);
+      } else {
+        if (path.extname(item) == '.md') {
+          let mdFile = item.substring(0, item.lastIndexOf('.'));
+          let findIndex = fileTree.findIndex(obj => obj.dirPath == relativePath);
+          if (findIndex >= 0) {
+            fileTree[findIndex].files.push(mdFile);
+          } else {
+            fileTree.push({
+              dirLevel: dirLevel,
+              basePath: baseDirectoryPath,
+              dirPath: relativePath,
+              dirName: dirName,
+              dirClass: dirClass,
+              files: [ mdFile ]
+            })
+          }
+        }
       }
-    });
-  } catch (err) {
-    console.log(err);
+    }
   }
+  traverseDirectoryTree(baseDirectoryPath);
+  
+  return fileTree.sort((a, b) => {
+    return a.dirLevel - b.dirLevel;
+  })
 }
 
 // GET CONTENTS OF MARKDOWN FILES
 let getFilesContent = async (fileDetails) => {
-  return fileDetails.map(details => {
-    let content = fs.readFileSync(details.path, { encoding: 'utf-8'});
-    return {
-      name: details.name,
-      title: details.name,
-      content: content
-    }
-  })
+  let mdFileContent = [];
+  for (let details of fileDetails) {
+    let absolutePath = path.join(details.basePath, details.dirPath);
+    details.files.forEach(file => {
+      let content = fs.readFileSync(path.join(absolutePath, `${file}.md`), { encoding: 'utf-8'});
+      mdFileContent.push({
+        name: file,
+        title: file,
+        content: content
+      })
+    });
+  }
+  return mdFileContent;
 }
 
 // CONVERT MARKDOWN FILES TO HTML
