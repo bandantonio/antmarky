@@ -22,13 +22,27 @@
       <div class="list_title"><i class="fas fa-list"></i> Table of contents</div>
 <ul class="sidebar_list">
   
-    
-      <li class="list_item"><a href="features.html">features</a></li>
-    
-  
-    
-      <li class="list_item"><a href="markdown.html">markdown</a></li>
-    
+    <div class="sidebar_list_item">
+      <button class="btn btn-sm list_heading home sub-0"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#home"
+        aria-expanded="true"
+        aria-controls="home">
+        Home
+      </button>
+        <ul id="home" class="list_files collapse show">
+        
+          
+            <li class="list_item"><a class="nav-link" href="features.html">features</a></li>
+          
+        
+          
+            <li class="list_item"><a class="nav-link" href="markdown.html">markdown</a></li>
+          
+        
+      </ul>
+    </div>
   
 </ul>
 <div class="powered-by">
@@ -47,13 +61,27 @@
       <div class="list_title"><i class="fas fa-list"></i> Table of contents</div>
 <ul class="sidebar_list">
   
-    
-      <li class="list_item"><a href="features.html">features</a></li>
-    
-  
-    
-      <li class="list_item"><a href="markdown.html">markdown</a></li>
-    
+    <div class="sidebar_list_item">
+      <button class="btn btn-sm list_heading home sub-0"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#home"
+        aria-expanded="true"
+        aria-controls="home">
+        Home
+      </button>
+        <ul id="home" class="list_files collapse show">
+        
+          
+            <li class="list_item"><a class="nav-link" href="features.html">features</a></li>
+          
+        
+          
+            <li class="list_item"><a class="nav-link" href="markdown.html">markdown</a></li>
+          
+        
+      </ul>
+    </div>
   
 </ul>
 <div class="powered-by">
@@ -66,7 +94,7 @@
       <h1 id="antmarky">Antmarky</h1>
 <p>Antmarky is a static-site generator for Markdown based on Node.js/EJS.</p>
 <p><img src="https://img.shields.io/docker/pulls/bandantonio/antmarky" alt="Docker Pulls" /></p>
-<p>The main idea behind creating Antmarky was to have a generator with <em>zero configuration</em> that can serve your Markdown files in the documentation directory. Currently, Antmarky handles the root directory level only, with no descendants (just yet).</p>
+<p>The main idea behind creating Antmarky was to have a generator with <em>zero configuration</em> that can serve your Markdown files in the documentation directory. Currently, Antmarky flattens out the folder structure and displays all the files at the root level under the corresponding folder.</p>
 <h2 id="features">Features</h2>
 <ul>
 <li>Zero configuration</li>
