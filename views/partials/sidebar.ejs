@@ -1,11 +1,25 @@
 <div class="list_title"><i class="fas fa-list"></i> Table of contents</div>
 <ul class="sidebar_list">
   <% pages.forEach(page => { %>
-    <% if (page.name == name) { %>
-      <li class="list_item"><a class="active" href="<%= page.name %>.html"><%= page.name %></a></li>
-    <% } else { %>
-      <li class="list_item"><a href="<%= page.name %>.html"><%= page.name %></a></li>
-    <% } %>
+    <div class="sidebar_list_item">
+      <button class="btn btn-sm list_heading <%= page.dirClass %> sub-<%= page.dirLevel %>"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#<%= page.dirClass %>"
+        aria-expanded="true"
+        aria-controls="<%= page.dirClass %>">
+        <%= page.dirName %>
+      </button>
+        <ul id="<%= page.dirClass %>" class="list_files collapse show">
+        <% page.files.forEach(file => { %>
+          <% if (file == name) { %>
+            <li class="list_item"><a class="nav-link active" href="<%= file %>.html"><%= file %></a></li>
+          <% } else { %>
+            <li class="list_item"><a class="nav-link" href="<%= file %>.html"><%= file %></a></li>
+          <% } %>
+        <% }) %>
+      </ul>
+    </div>
   <% }) %>
 </ul>
 <%- include('./footer'); %>
