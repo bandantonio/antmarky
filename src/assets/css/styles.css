@@ -44,8 +44,39 @@ body {
   color: #2d2b57;
 }
 
+.list_heading {
+  font-size: 13px;
+  font-weight: 700;
+  margin: .8em 0 0 0;
+}
+
+[aria-expanded="false"]::before {
+  display: inline-block;
+  width: 1em;
+  font-family: 'Font Awesome 6 Free';
+  content: '\f105';
+  font-size: 80%;
+}
+
+[aria-expanded="true"]::before {
+  display: inline-block;
+  width: 1em;
+  font-family: 'Font Awesome 6 Free';
+  content: '\f107';
+  font-size: 80%;
+}
+
+.list_files {
+  list-style: none;
+}
+
+.list_files > li {
+  margin-left: -.5em;
+}
+
 .sidebar, .toc {
   position: fixed;
+  overflow: scroll;
 }
 
 .powered-by a {
@@ -59,7 +90,6 @@ body {
 
 .toc {
   right: 0;
-  overflow: scroll;
 }
 
 .list_item.ind-3 {
@@ -86,6 +116,7 @@ body {
 
 .sidebar_list a.active {
   color: #DB504A;
+  font-weight: 700;
   text-decoration: underline;
 }
 
@@ -103,7 +134,16 @@ body {
   font-weight: 700;
 }
 
+.sidebar_list {
+  margin: 0;
+  padding-left: .5em;
+}
+
 /* Override default Bootstrap styling */
+.btn {
+  display: inherit;
+}
+
 .nav-link {
   display: inherit;
   padding: inherit;
