@@ -277,57 +277,57 @@ blockquote p {
 }
 
 .callout-info {
-  border-left-color: #0059FF;
-  background-color: rgba(0, 89, 255, .2);
+  border-left-color: rgb(51, 153, 255);
+  background-color: rgba(51, 153, 255, .1);
 }
 
 .callout-warning {
-  border-left-color: #FFBF00;
-  background-color: rgba(255, 191, 0, .2);
+  border-left-color: rgb(249, 177, 21);
+  background-color: rgba(249, 177, 21, .1);
 }
 
 .callout-danger {
-  border-left-color: #FF0800;
-  background-color: rgba(255, 8, 0, .2);
+  border-left-color: rgb(222, 22, 22);
+  background-color: rgba(222, 22, 22, .1);
 }
 
 .callout-tip {
-  border-left-color: #00D51C;
-  background-color: rgba(0, 213, 28, .2)
+  border-left-color: rgb(14, 181, 70);
+  background-color: rgba(14, 181, 70, .1);
 }
 
 .callout-example {
-  border-left-color: #8900D3;
-  background-color: rgba(137, 0, 211, .2)
+  border-left-color: rgb(50, 31, 219);
+  background-color: rgba(50, 31, 219, .1);
 }
 
 .callout-secondary, .callout-quote {
-  border-left-color: #3D3D3D;
+  border-left-color: rgb(61, 61, 61);
   background-color: rgba(61, 61, 61, .1);
 }
 
 .callout-info .callout-title {
-  color: #0059FF;
+  color: rgb(51, 153, 255);
 }
 
 .callout-warning .callout-title {
-  color: #FFBF00;
+  color: rgb(249, 177, 21);
 }
 
 .callout-danger .callout-title {
-  color: #FF0800;
+  color: rgb(222, 22, 22);
 }
 
 .callout-tip .callout-title {
-  color: #04B31B;
+  color: rgb(14, 181, 70);
 }
 
 .callout-example .callout-title {
-  color: #8900D3;
+  color: rgb(50, 31, 219);
 }
 
 .callout-quote .callout-title {
-  color: #3D3D3D;
+  color: rgb(61, 61, 61);
 }
 
 .callout-title {
@@ -335,35 +335,34 @@ blockquote p {
 }
 
 .callout-title::before {
-  font-family: 'Font Awesome 6 Free';
-  font-size: 110%;
-  font-weight: 700;
-  vertical-align:baseline;
-  padding: 0 .5em 0 .5em;
+  font-family: 'unicons';
+  font-size: 20px;
+  vertical-align: middle;
+  padding: 0 .1em 0 .1em;
 }
 
 .callout-info .callout-title::before {
-  content: '\f129';
+  content: '\e9ad';
 }
 
 .callout-warning .callout-title::before {
-  content: '\21';
+  content: '\e9b1';
 }
 
 .callout-danger .callout-title::before {
-  content: '\21\21';
+  content: '\eafb';
 }
 
 .callout-tip .callout-title::before {
-  content: '\f560';
+  content: '\e90b';
 }
 
 .callout-quote .callout-title::before {
-  content: '\f10d';
+  content: '\e810';
 }
 
 .callout-example .callout-title::before {
-  content: '\f044';
+  content: '\e905';
 }
 
 .callout p {
