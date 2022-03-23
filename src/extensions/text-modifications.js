@@ -9,7 +9,7 @@ let markyText = (text) => {
     // ADMONITIONS
     {
       type: 'output',
-      regex: /\<p>::: (\w*) "(.*)"\n([\S\s]*?):::<\/p>/g,
+      regex: /\<p>::: (\w*) "(.*)"\n?([\S\s]*?):::<\/p>/g,
       replace: '<div class="callout callout-$1"><strong class="callout-title">$2</strong><p>$3</p></div>'
     },
     // LANGUAGE LABEL IN CODE BLOCK
