@@ -1,8 +1,6 @@
 name: antmarky-generate
-on:
-  push:
-    branches:
-      - main
+on: [push]
+
 jobs:
   generate-docs:
     name: 📚 Generate documentation
@@ -19,13 +17,17 @@ jobs:
         id: npm_packages
         run: npm i
 
+      - name: 🧪 Run tests
+        id: tests
+        run: npm test
+
       - name: 📚 Generate documentation
         id: build_docs
-        if: steps.npm_packages.outcome  == 'success'
+        if: steps.tests.outcome == 'success' && github.ref == 'refs/heads/main'
         run: npm run build
 
       - name: 🚀 Deploy to GitHub Pages 
-        if: steps.build_docs.outcome == 'success'
+        if: steps.tests.outcome == 'success' && github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -33,6 +35,7 @@ jobs:
   build-docker-image:
     name: 🐋 Build and push Docker image
     needs: generate-docs
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
