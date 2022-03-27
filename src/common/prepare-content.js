@@ -2,58 +2,86 @@ const ejs = require('ejs');
 const fs = require('fs');
 const fse = require('fs-extra');
 const fsp = require('fs/promises');
-let { md } = require('./md-parser');
 const path = require('path');
+let { md } = require('./md-parser');
+let { findMdFilesSchema,
+      filesContentSchema,
+      convertMdToHtmlSchema,
+      saveHtmlContentSchemaFile,
+      saveHtmlContentSchemaContent,
+      compileTemplateSchemaTemplatesPath,
+      compileTemplateSchemaTemplate,
+      removeOutputDirectorySchema,
+      copyStaticAssetsSchema
+    } = require('../schemas/schemas');
 let { embedRemoteMarkdown } = require('./embed-remote-markdown');
 let { buildToc } = require('../toc');
 let { errorPage } = require('../data/defaults');
 
 // LOCATE MARKDOWN FILES
 let findMdFiles = async (docsDir = 'docs') => {
-  const baseDirectoryPath = (docsDir) ? path.join(process.cwd() + `/${docsDir}`) : path.join(process.cwd());
-  let fileTree = [];
-  let traverseDirectoryTree = (dir) => {
-    let dirItems = fs.readdirSync(dir);
-    for (let item of dirItems) {
-      let relativePath = path.relative(baseDirectoryPath, dir);
-      let absolutePath = path.join(dir, item);
+  try {
+    await findMdFilesSchema.validateAsync(docsDir);
+  } catch (error) {
+    throw Error(`invalid docs directory': ${error.message}`);
+  }
 
-      let dirLevel = (relativePath == "") ? 0 : relativePath.split('/').length;
-      let pathToDirFull = (relativePath == '') ? 'home' : relativePath ;
-      let dirClass = pathToDirFull.substring(pathToDirFull.lastIndexOf('/') + 1, pathToDirFull.length);
-      let dirName = dirClass[0].toUpperCase() + dirClass.substring(1, dirClass.length);
-
-      if (fs.statSync(absolutePath).isDirectory()) {
-        traverseDirectoryTree(absolutePath);
-      } else {
-        if (path.extname(item) == '.md') {
-          let mdFile = item.substring(0, item.lastIndexOf('.'));
-          let findIndex = fileTree.findIndex(obj => obj.dirPath == relativePath);
-          if (findIndex >= 0) {
-            fileTree[findIndex].files.push(mdFile);
-          } else {
-            fileTree.push({
-              dirLevel: dirLevel,
-              basePath: baseDirectoryPath,
-              dirPath: relativePath,
-              dirName: dirName,
-              dirClass: dirClass,
-              files: [ mdFile ]
-            })
+  let normalizedDocsDir = docsDir.trim();
+  const baseDirectoryPath = (normalizedDocsDir) ? path.join(process.cwd() + `/${normalizedDocsDir}`) : path.join(process.cwd());
+  
+  if (!fs.existsSync(baseDirectoryPath)) {
+    throw Error('The specified directory does not exist');
+  } else {
+    let fileTree = [];
+    let traverseDirectoryTree = (dir) => {
+      let dirItems = fs.readdirSync(dir);
+      for (let item of dirItems) {
+        let relativePath = path.relative(baseDirectoryPath, dir);
+        let absolutePath = path.join(dir, item);
+        
+        let dirLevel = (relativePath == "") ? 0 : relativePath.split('/').length;
+        let pathToDirFull = (relativePath == '') ? 'home' : relativePath ;
+        let dirClass = pathToDirFull.substring(pathToDirFull.lastIndexOf('/') + 1, pathToDirFull.length);
+        let dirName = dirClass[0].toUpperCase() + dirClass.substring(1, dirClass.length);
+        
+        if (fs.statSync(absolutePath).isDirectory()) {
+          traverseDirectoryTree(absolutePath);
+        } else {
+          if (path.extname(item) == '.md') {
+            let mdFile = item.substring(0, item.lastIndexOf('.'));
+            let findIndex = fileTree.findIndex(obj => obj.dirPath == relativePath);
+            if (findIndex >= 0) {
+              fileTree[findIndex].files.push(mdFile);
+            } else {
+              fileTree.push({
+                dirLevel: dirLevel,
+                basePath: baseDirectoryPath,
+                dirPath: relativePath,
+                dirName: dirName,
+                dirClass: dirClass,
+                files: [ mdFile ]
+              })
+            }
           }
         }
       }
     }
+    traverseDirectoryTree(baseDirectoryPath);
+    
+    return fileTree.sort((a, b) => {
+      return a.dirLevel - b.dirLevel;
+    })
   }
-  traverseDirectoryTree(baseDirectoryPath);
-  
-  return fileTree.sort((a, b) => {
-    return a.dirLevel - b.dirLevel;
-  })
 }
 
 // GET CONTENTS OF MARKDOWN FILES
 let getFilesContent = async (fileDetails) => {
+  try {
+    await filesContentSchema.validateAsync(fileDetails);
+  } catch (error) {
+    throw Error(`Can't get content from Markdown files: ${error.message}`);
+  }
+
   let mdFileContent = [];
   for (let details of fileDetails) {
     let absolutePath = path.join(details.basePath, details.dirPath);
@@ -70,7 +98,12 @@ let getFilesContent = async (fileDetails) => {
 }
 
 // CONVERT MARKDOWN FILES TO HTML
-let convertMdToHtml = (mdTextArray) => {  
+let convertMdToHtml = (mdTextArray) => {
+  let validation = convertMdToHtmlSchema.validate(mdTextArray);
+
+  if (validation.error) {
+    throw Error(`Can't convert. Input data is invalid: ${validation.error.message}`);
+  }
   return mdTextArray.map(mdText => {
     let html = md.makeHtml(mdText.content);
     let tableOfCOntents = buildToc(html);
@@ -83,11 +116,22 @@ let convertMdToHtml = (mdTextArray) => {
   });
 }
 
-let saveHtmlContent = (filename, htmlContent) => {
-  let outputFolder = 'public';
-  let basePath = `${process.cwd()}/${outputFolder}`;
-  fs.mkdirSync(basePath, { recursive: true });
-  fs.writeFileSync(`${basePath}/${filename}`, htmlContent);
+let saveHtmlContent = async (filename, htmlContent) => {
+  try {
+    await saveHtmlContentSchemaFile.validateAsync(filename);
+    await saveHtmlContentSchemaContent.validateAsync(htmlContent);
+  } catch (error) {
+    throw Error(`Can't retrieve content to save html file(s). Something went wrong: ${error.message}`);
+  }
+  
+  try {
+    let outputFolder = 'public';
+    let basePath = `${process.cwd()}/${outputFolder}`;
+    await fsp.mkdir(basePath, { recursive: true });
+    await fsp.writeFile(`${basePath}/${filename}`, htmlContent);
+  } catch (error) {
+    throw Error(`Can't save html file(s). Something went wrong: ${error.message}`);  
+  }
 }
 
 let buildContent = async (docsDir = 'docs') => {
@@ -103,6 +147,13 @@ let buildContent = async (docsDir = 'docs') => {
 }
 
 let compileTemplate = (templatesPath, template) => {
+  let validateTemplatesPath = compileTemplateSchemaTemplatesPath.validate(templatesPath);
+  let validateTemplate = compileTemplateSchemaTemplate.validate(template);
+
+  if (validateTemplatesPath.error || validateTemplate.error) {
+    throw Error('Error occurred when compiling template');
+  } 
+
   let compiledTemplate = ejs.compile(fs.readFileSync(templatesPath + '/' + template, 'utf-8'), {
     encoding: 'utf-8',
     views: [ path.resolve(templatesPath) ]
@@ -111,11 +162,21 @@ let compileTemplate = (templatesPath, template) => {
 } 
 
 let removeOutputDirectory = (outputDirectory = 'public') => {
+  let validateOutputDirectory = removeOutputDirectorySchema.validate(outputDirectory);
+
+  if (validateOutputDirectory.error) {
+    throw Error(`Error occurred when deleting the output folder: ${validateOutputDirectory.error.message}`);
+  }
   fse.emptyDirSync(path.resolve(outputDirectory));
 }
 
-let copyStaticAssets = (staticFolder = 'src/assets') => {
-  fse.copySync(path.resolve(staticFolder), path.resolve('public'));
+let copyStaticAssets = (staticFolder = 'assets') => {
+  let validateStaticAssets = copyStaticAssetsSchema.validate(staticFolder);
+
+  if (validateStaticAssets.error) {
+    throw Error(`Error occerred when copying static assets: ${validateStaticAssets.error.message}`)
+  }
+  fse.copySync(path.resolve(path.join(process.cwd() + '/src/' + staticFolder)), path.resolve('public'));
 }
 
 let buildStaticFiles = async (docsDir = 'docs') => {
