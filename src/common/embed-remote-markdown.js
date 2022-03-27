@@ -1,11 +1,17 @@
 const axios = require('axios');
+let { fileInclusionSchema } = require('../schemas/schemas')
 
 let fileInclusion = async (url) => {
+  try {
+    await fileInclusionSchema.validateAsync(url);
+  } catch (error) {
+    throw Error(`The provided remote URL is not valid: ${error.message}`)
+  }
   try {
     let response = await axios.get(url);
     return response.data;
   } catch (error) {
-    console.log(error);
+    throw Error(`Error retrieving information from the remote source: ${error}`);
   }
 }
 
