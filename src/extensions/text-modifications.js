@@ -24,18 +24,6 @@ let markyText = (text) => {
       regex: /<pre><code>/g,
       replace: '<pre data-language="text"><code>'
     },
-    // SUBSCRIPT
-    {
-      type: 'output',
-      regex: /~(\d{1})~/g,
-      replace: '<sub>$1</sub>'
-    },
-    // SUPERSCRIPT
-    {
-      type: 'output',
-      regex: /\^(\d|\w)\^/g,
-      replace: '<sup>$1</sup>'
-    },
     // TABLE
     { 
       type: 'output',
