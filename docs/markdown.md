@@ -55,22 +55,6 @@ a ~~strikethrough~~ element
 
 a ~~strikethrough~~ element
 
-## Subscript
-
-```md
-H~2~O
-```
-
-H~2~O
-
-## Superscript
-
-```md
-x^2^ * y^2^
-```
-
-x^2^ * y^2^
-
 ## Tables
 
 ```md
