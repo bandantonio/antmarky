@@ -19,8 +19,6 @@ The main idea behind creating Antmarky was to have a generator with *zero config
     * Images with inline dimensions attributes
     * Reference links
     * Strikethrough
-    * Subscript
-    * Superscript
     * Tables
 * [Admonitions][admonitions]
 * [Syntax highlighting][syntax-highlight]
