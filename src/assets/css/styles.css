@@ -120,7 +120,7 @@ body {
   text-decoration: underline;
 }
 
-.sidebar_list a:hover, .toc_list a:hover, a {
+.sidebar_list a:hover, .toc_list a:hover {
   color: #DB504A;
 }
 
