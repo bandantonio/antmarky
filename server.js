@@ -10,6 +10,7 @@ app.use(serveContent);
 
 app.set('view engine', 'ejs');
 app.use(express.static('src/assets'));
+app.use(express.static('docs'));
 
 
 app.get('/', (req, res) => {
