@@ -170,13 +170,19 @@ let removeOutputDirectory = (outputDirectory = 'public') => {
   fse.emptyDirSync(path.resolve(outputDirectory));
 }
 
-let copyStaticAssets = (staticFolder = 'assets') => {
+let copyStaticAssets = (staticFolder = 'assets', docsDir = 'docs') => {
   let validateStaticAssets = copyStaticAssetsSchema.validate(staticFolder);
 
   if (validateStaticAssets.error) {
-    throw Error(`Error occerred when copying static assets: ${validateStaticAssets.error.message}`)
+    throw Error(`Error occurred when copying static assets: ${validateStaticAssets.error.message}`)
   }
   fse.copySync(path.resolve(path.join(process.cwd() + '/src/' + staticFolder)), path.resolve('public'));
+
+  let docsStaticFolderPath = path.join(path.resolve('public'), staticFolder);
+  
+  if (fs.existsSync(docsStaticFolderPath)) {
+    fse.copySync(path.resolve(path.join(process.cwd() + `/${docsDir}/` + staticFolder)), docsStaticFolderPath);
+  }
 }
 
 let buildStaticFiles = async (docsDir = 'docs') => {
