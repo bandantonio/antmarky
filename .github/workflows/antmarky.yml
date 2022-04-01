@@ -2,8 +2,8 @@ name: antmarky-generate
 on: [push]
 
 jobs:
-  generate-docs:
-    name: 📚 Generate documentation
+  run-tests:
+    name: 🧪 Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -21,13 +21,36 @@ jobs:
         id: tests
         run: npm test
 
+      - name: 📈 Send test coverage to Coveralls
+        id: coverage
+        if: steps.tests.outcome == 'success'
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  generate-docs:
+    name: 📚 Generate documentation
+    needs: run-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: ⚙️ Setup node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: 📦 Install npm packages
+        id: npm_packages
+        run: npm i
+
       - name: 📚 Generate documentation
         id: build_docs
-        if: steps.tests.outcome == 'success' && github.ref == 'refs/heads/main'
+        if: steps.npm_packages.outcome == 'success'
         run: npm run build
 
       - name: 🚀 Deploy to GitHub Pages 
-        if: steps.tests.outcome == 'success' && github.ref == 'refs/heads/main'
+        if: steps.build_docs.outcome == 'success' && github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -51,7 +74,7 @@ jobs:
       - name: 🔑 Login to Docker Hub
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v1
-        with:
+        with: 
           username: ${{ secrets.DOCKER_HUB_USER }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
