@@ -2,7 +2,7 @@
 
 Antmarky is a static-site generator for Markdown based on Node.js/EJS.
 
-![Docker Pulls](https://img.shields.io/docker/pulls/bandantonio/antmarky)
+[![antmarky-generate](https://github.com/bandantonio/antmarky/actions/workflows/antmarky.yml/badge.svg?branch=main)](https://github.com/bandantonio/antmarky/actions/workflows/antmarky.yml) [![Coverage Status](https://coveralls.io/repos/github/bandantonio/antmarky/badge.svg?branch=main)](https://coveralls.io/github/bandantonio/antmarky?branch=main) ![Docker Pulls](https://img.shields.io/docker/pulls/bandantonio/antmarky)
 
 The main idea behind creating Antmarky was to have a generator with *zero configuration* that can serve your Markdown files in the documentation directory. Currently, Antmarky flattens out the folder structure and displays all the files at the root level under the corresponding folder.
 
