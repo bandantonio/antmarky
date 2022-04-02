@@ -7,8 +7,6 @@ Antmarky uses `GitHub` flavor for the Markdown parser. The parser supports the f
 * [Images with inline dimensions attributes](#image-dimensions)
 * [Reference links](#reference-links)
 * [Strikethrough](#strikethrough)
-* [Subscript](#subscript)
-* [Superscript](#superscript)
 * [Tables](#tables)
 
 ## Heading ids

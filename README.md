@@ -2,7 +2,7 @@
 
 Antmarky is a static-site generator for Markdown based on Node.js/EJS.
 
-[![antmarky-generate](https://github.com/bandantonio/antmarky/actions/workflows/antmarky.yml/badge.svg?branch=main)](https://github.com/bandantonio/antmarky/actions/workflows/antmarky.yml) [![Coverage Status](https://coveralls.io/repos/github/bandantonio/antmarky/badge.svg?branch=main)](https://coveralls.io/github/bandantonio/antmarky?branch=main) ![Docker Pulls](https://img.shields.io/docker/pulls/bandantonio/antmarky) [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-f7df1e.svg)](https://github.com/standard/semistandard) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![antmarky](https://github.com/bandantonio/antmarky/actions/workflows/antmarky.yml/badge.svg?branch=main)](https://github.com/bandantonio/antmarky/actions/workflows/antmarky.yml) [![Coverage Status](https://coveralls.io/repos/github/bandantonio/antmarky/badge.svg?branch=main)](https://coveralls.io/github/bandantonio/antmarky?branch=main) ![Docker Pulls](https://img.shields.io/docker/pulls/bandantonio/antmarky) [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-f7df1e.svg)](https://github.com/standard/semistandard)
 
 The main idea behind creating Antmarky was to have a generator with *zero configuration* that can serve your Markdown files in the documentation directory. Currently, Antmarky flattens out the folder structure and displays all the files at the root level under the corresponding folder.
 
