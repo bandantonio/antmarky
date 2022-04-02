@@ -6,7 +6,6 @@
   "scripts": {
     "build": "node src/commands/build.js",
     "serve": "node server.js",
-    "format": "prettier --check .",
     "lint": "semistandard",
     "test": "nyc --reporter=lcovonly --reporter=text mocha 'tests/**/*.test.js'"
   },
@@ -25,7 +24,6 @@
     "joi": "^17.6.0",
     "mocha": "^9.2.2",
     "nyc": "^15.1.0",
-    "prettier": "^2.6.1",
     "semistandard": "^16.0.1",
     "showdown": "^1.9.1"
   }

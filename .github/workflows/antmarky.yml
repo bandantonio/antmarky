@@ -3,7 +3,7 @@ on: [push]
 
 jobs:
   run-lint:
-    name: ✅ Linters
+    name: ✅ Linter
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,10 +16,6 @@ jobs:
       - name: 📦 Install npm packages
         id: npm_packages
         run: npm i
-
-      - name: ✅ Run formatter
-        id: formatter
-        run: npm run format
 
       - name: ✅ Run code style linter
         id: linter
