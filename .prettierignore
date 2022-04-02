@@ -1,0 +1,7 @@
+node_modules
+public
+package-lock.json
+coverage
+.nyc_output
+*.html
+*.md
