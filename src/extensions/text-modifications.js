@@ -1,4 +1,4 @@
-let markyText = (text) => {
+const markyText = (text) => {
   return [
     // CROSS-FILES LINKS md -> html
     {
@@ -9,7 +9,7 @@ let markyText = (text) => {
     // ADMONITIONS
     {
       type: 'output',
-      regex: /\<p>::: (\w*) "(.*)"\n?([\S\s]*?):::<\/p>/g,
+      regex: /<p>::: (\w*) "(.*)"\n?([\S\s]*?):::<\/p>/g,
       replace: '<div class="callout callout-$1"><strong class="callout-title">$2</strong><p>$3</p></div>'
     },
     // LANGUAGE LABEL IN CODE BLOCK
@@ -25,7 +25,7 @@ let markyText = (text) => {
       replace: '<pre data-language="text"><code>'
     },
     // TABLE
-    { 
+    {
       type: 'output',
       regex: '<table>',
       replace: '<table class="table">'
@@ -36,9 +36,9 @@ let markyText = (text) => {
       regex: /==(.*)==/g,
       replace: '<mark>$1</mark>'
     }
-  ]
-}
+  ];
+};
 
 module.exports = {
   markyText
-}
+};
