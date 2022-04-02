@@ -1,41 +1,47 @@
-name: antmarky-generate
+name: antmarky
 on: [push]
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  run-lint:
-    name: ✅ Linter
+  node-setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/node-cache
+        id: cache-node-modules
+        with:
+          node-version: '16'
+      - run: npm i
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
 
-      - name: ⚙️ Setup node.js
-        uses: actions/setup-node@v2
+  run-lint:
+    name: ✅ Linter
+    needs: node-setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/node-cache
+        id: cache-node-modules
         with:
           node-version: '16'
 
-      - name: 📦 Install npm packages
-        id: npm_packages
-        run: npm i
-
-      - name: ✅ Run code style linter
+      - name: ✅ Run code style linter          
         id: linter
         run: npm run lint
           
   run-tests:
     name: 🧪 Tests
-    needs: run-lint
+    needs: node-setup
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - name: ⚙️ Setup node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/node-cache
+        id: cache-node-modules
         with:
           node-version: '16'
-
-      - name: 📦 Install npm packages
-        id: npm_packages
-        run: npm i
 
       - name: 🧪 Run tests
         id: tests
@@ -50,23 +56,18 @@ jobs:
 
   generate-docs:
     name: 📚 Generate documentation
-    needs: run-tests
+    needs: [run-tests, run-lint]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - name: ⚙️ Setup node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/node-cache
+        id: cache-node-modules
         with:
           node-version: '16'
 
-      - name: 📦 Install npm packages
-        id: npm_packages
-        run: npm i
-
       - name: 📚 Generate documentation
         id: build_docs
-        if: steps.npm_packages.outcome == 'success'
+        if: steps.cache-node-modules.outcome == 'success'
         run: npm run build
 
       - name: 🚀 Deploy to GitHub Pages 
@@ -81,7 +82,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: 📝 Get Docker metadata
         id: docker_meta
