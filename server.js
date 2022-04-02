@@ -4,18 +4,17 @@ const path = require('path');
 const app = express();
 const PORT = 8000;
 const { serveContent } = require('./src/commands/serve');
-let { md } = require('./src/common/md-parser');
-let { errorPage } = require('./src/data/defaults');
+const { md } = require('./src/common/md-parser');
+const { errorPage } = require('./src/data/defaults');
 app.use(serveContent);
 
 app.set('view engine', 'ejs');
 app.use(express.static('src/assets'));
 app.use(express.static('docs'));
 
-
 app.get('/', (req, res) => {
-  let renderData = {};
-  let specificPageData = res.locals.files_data.find(page => page.name == 'README');
+  const renderData = {};
+  const specificPageData = res.locals.files_data.find(page => page.name === 'README');
   renderData.name = (specificPageData) ? specificPageData.name : '/';
   renderData.title = (specificPageData) ? specificPageData.title : 'Home';
   renderData.content = (specificPageData) ? specificPageData.html : md.makeHtml(fs.readFileSync(path.resolve('README.md'), 'utf-8'));
@@ -24,17 +23,17 @@ app.get('/', (req, res) => {
 });
 
 app.get('/:pageName.html', (req, res) => {
-  let pageTitle = req.params.pageName;
-  let specificPageData = res.locals.files_data.find(page => page.name == pageTitle);
+  const pageTitle = req.params.pageName;
+  const specificPageData = res.locals.files_data.find(page => page.name === pageTitle);
   if (specificPageData) {
-    let content = specificPageData.html;
+    const content = specificPageData.html;
     res.render('page', {
       name: specificPageData.name,
       title: pageTitle,
       content,
       toc: specificPageData.toc,
       pages: res.locals.all_pages.filter(page => page.name !== 'README')
-    })
+    });
   } else {
     res.status(404).render('404', {
       name: '404',
