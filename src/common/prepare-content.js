@@ -81,7 +81,7 @@ const getFilesContent = async (fileDetails) => {
   try {
     await filesContentSchema.validateAsync(fileDetails);
   } catch (error) {
-    throw new Error(`Can't get content from Markdown files`);
+    throw new Error('Can\'t get content from Markdown files');
   }
 
   const mdFileContent = [];
@@ -104,7 +104,7 @@ const convertMdToHtml = (mdTextArray) => {
   const validation = convertMdToHtmlSchema.validate(mdTextArray);
 
   if (validation.error) {
-    throw new Error(`Can't convert. Input data is invalid`);
+    throw new Error('Can\'t convert. Input data is invalid');
   }
   return mdTextArray.map(mdText => {
     const html = md.makeHtml(mdText.content);
@@ -191,7 +191,7 @@ const buildStaticFiles = async (docsDir = 'docs') => {
   try {
     await buildStaticFilesSchema.validateAsync(docsDir);
   } catch (error) {
-    throw new Error(`Error when building static files`);
+    throw new Error('Error when building static files');
   }
   removeOutputDirectory();
   const templatesPath = path.join(process.cwd() + '/views');
