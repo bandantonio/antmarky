@@ -13,6 +13,7 @@ const {
   compileTemplateSchemaTemplatesPath,
   compileTemplateSchemaTemplate,
   removeOutputDirectorySchema,
+  buildStaticFilesSchema,
   copyStaticAssetsSchema
 } = require('../schemas/schemas');
 const { embedRemoteMarkdown } = require('./embed-remote-markdown');
@@ -24,14 +25,14 @@ const findMdFiles = async (docsDir = 'docs') => {
   try {
     await findMdFilesSchema.validateAsync(docsDir);
   } catch (error) {
-    throw Error(`invalid docs directory': ${error.message}`);
+    throw new Error('Invalid docs directory');
   }
 
   const normalizedDocsDir = docsDir.trim();
   const baseDirectoryPath = (normalizedDocsDir) ? path.join(process.cwd() + `/${normalizedDocsDir}`) : path.join(process.cwd());
 
   if (!fs.existsSync(baseDirectoryPath)) {
-    throw Error('The specified directory does not exist');
+    throw new Error('The specified directory does not exist');
   } else {
     const fileTree = [];
     const traverseDirectoryTree = (dir) => {
@@ -80,7 +81,7 @@ const getFilesContent = async (fileDetails) => {
   try {
     await filesContentSchema.validateAsync(fileDetails);
   } catch (error) {
-    throw Error(`Can't get content from Markdown files: ${error.message}`);
+    throw new Error('Can\'t get content from Markdown files');
   }
 
   const mdFileContent = [];
@@ -103,7 +104,7 @@ const convertMdToHtml = (mdTextArray) => {
   const validation = convertMdToHtmlSchema.validate(mdTextArray);
 
   if (validation.error) {
-    throw Error(`Can't convert. Input data is invalid: ${validation.error.message}`);
+    throw new Error('Can\'t convert. Input data is invalid');
   }
   return mdTextArray.map(mdText => {
     const html = md.makeHtml(mdText.content);
@@ -187,6 +188,11 @@ const copyStaticAssets = (staticFolder = 'assets', docsDir = 'docs') => {
 };
 
 const buildStaticFiles = async (docsDir = 'docs') => {
+  try {
+    await buildStaticFilesSchema.validateAsync(docsDir);
+  } catch (error) {
+    throw new Error('Error when building static files');
+  }
   removeOutputDirectory();
   const templatesPath = path.join(process.cwd() + '/views');
   const generatedContent = await buildContent(docsDir);

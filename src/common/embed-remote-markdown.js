@@ -1,21 +1,25 @@
 const axios = require('axios');
-const { fileInclusionSchema } = require('../schemas/schemas');
+const { fileInclusionSchema, embedRemoteMarkdownSchema } = require('../schemas/schemas');
 
 const fileInclusion = async (url) => {
-  try {
-    await fileInclusionSchema.validateAsync(url);
-  } catch (error) {
-    throw Error(`The provided remote URL is not valid: ${error.message}`);
-  }
-  try {
-    const response = await axios.get(url);
+  await fileInclusionSchema.validateAsync(url).catch(error => {
+    throw error;
+  });
+
+  return axios.get(url).then(response => {
     return response.data;
-  } catch (error) {
-    throw Error(`Error retrieving information from the remote source: ${error}`);
-  }
+  }).catch(error => {
+    throw error;
+  });
 };
 
 const embedRemoteMarkdown = async (mdFilesContent) => {
+  try {
+    await embedRemoteMarkdownSchema.validateAsync(mdFilesContent);
+  } catch (error) {
+    throw new Error('Cannot search for remote URLs. The provided content is invalid.');
+  }
+
   const remoteContentExtractionRegex = /!!\+ (?<url>https:\/\/(?:github.com|bitbucket.org)\/[\S\s]*?.md)/g;
   return await Promise.all(mdFilesContent.map(async file => {
     let resultingContent = file.content;
@@ -25,6 +29,8 @@ const embedRemoteMarkdown = async (mdFilesContent) => {
       for (const match of matches) {
         resultingContent = await fileInclusion(match.groups.url).then(content => {
           return resultingContent.replace(match[0], content);
+        }).catch(() => {
+          throw new Error('Cannot retrieve the remote content. Something wrong with the URL.');
         });
       }
     }
