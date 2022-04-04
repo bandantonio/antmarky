@@ -23,16 +23,18 @@ const filesContentSchema = joi.array().min(1).items(
   }).required()
 ).required();
 
-// Validate raw URLs for Markdown files within GitHub and BitBucket
-const fileInclusionSchema = stringOrPath.pattern(/https:\/\/(?:github.com|bitbucket.org)\/([\s\S]*?\/){2}raw\/([\s\S])*?\/([\s\S])*?.md/).required();
-
-const convertMdToHtmlSchema = joi.array().min(1).items(
+const nameTitleContent = joi.array().min(1).items(
   joi.object({
     name: stringOrPath.required(),
     title: stringOrPath.required(),
     content: stringOrPath.required()
   }).required()
 ).required();
+
+// Validate raw URLs for Markdown files within GitHub and BitBucket
+const fileInclusionSchema = stringOrPath.pattern(/https:\/\/(?:github.com|bitbucket.org)\/([\s\S]*?\/){2}raw\/([\s\S])*?\/([\s\S])*?.md/).required();
+
+const convertMdToHtmlSchema = nameTitleContent.required();
 
 const saveHtmlContentSchemaFile = stringOrPath.pattern(/^([\w\d- ])*?\.html$/).required();
 
@@ -50,10 +52,13 @@ const buildStaticFilesSchema = stringOrPath.required();
 
 const buildTocSchema = htmlDocumentBody.required();
 
+const embedRemoteMarkdownSchema = nameTitleContent.required();
+
 module.exports = {
   findMdFilesSchema,
   filesContentSchema,
   fileInclusionSchema,
+  embedRemoteMarkdownSchema,
   convertMdToHtmlSchema,
   saveHtmlContentSchemaFile,
   saveHtmlContentSchemaContent,
