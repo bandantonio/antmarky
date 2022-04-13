@@ -3,14 +3,14 @@ const joi = require('joi');
 // Components
 const stringOrPath = joi.string();
 const directoryNumberHierarchy = joi.number().min(0).max(4);
-const stringWithCapitalLetter = stringOrPath.pattern(/^[A-Z][a-z]*/);
+const stringWithCapitalLetter = stringOrPath.pattern(/\w+/);
 const lowercasedString = stringOrPath.case('lower');
 const arrayOfStrings = joi.array().items(joi.string());
 const fullHtmlDocument = stringOrPath.pattern(/<!DOCTYPE [html|HTML][\s\S]*<html[\s\S]*<head>[\s\S]*<title>[\s\S]*<\/title>[\s\S]*<\/head>[\s\S]*<body[\s\S]*<\/body>[\s\S]*<\/html>/);
 const htmlDocumentBody = stringOrPath.pattern(/<\/?[^>]+>/); // just matches HTML tags, should be improved later
 
 // Schemas
-const findMdFilesSchema = stringOrPath.required();
+const findMdFilesSchema = stringOrPath.allow('/', stringOrPath).required();
 
 const filesContentSchema = joi.array().min(1).items(
   joi.object({
