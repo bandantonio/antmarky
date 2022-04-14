@@ -379,11 +379,11 @@ blockquote p {
   .navbar-toggler {
     color: #fad000;
   }
-  [aria-expanded="false"]::before {
+  .navbar-toggler[aria-expanded="false"]::before {
     font-family: 'Font Awesome 6 Free';
     content: '\f0c9';
   }
-  [aria-expanded="true"]::before {
+  .navbar-toggler[aria-expanded="true"]::before {
     font-family: 'Font Awesome 6 Free';
     content: '\f00d';
   }
@@ -400,6 +400,13 @@ blockquote p {
   .sidebar {
     display: none;
   }
+  .list_heading {
+    margin: 0 auto;
+    color: #dee2e6;
+  }
+  .list_heading:hover {
+    color: #dee2e6;
+  }
   .toc {
     display: none;
   }
@@ -407,10 +414,7 @@ blockquote p {
     width: 85%;
   }
   .powered-by {
-    font-size: 70%;
-  }
-  .powered-by a {
-    color: #fad000;
+    display: none;
   }
 }
 
