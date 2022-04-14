@@ -1,7 +1,6 @@
 const ejs = require('ejs');
 const fs = require('fs');
 const fse = require('fs-extra');
-const fsp = require('fs/promises');
 const path = require('path');
 const { md } = require('./md-parser');
 const {
@@ -138,8 +137,8 @@ const saveHtmlContent = async (filename, htmlContent) => {
 
   try {
     const basePath = path.join(process.cwd(), 'public');
-    await fsp.mkdir(basePath, { recursive: true });
-    await fsp.writeFile(path.join(basePath, filename), htmlContent);
+    await fs.promises.mkdir(basePath, { recursive: true });
+    await fs.promises.writeFile(path.join(basePath, filename), htmlContent);
   } catch (error) {
     throw Error(`Can't save html file(s). Something went wrong: ${error.message}`);
   }
@@ -225,7 +224,7 @@ const buildStaticFiles = async (docsDirectoryName = 'docs') => {
   const generatedContent = await buildContent(docsDirectoryName);
   const sidebarListOfPages = generatedContent.allPages.filter(page => page.name !== 'README');
 
-  const items = await fsp.readdir(templatesPath);
+  const items = await fs.promises.readdir(templatesPath);
   items.filter(item => path.extname(item) === '.ejs').forEach(async template => {
     if (template === 'page.ejs') {
       const compiledTemplate = compileTemplate(templatesPath, template);
