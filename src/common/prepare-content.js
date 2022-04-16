@@ -128,20 +128,12 @@ const convertMdToHtml = (mdTextArray) => {
  * Save HTML content to a file
  */
 const saveHtmlContent = async (filename, htmlContent) => {
-  try {
-    await saveHtmlContentSchemaFile.validateAsync(filename);
-    await saveHtmlContentSchemaContent.validateAsync(htmlContent);
-  } catch (error) {
-    throw Error(`Can't retrieve content to save html file(s). Something went wrong: ${error.message}`);
-  }
+  await saveHtmlContentSchemaFile.validateAsync(filename);
+  await saveHtmlContentSchemaContent.validateAsync(htmlContent);
+  const basePath = path.join(process.cwd(), 'public');
 
-  try {
-    const basePath = path.join(process.cwd(), 'public');
-    await fs.promises.mkdir(basePath, { recursive: true });
-    await fs.promises.writeFile(path.join(basePath, filename), htmlContent);
-  } catch (error) {
-    throw Error(`Can't save html file(s). Something went wrong: ${error.message}`);
-  }
+  await fs.promises.mkdir(basePath, { recursive: true });
+  await fs.promises.writeFile(path.join(basePath, filename), htmlContent);
 };
 
 /**
@@ -169,15 +161,13 @@ const compileTemplate = (templatesPath, template) => {
   const validateTemplatesPath = compileTemplateSchemaTemplatesPath.validate(templatesPath);
   const validateTemplate = compileTemplateSchemaTemplate.validate(template);
 
-  if (validateTemplatesPath.error || validateTemplate.error) {
-    throw Error('Error occurred when compiling template');
+  if (!validateTemplatesPath.error || !validateTemplate.error) {
+    const compiledTemplate = ejs.compile(fs.readFileSync(templatesPath + '/' + template, 'utf-8'), {
+      encoding: 'utf-8',
+      views: [path.resolve(templatesPath)]
+    });
+    return compiledTemplate;
   }
-
-  const compiledTemplate = ejs.compile(fs.readFileSync(templatesPath + '/' + template, 'utf-8'), {
-    encoding: 'utf-8',
-    views: [path.resolve(templatesPath)]
-  });
-  return compiledTemplate;
 };
 
 /**
