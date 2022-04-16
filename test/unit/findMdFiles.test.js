@@ -47,8 +47,8 @@ describe('module findMdFiles', () => {
     await expect(findMdFiles(failedDirectoryPath)).to.be.rejectedWith('The specified directory does not exist');
   });
 
-  describe.skip('module findMdFiles - working with files', () => {
-    it('Output files from the root docs directory', async () => {
+  describe('module findMdFiles - working with files', () => {
+    it.skip('Output files from the root docs directory', async () => {
       mock({
         'fake-root-one.md': `# Title\nHello world from the fake-root-one file`,
         'fake-root-two.md': `# Title\nHello world from the fake-root-two file`,
@@ -59,16 +59,42 @@ describe('module findMdFiles', () => {
       mock.restore();
     });
     
-    it(`Output files from the default docs directory`, async () => {
+    it(`Output files from the default docs directory (with child directories)`, async () => {
       mock({
         'docs': {
-          'fake-docs-dir-one.md': `# Title\nHello world from the fake-docs-dir-one file`,
-          'fake-docs-dir-two.md': `# Title\nHello world from the fake-docs-dir-two file`,
+          'Fake-docs-dir-one.md': `# Title\nHello world from the fake-docs-dir-one file`,
+          'Fake-docs-dir-two.md': `# Title\nHello world from the fake-docs-dir-two file`,
+          'child-directory': {
+            'Fake-docs-child-dir-one.md': `# Title\nHello world from the fake-child-dir-one file`,
+            'Fake-docs-child-dir-two.md': `# Title\nHello world from the fake-child-dir-two file`,
+          }
         }
       });
 
       let result = await findMdFiles();
-      expect(result).to.be.an('array').that.includes.ordered.members([ 'fake-docs-dir-one.md', 'fake-docs-dir-two.md' ]);
+
+      expect(result).to.be.an('array').with.length(2);
+      expect(result[0].dirName).to.eql('Home');
+      expect(result[1].dirName).to.eql('Child-directory');
+
+      expect(result[0].files).to.eql(['Fake-docs-dir-one', 'Fake-docs-dir-two']);
+      expect(result[1].files).to.eql(['Fake-docs-child-dir-one', 'Fake-docs-child-dir-two']);
+
+      mock.restore();
+    });
+
+    it(`Should throw an error when passing invalid filename`, async () => {
+      mock({
+        'docs': {
+          'Fake-docs-dir-one.md': `# Title\nHello world from the fake-docs-dir-one file`,
+          'child-directory': {
+            'Very¢£«±Ÿ÷_bad&*()\/<> file-!@#$%^ name.md': `# Title\nHello world from the fake-child-dir-one file`
+          }
+        }
+      });
+
+      await expect(findMdFiles()).to.be.rejectedWith('Filename is invalid. Valid characters are: letters (A-Z, a-z), numbers (0-9), dashes (-), underscores (_), dots (.)');
+
       mock.restore();
     });
   });
