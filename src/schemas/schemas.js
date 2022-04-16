@@ -3,7 +3,7 @@ const joi = require('joi');
 // Components
 const stringOrPath = joi.string();
 const directoryNumberHierarchy = joi.number().min(0).max(4);
-const stringWithCapitalLetter = stringOrPath.pattern(/\w+/);
+const stringWithCapitalLetter = stringOrPath.pattern(/^[A-Z][\w]*/);
 const lowercasedString = stringOrPath.case('lower');
 const arrayOfStrings = joi.array().items(joi.string());
 const fullHtmlDocument = stringOrPath.pattern(/<!DOCTYPE [html|HTML][\s\S]*<html[\s\S]*<head>[\s\S]*<title>[\s\S]*<\/title>[\s\S]*<\/head>[\s\S]*<body[\s\S]*<\/body>[\s\S]*<\/html>/);
@@ -36,7 +36,8 @@ const fileInclusionSchema = stringOrPath.pattern(/https:\/\/(?:github.com|bitbuc
 
 const convertMdToHtmlSchema = nameTitleContent.required();
 
-const saveHtmlContentSchemaFile = stringOrPath.pattern(/^([\w\d- ])*?\.html$/).required();
+const filenameSchema = stringOrPath.pattern(/^([\w-.])*?$/).required();
+const saveHtmlContentSchemaFile = stringOrPath.pattern(/^([\w-.])*?\.html$/).required();
 
 // Validate html to contain all the tags required for a document
 const saveHtmlContentSchemaContent = fullHtmlDocument.required();
@@ -56,6 +57,7 @@ const embedRemoteMarkdownSchema = nameTitleContent.required();
 
 module.exports = {
   findMdFilesSchema,
+  filenameSchema,
   filesContentSchema,
   fileInclusionSchema,
   embedRemoteMarkdownSchema,

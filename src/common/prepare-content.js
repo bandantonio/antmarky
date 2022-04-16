@@ -66,7 +66,7 @@ const findMdFiles = async (docsDirectoryName = 'docs') => {
     }
 
     const anyFolderInside = checkForChildrenFolders(dir);
-    if (anyFolderInside.length !== 0) {
+    if (anyFolderInside.length > 0) {
       for (const directory of anyFolderInside) {
         await markdownFilesFilder(path.join(dir, directory));
       }
