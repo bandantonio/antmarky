@@ -207,60 +207,103 @@ blockquote p {
   padding: .5rem 1.25rem;
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
-  border: 1px solid #e9ecef;
+  border-left: 1px solid #e9ecef;
   border-left-width: .25rem;
-  border-radius:.25rem
+  border-radius:.25rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
 .callout-info {
-  border-left-color: #0d6efd;
-}
-
-.callout-info .callout-title {
-  color: #0d6efd;
+  border-left-color: rgb(51, 153, 255);
+  background-color: rgba(51, 153, 255, .1);
 }
 
 .callout-warning {
-  border-left-color: #ffc107;
-}
-
-.callout-warning .callout-title {
-  color: #ffc107;
+  border-left-color: rgb(249, 177, 21);
+  background-color: rgba(249, 177, 21, .1);
 }
 
 .callout-danger {
-  border-left-color: #d9534f;
-}
-
-.callout-danger .callout-title {
-  color: #d9534f;
+  border-left-color: rgb(222, 22, 22);
+  background-color: rgba(222, 22, 22, .1);
 }
 
 .callout-tip {
-  border-left-color: #198754;
+  border-left-color: rgb(14, 181, 70);
+  background-color: rgba(14, 181, 70, .1);
+}
+
+.callout-example {
+  border-left-color: rgb(50, 31, 219);
+  background-color: rgba(50, 31, 219, .1);
+}
+
+.callout-secondary, .callout-quote {
+  border-left-color: rgb(61, 61, 61);
+  background-color: rgba(61, 61, 61, .1);
+}
+
+.callout-info .callout-title {
+  color: rgb(51, 153, 255);
+}
+
+.callout-warning .callout-title {
+  color: rgb(249, 177, 21);
+}
+
+.callout-danger .callout-title {
+  color: rgb(222, 22, 22);
 }
 
 .callout-tip .callout-title {
-  color: #198754;
+  color: rgb(14, 181, 70);
 }
 
-.callout-secondary {
-  border-left-color: #565e64;
+.callout-example .callout-title {
+  color: rgb(50, 31, 219);
 }
 
-.callout-secondary .callout-title {
-  color: #565e64;
+.callout-quote .callout-title {
+  color: rgb(61, 61, 61);
+}
+
+.callout-title {
+  font-size: 80%;
+}
+
+.callout-title::before {
+  font-family: 'unicons';
+  font-size: 20px;
+  vertical-align: middle;
+  padding: 0 .1em 0 .1em;
+}
+
+.callout-info .callout-title::before {
+  content: '\e9ad';
+}
+
+.callout-warning .callout-title::before {
+  content: '\e9b1';
+}
+
+.callout-danger .callout-title::before {
+  content: '\eafb';
+}
+
+.callout-tip .callout-title::before {
+  content: '\e90b';
+}
+
+.callout-quote .callout-title::before {
+  content: '\e810';
+}
+
+.callout-example .callout-title::before {
+  content: '\e905';
 }
 
 .callout p {
   margin:.5em;
-}
-
-.octicon {
-  display: inline-block;
-  vertical-align: text-top;
-  fill: currentColor;
-  overflow: visible;
 }
 
 @media (max-width: 576px) {
