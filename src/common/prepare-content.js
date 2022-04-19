@@ -36,10 +36,15 @@ let getFilesContent = async (fileDetails) => {
   })
 }
 
+let convertCrossLinks = (mdText) => {
+  return mdText.replace(/\.md/g, '.html')
+}
+
 // CONVERT MARKDOWN FILES TO HTML
 let convertMdToHtml = (mdTextArray) => {  
   return mdTextArray.map(mdText => {
-    let html = md.makeHtml(mdText.content);
+    let linksInContent = convertCrossLinks(mdText.content);
+    let html = md.makeHtml(linksInContent);
     let tableOfCOntents = buildToc(html);
     return {
       name: mdText.name,
@@ -121,7 +126,7 @@ let buildStaticFiles = async (docsDir) => {
           let readyHtml = compiledTemplate({
             name: '/',
             title: 'Home',
-            content: md.makeHtml(fs.readFileSync(path.resolve('README.md'), 'utf-8')),
+            content: md.makeHtml(convertCrossLinks(fs.readFileSync(path.resolve('README.md'), 'utf-8'))),
             pages: sidebarListOfPages
           });
           saveHtmlContent('index.html', readyHtml);
@@ -144,6 +149,7 @@ let buildStaticFiles = async (docsDir) => {
 module.exports = {
   findMdFiles: findMdFiles,
   getFilesContent: getFilesContent,
+  convertCrossLinks: convertCrossLinks,
   convertMdToHtml: convertMdToHtml,
   buildStaticFiles: buildStaticFiles
 }
