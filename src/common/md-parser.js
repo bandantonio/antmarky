@@ -1,8 +1,8 @@
-let showdown = require('showdown');
-let { markyText } = require('../extensions/text-modifications');
+const showdown = require('showdown');
+const { markyText } = require('../extensions/text-modifications');
 showdown.extension('markyText', markyText);
 
-let md = new showdown.Converter({
+const md = new showdown.Converter({
   emoji: true,
   ghCodeBlocks: true,
   ghCompatibleHeaderId: true,
@@ -12,11 +12,11 @@ let md = new showdown.Converter({
   strikethrough: true,
   tables: true,
   tasklists: true,
-  extensions: ['markyText', markyText ]
+  extensions: ['markyText', markyText]
 });
 
 showdown.setFlavor('github');
 
 module.exports = {
   md: md
-}
+};

@@ -1,7 +1,7 @@
-let buildToc = (htmlContent) => {
-  let tocHeadings = [];
-  let results = [...htmlContent.matchAll(/<h(?<id>[2-6]) id="(?<link>.*)">(?<name>.*)<\/h[2-6]>/g)];
-  results.map(item => {
+const buildToc = (htmlContent) => {
+  const tocHeadings = [];
+  const results = [...htmlContent.matchAll(/<h(?<id>[2-6]) id="(?<link>.*)">(?<name>.*)<\/h[2-6]>/g)];
+  results.forEach(item => {
     tocHeadings.push({
       id: item.groups.id,
       link: item.groups.link,
@@ -9,8 +9,8 @@ let buildToc = (htmlContent) => {
     });
   });
   return tocHeadings;
-}
+};
 
 module.exports = {
   buildToc
-}
+};
