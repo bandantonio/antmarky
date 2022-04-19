@@ -56,11 +56,11 @@ Secondary admonition body
 
 Antmarky uses [Highlight.js](https://highlightjs.org) for syntax highlighting. The bundle includes a set of common languages. Other languages can be added on request.
 
-## Font Awesome
+## FontAwesome
 
-Antmarky supports the latest version of [Font Awesome icon set](https://fontawesome.com/v6.0/icons?m=free).
+Antmarky supports the latest version of [FontAwesome icon set](https://fontawesome.com/v6.0/icons?m=free).
 
-## Task lists (todo lists)
+## Task lists
 
 ```md
  - [x] checked list item
