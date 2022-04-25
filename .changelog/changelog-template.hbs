@@ -1,0 +1,34 @@
+# Changelog
+
+This document outlines the summary of all notable changes to the project.
+
+{{#each releases}}
+  {{#if href}}
+    ## [{{title}}]({{href}}) - {{niceDate}}
+  {{else}}
+    ## {{title}} - {{niceDate}}
+  {{/if}}
+
+  {{#commit-list commits heading='### Breaking Changes ⚠️' message='BREAKING CHANGE'}}
+  {{subject}} ([`{{shorthash}}`]({{href}}))
+  {{/commit-list}}
+
+  {{#commit-list commits heading='### New ✨' message='feat(\([\w-]*?\))?:'}}
+  - {{subject}} ([`{{shorthash}}`]({{href}}))
+  {{/commit-list}}
+
+  {{#commit-list commits heading='### Bug fixes 🐛' message='fix(\([\w-]*?\))?:'}}
+  - {{subject}} ([`{{shorthash}}`]({{href}}))
+  {{/commit-list}}
+
+  {{#commit-list commits heading='### Documentation 📚' message='docs(\([\w-]*?\))?:'}}
+  - {{subject}} ([`{{shorthash}}`]({{href}}))
+  {{/commit-list}}
+
+  {{#commit-list commits heading='### Improvements 📈' message='(build|chore|ci|perf|refactor|revert|style|test)(\([\w-]*?\))?:'}}
+  - {{#emoji subject }}{{/emoji}}{{#if href}} ([`{{shorthash}}`]({{href}})){{/if}}
+{{/commit-list}}
+
+----
+
+{{/each}}
