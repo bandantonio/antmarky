@@ -76,6 +76,20 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+  generate-release:
+    name: 📦 Generate GitHub Release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: generate-docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create a GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: 'This release was generated automatically. Full details will be available soon'
+          draft: true
+
   build-docker-image:
     name: 🐋 Build and push Docker image
     needs: generate-docs
