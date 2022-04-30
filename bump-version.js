@@ -29,6 +29,5 @@ for (const commitPart of commitParts) {
   execSync(`git add package.json package-lock.json CHANGELOG.md && git commit -q -m "chore(release): ${newBumbedVersion}"`);
 
   // Push commit along with the tag to the main branch
-  execSync('git push --follow-tags origin main');
-  // execSync('git push origin --tags');
+  execSync('git push origin main && git push origin --tags');
 }
