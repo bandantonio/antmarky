@@ -2,6 +2,15 @@
 
 This document outlines the summary of all notable changes to the project.
 
+## [v0.10.0](https://github.com/bandantonio/antmarky/compare/v0.9.0...v0.10.0) - 30 April 2022
+
+### Improvements 📈
+
+- 🚀 ci: configure release actions ([`631df77`](https://github.com/bandantonio/antmarky/commit/631df776517ed7462e068cf3f790eee6c2a1b580))
+- ℹ️ chore: update bump script to push lw-tags ([`d90c8a9`](https://github.com/bandantonio/antmarky/commit/d90c8a9546df524704fce72cf79ab0d6f5892131))
+
+----
+
 ## [v0.9.0](https://github.com/bandantonio/antmarky/compare/v0.8.0...v0.9.0) - 26 April 2022
 
 ### New ✨
