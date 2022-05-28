@@ -1,22 +1,19 @@
-const chai = require('chai');
-const { expect } = require('chai');
-const chaiAsPromised = require('chai-as-promised');
+// jest.mock('../../src/common/embed-remote-markdown');
 const { embedRemoteMarkdown } = require('../../src/common/embed-remote-markdown');
-chai.use(chaiAsPromised);
 
 describe('module embedRemoteMarkdown', () => {
-  it('Throw an error when passing input of incorrect type', async () => {
+  test('Throw an error when passing input of incorrect type', async () => {
     let inputOfIncorrectType = ['string', 77, { "name": "John" }];
     for (let value of inputOfIncorrectType) {
-      await expect(embedRemoteMarkdown(value)).to.be.rejectedWith('Cannot search for remote URLs. The provided content is invalid');
+      await expect(embedRemoteMarkdown(value)).rejects.toThrow(Error, 'Cannot search for remote URLs. The provided content is invalid.');
     }
   });
 
-  it('Throw an error when passing an empty input', async () => {
-    await expect(embedRemoteMarkdown()).to.be.rejectedWith('Cannot search for remote URLs. The provided content is invalid');
+  test('Throw an error when passing an empty input', async () => {
+    await expect(embedRemoteMarkdown()).rejects.toThrow(Error, 'Cannot search for remote URLs. The provided content is invalid.');
   });
 
-  it('Throw an error when trying to fetch an invalid remote content URL', async () => {
+  test('Throw an error when trying to fetch an invalid remote content URL', async () => {
     let markdownWithBrokenRemoteURL = [{
       name: 'markdown with broken url',
       title: 'markdown with broken url',
@@ -27,10 +24,10 @@ describe('module embedRemoteMarkdown', () => {
       '!!+ bitbucket.org/link/to/your/raw/markdown/file.md\n' +
       '!!+ https://github.com/<username>/<repo>/raw/<branch>/filename.md\n'
     }]
-    await expect(embedRemoteMarkdown(markdownWithBrokenRemoteURL)).to.be.rejectedWith('Cannot retrieve the remote content. Something wrong with the URL.');
+    await expect(embedRemoteMarkdown(markdownWithBrokenRemoteURL)).rejects.toThrow(Error, 'Cannot retrieve the remote content. Something wrong with the URL.');
   });
 
-  it('Throw an error when a URL is rejected by validation', async () => {
+  test('Throw an error when a URL is rejected by validation', async () => {
     let markdownWithInvalidRemoteURLs = [{
       name: 'markdown with broken url',
       title: 'markdown with broken url',
@@ -43,11 +40,11 @@ describe('module embedRemoteMarkdown', () => {
       '!!+ https://github.com/bandantonio/antmarky/blob/main/README.md\n' +
       '!!+ https://bitbucket.org/stephendeutsch/confluence-user-macros/src/master/README.md\n'
     }]
-    await expect(embedRemoteMarkdown(markdownWithInvalidRemoteURLs)).to.be.rejectedWith('Cannot retrieve the remote content. Something wrong with the URL.');
+    await expect(embedRemoteMarkdown(markdownWithInvalidRemoteURLs)).rejects.toThrow(Error, 'Cannot retrieve the remote content. Something wrong with the URL.');
   });
 
-  it('Embed remote content from GitHub into the doc', async () => {
-    let markdownWithSuitableGitHubURL = [    {
+  test('Embed remote content from GitHub into the doc', async () => {
+    let markdownWithSuitableGitHubURL = [{
       name: 'remote-github',
       title: 'remote-github',
       content:
@@ -90,10 +87,10 @@ describe('module embedRemoteMarkdown', () => {
       'The main idea behind creating Antmarky was to have a generator with zero configuration that can serve your Markdown files in the documentation directory.'
     }];
     let resultingRemoteContent = await embedRemoteMarkdown(markdownWithSuitableGitHubURL);
-    expect(resultingRemoteContent).to.eql(expectedGitHubContent);
+    expect(resultingRemoteContent).toEqual(expectedGitHubContent);
   });
 
-  it('Embed remote content from BitBucket into the doc', async () => {
+  test('Embed remote content from BitBucket into the doc', async () => {
     let markdownWithSuitableBitBucketURL = [{
       name: 'remote-bitbucket',
       title: 'remote-bitbucket',
@@ -127,10 +124,10 @@ describe('module embedRemoteMarkdown', () => {
       'I am making these available for free under the [Apache license](http://www.apache.org/licenses/LICENSE-2.0.html), but if you find any of them useful, consider [making a donation via Paypal.](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=8Z6CHCT4XCLPA&lc=US&item_name=Stephen%20Deutsch&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)'
     }];
     let resultingRemoteContent = await embedRemoteMarkdown(markdownWithSuitableBitBucketURL);
-    expect(resultingRemoteContent).to.eql(expectedBitBucketContent);
+    expect(resultingRemoteContent).toEqual(expectedBitBucketContent);
   });
 
-  it('Pass content "as is" if no remote content found (URLs skipped)', async () => {
+  test('Pass content "as is" if no remote content found (URLs skipped)', async () => {
     let markdownWithGeneralURLs = [{
       name: 'text-with-random-valid-urls',
       title: 'text-with-random-valid-urls',
@@ -163,6 +160,6 @@ describe('module embedRemoteMarkdown', () => {
     let expectedGeneralContent = markdownWithGeneralURLs;
     
     let resultingRemoteContent = await embedRemoteMarkdown(markdownWithGeneralURLs);
-    expect(resultingRemoteContent).to.eql(expectedGeneralContent);
+    expect(resultingRemoteContent).toEqual(expectedGeneralContent);
   });
 });

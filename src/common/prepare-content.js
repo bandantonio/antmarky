@@ -127,10 +127,10 @@ const convertMdToHtml = (mdTextArray) => {
 /**
  * Save HTML content to a file
  */
-const saveHtmlContent = async (filename, htmlContent) => {
+const saveHtmlContent = async (filename, htmlContent, outputDirectory = 'public') => {
   await saveHtmlContentSchemaFile.validateAsync(filename);
   await saveHtmlContentSchemaContent.validateAsync(htmlContent);
-  const basePath = path.join(process.cwd(), 'public');
+  const basePath = path.join(process.cwd(), outputDirectory);
 
   await fs.promises.mkdir(basePath, { recursive: true });
   await fs.promises.writeFile(path.join(basePath, filename), htmlContent);
@@ -188,28 +188,28 @@ const removeOutputDirectory = (outputDirectory = 'public') => {
 const copyStaticAssets = (staticFolder = 'assets', docsDirectoryName = 'docs') => {
   const validateStaticAssets = copyStaticAssetsSchema.validate(staticFolder);
 
-  if (validateStaticAssets.error) {
-    throw Error(`Error occurred when copying static assets: ${validateStaticAssets.error.message}`);
+  if (!validateStaticAssets.error) {
+    fse.copySync(path.resolve(path.join(process.cwd() + '/src/' + staticFolder)), path.resolve('public'));
   }
-  fse.copySync(path.resolve(path.join(process.cwd() + '/src/' + staticFolder)), path.resolve('public'));
 
-  const docsStaticFolderPath = path.join(path.resolve('public'), staticFolder);
+  const docsStaticFolderPath = path.join(path.resolve(docsDirectoryName), staticFolder);
+  const publicStaticFolderPath = path.join(path.resolve('public'), staticFolder);
 
   if (fs.existsSync(docsStaticFolderPath)) {
-    fse.copySync(path.resolve(path.join(process.cwd() + `/${docsDirectoryName}/` + staticFolder)), docsStaticFolderPath);
+    fse.copySync(docsStaticFolderPath, publicStaticFolderPath);
   }
 };
 
 /**
  * Do the magic :)
  */
-const buildStaticFiles = async (docsDirectoryName = 'docs') => {
+const buildStaticFiles = async (docsDirectoryName = 'docs', outputDirectory = 'public') => {
   try {
     await buildStaticFilesSchema.validateAsync(docsDirectoryName);
   } catch (error) {
     throw new Error('Error when building static files');
   }
-  removeOutputDirectory();
+  removeOutputDirectory(outputDirectory);
   const templatesPath = path.join(process.cwd() + '/views');
   const generatedContent = await buildContent(docsDirectoryName);
   const sidebarListOfPages = generatedContent.allPages.filter(page => page.name !== 'README');
