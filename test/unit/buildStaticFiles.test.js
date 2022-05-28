@@ -1,21 +1,18 @@
-const chai = require('chai');
-const { expect } = require('chai');
-const chaiAsPromised = require('chai-as-promised');
 const fs = require('fs');
 const path = require('path');
 const mock = require('mock-fs');
 const { buildStaticFiles } = require('../../src/common/prepare-content');
-chai.use(chaiAsPromised);
 
 describe('module buildStaticFiles', () => {
-  it('Throw an error when passing documentatiom directory name of incorrect type', async () => {
-    let incorrectDocsDirectory = [ ['one', 'two', 'three'], 77, { "name": "John" }];
+  
+  test('Throw an error when passing documentatiom directory name of incorrect type', async () => {
+    let incorrectDocsDirectory = [['one', 'two', 'three'], 77, { "name": "John" }];
     for (let input of incorrectDocsDirectory) {
-      await expect(buildStaticFiles(input)).to.be.rejectedWith(`Error when building static files`);
+      await expect(buildStaticFiles(input)).rejects.toThrow(Error, 'Error when building static files');
     }
   });
   
-  before(async () => {
+  test('Ensure the output directory contains generated static files (root README)', async () => {
     mock({
       'docs': {
         'unit-test.md': '## Unit test 1\nUnit test 1 file content',
@@ -26,21 +23,76 @@ describe('module buildStaticFiles', () => {
       },
       'views': mock.load(path.resolve(process.cwd(), 'views')),
       'src/assets': mock.load(path.resolve(process.cwd(), 'src/assets')),
-      'README.md': mock.load(path.resolve(process.cwd(), 'README.md'))
+      'README.md': mock.load(path.resolve(process.cwd(), 'README.md')),
+      
+      'public': {}
     });
-
+    
+    // Refactor expectations below (await-related)
     await buildStaticFiles();
-  })
-  it('Ensure the output directory contains generated static files', async () => {
-    let files = fs.readdirSync(path.resolve('public'), 'utf-8');
-
-    expect(files).to.be.an('array').that
-      .includes.members(['css', 'index.html', 'unit-test.html', 'unit-test-2.html', 'unit-test-3.html', '404.html'])
-      .but.not.includes.members(['unit-test-4.html']);
-
-    expect(mock.bypass(() => fs.existsSync(path.resolve('public')))).to.be.false;
+    await expect(fs.promises.readdir('public')).resolves.toBeInstanceOf(Array);
+    await expect(fs.promises.readdir('public')).resolves.toEqual(expect.arrayContaining(['css', 'index.html', 'unit-test.html', 'unit-test-2.html', 'unit-test-3.html', '404.html']));
+    await expect(fs.promises.readdir('public')).resolves.toEqual(expect.not.arrayContaining(['unit-test-4.html']));
+    expect(mock.bypass(() => fs.existsSync('public'))).toBeFalsy();
+    
     mock.restore();
   });
+  
+  test('Ensure the output directory contains generated static files (README in the default docs directory)', async () => {
+    mock({
+      'docs': {
+        'unit-test.md': '## Unit test 1\nUnit test 1 file content',
+        'unit-test-2.md': '## Unit test 2\nUnit test 2 file content',
+        'README.md': mock.load(path.resolve(process.cwd(), 'README.md'))
+      },
+      'docs/unit-sub-dir': {
+        'unit-test-3.md': '## Unit test 3\nUnit test 3 file content'
+      },
+      'views': mock.load(path.resolve(process.cwd(), 'views')),
+      'src/assets': mock.load(path.resolve(process.cwd(), 'src/assets')),
+      
+      'public': {}
+    });
+    
+    // Refactor expectations below (await-related)
+    await buildStaticFiles();
+    await expect(fs.promises.readdir('public')).resolves.toBeInstanceOf(Array);
+    await expect(fs.promises.readdir('public')).resolves.toEqual(expect.arrayContaining(['css', 'index.html', 'unit-test.html', 'unit-test-2.html', 'unit-test-3.html', '404.html']));
+    await expect(fs.promises.readdir('public')).resolves.toEqual(expect.not.arrayContaining(['unit-test-4.html']));
+    expect(mock.bypass(() => fs.existsSync('public'))).toBeFalsy();
+    
+    mock.restore();
+  });
+  
+  test('Error when deleting output folder', async () => {
+    await expect(buildStaticFiles('docs', 'ublic')).rejects.toThrow();
+  });
 
-  it.skip('Throw error when passed an incorrect filename');
+  test('Ensure assets in the default docs directory are copied to the output directory', async () => {
+    mock({
+      'docs': {
+        'unit-test.md': '## Unit test 1\nUnit test 1 file content',
+      },
+      'docs/assets': {
+        'dummy.json': '{ "userId": 1, "title": "delectus aut autem", "completed": false }',
+        'js.png': 'iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAACpklEQVRoge2ZS0hUURjHf8d8Zy8kn2lmZWkYJWUIIkGLwKQWgQ/EjaQJEj0QKi3bFC6LgogIF2Zgj8VUPijUiCAYok2mkAYqNKJiKFY2Ezmnxa0OozM1k3rvovODy/3O+c7j+3Mu53VBo9ForET4csg+pJmB/A2R4T3WILMDWWy0AKvRAqxGC7AaLcBqtACr0QKsRguwmiUTIDLE7+f+E0/f2wEoqRHE5wlCMgWJewVlpwW97wPvx/QR6LbD7kJBSzuMTsD3WRgZh+bHkF0o6LYH1p6pAtxuOHJe4HQZ6bBQSE813gAzTqi9LJABnAVNFdAzAIMffnYcBK/uSfpaJf0dko1JcLwMOhslwudBdz7BSxOqd6amlR0aAls2GHZyPPQ8lESEB96mqSOQmqRspwuKTgmGR4z0vwQPJgtIioP9uSpt64KtBwQV9YKB4X9r0/RZqPGiZGe6SjtdcOsBpBcYQr58Daw90wUkxMCLZkltJURFqvzZWUNITolgctp3/blYshIvj4BLJyRDnZKGk5LYaOXr6YcL1/yfhpZEgNv9Z/+veT56NZypgHftkj3bld/W5X9fCxYwPAKHqgVtz1XeoMOzTESYsm8/guwiwecZlbdqBRTnq9Vr7KP//S9oHbjbAeV1ghknPH0pqCqCtBTJnVbPTyAl0XiX1BhbCICD1YKmBsm6OJj6BLYuVScx1iQBc2eTK00w975483rYtsmwc3ZIWtoN/zM7JO8TJMTAxCS4vqk6xfn+x7CgTygtBdpuSFZGefeHhsD1erU1OFYK56qUX0pwjHkGn7cL6o76vxlalOv10QlouCmwdYFjHNaugdwsOFspycqYX97+Bq42C173wpADIsMhMw1KCyTlhyF4mZdAfVyv6/8DVqMFaDQazf/ND8ttt3KFrySDAAAAAElFTkSuQmCC'
+      },
+      'views': mock.load(path.resolve(process.cwd(), 'views')),
+      'src/assets': mock.load(path.resolve(process.cwd(), 'src/assets')),
+      'README.md': mock.load(path.resolve(process.cwd(), 'README.md')),
+      
+      'public': {}
+    });
+    
+    // Refactor expectations below (await-related)
+    await buildStaticFiles();
+    await expect(fs.promises.readdir('public')).resolves.toBeInstanceOf(Array);
+    await expect(fs.promises.readdir('public')).resolves.toStrictEqual(expect.arrayContaining(['404.html', 'assets', 'css', 'index.html', 'unit-test.html']));
+    await expect(fs.promises.readdir('public/assets')).resolves.toStrictEqual(expect.arrayContaining(['dummy.json', 'js.png']));
+    expect(mock.bypass(() => fs.existsSync('public'))).toBeFalsy();
+    
+    mock.restore();
+  });
+  
+  test.todo('Throw error when passed an incorrect filename');
 });

@@ -1,15 +1,14 @@
-const expect = require('chai').expect
 const { buildToc } = require('../../src/toc');
 
 describe('module buildToc', () => {
-  it('Throw error when passing input of incorrect type', () => {
+  test('Throw error when passing input of incorrect type', () => {
     let inputOfIncorrectType = [['one', 'two', 'three'], 77, { "name": "John" }];
     for (let value of inputOfIncorrectType) {
-      expect(() => buildToc(value)).to.throw(`Can't build table of contents, the provided content is invalid`);
+      expect(() => buildToc(value)).toThrowError(`Can't build table of contents, the provided content is invalid`);
     }
   });
 
-  it('Should return headings in proper format', () => {
+  test('Should return headings in proper format', () => {
     let properHtml =
       '<h1 id="features">Features</h1>\n' +
       '<h2 id="remote-markdown-files">Remote markdown files</h2>\n' +
@@ -23,10 +22,10 @@ describe('module buildToc', () => {
       '<h2 id="heading-ids">Heading ids</h2>\n' +
       '<h1 id="hello-world">Hello World</h1>';
 
-    expect(buildToc(properHtml)).to.be.an.instanceOf(Array);
+    expect(buildToc(properHtml)).toBeInstanceOf(Array);
   });
 
-  it('Should properly find all the headings from the html content', () => {
+  test('Should properly find all the headings from the html content', () => {
     let htmlPiece =
     '<h1 id="features">Features</h1>\n' +
     '<h2 id="remote-markdown-files">Remote markdown files</h2>\n' +
@@ -63,9 +62,9 @@ describe('module buildToc', () => {
       { id: '5', link: 'heading-ids', title: 'Heading ids' },
     ];
 
-    expect(buildToc(htmlPiece)).to.eql(expectedResult);
+    expect(buildToc(htmlPiece)).toEqual(expectedResult);
   });
 
-  it.skip('Should there be a test to check for accidental tags mismatch?');
+  test.todo('Should there be a test to check for accidental tags mismatch?');
 
 });
