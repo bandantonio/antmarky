@@ -240,14 +240,13 @@ pre {
 
 pre::before {
   content: attr(data-language);
-  opacity: .75;
-  background-color: #f7df1e;
-  color: #2d2b57;
-  border-radius: 0 0 5px 5px;
-  font-size: 12px;
-  padding: .1em .4em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: .7rem;
   position: absolute;
-  right: 1em;
+  float: right;
+  right: .4rem;
+  color: #f7df1e;
 }
 
 li p {
