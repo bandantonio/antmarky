@@ -43,6 +43,6 @@
     "joi": "^17.6.0",
     "mock-fs": "^5.1.2",
     "semistandard": "^16.0.1",
-    "showdown": "^1.9.1"
+    "showdown": "^2.1.0"
   }
 }
