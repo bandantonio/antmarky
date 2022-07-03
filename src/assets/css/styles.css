@@ -245,8 +245,36 @@ pre::before {
   font-size: .7rem;
   position: absolute;
   float: right;
-  right: .4rem;
+  top: .3rem;
+  right: .5rem;
   color: #f7df1e;
+}
+
+pre:hover::before {
+  right: 1.5rem;
+}
+
+.copy-block {
+  display: none;
+  position: absolute;
+  float: right;
+  right: .3em;
+  top: .1em;
+  color: #f7df1e;
+  cursor: pointer;
+}
+
+.copy-block svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+pre:hover > .copy-block {
+  display: block;
+}
+
+pre:not(:hover) > .copy-block {
+  display: none;
 }
 
 li p {
