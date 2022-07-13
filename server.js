@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 const PORT = 8000;
 const { serveContent } = require('./src/commands/serve');
-const { md } = require('./src/common/md-parser');
+const { md } = require('./src/common/parsers');
 const { errorPage } = require('./src/data/defaults');
 app.use(serveContent);
 

@@ -13,15 +13,15 @@ const fileInclusion = async (url) => {
   });
 };
 
-const embedRemoteMarkdown = async (mdFilesContent) => {
+const embedRemoteMarkdown = async (docFilesContent) => {
   try {
-    await embedRemoteMarkdownSchema.validateAsync(mdFilesContent);
+    await embedRemoteMarkdownSchema.validateAsync(docFilesContent);
   } catch (error) {
     throw new Error('Cannot search for remote URLs. The provided content is invalid.');
   }
 
   const remoteContentExtractionRegex = /!!\+ (?<url>https:\/\/(?:github.com|bitbucket.org)\/[\S\s]*?.md)/g;
-  return await Promise.all(mdFilesContent.map(async file => {
+  return await Promise.all(docFilesContent.map(async file => {
     let resultingContent = file.content;
     const isRemoteContent = file.content.match(remoteContentExtractionRegex);
     if (isRemoteContent) {

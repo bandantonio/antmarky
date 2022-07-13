@@ -13,9 +13,9 @@
         <ul id="<%= page.dirClass %>" class="list_files collapse show">
         <% page.files.forEach(file => { %>
           <% if (file == name) { %>
-            <li class="list_item"><a class="nav-link active" href="<%= file %>.html"><%= file %></a></li>
+            <li class="list_item"><a class="nav-link active" href="<%= file.fileName %>.html"><%= file.fileName %></a></li>
           <% } else { %>
-            <li class="list_item"><a class="nav-link" href="<%= file %>.html"><%= file %></a></li>
+            <li class="list_item"><a class="nav-link" href="<%= file.fileName %>.html"><%= file.fileName %></a></li>
           <% } %>
         <% }) %>
       </ul>
