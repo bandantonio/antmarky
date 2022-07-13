@@ -15,7 +15,7 @@ describe('module embedRemoteMarkdown', () => {
 
   test('Throw an error when trying to fetch an invalid remote content URL', async () => {
     let markdownWithBrokenRemoteURL = [{
-      name: 'markdown with broken url',
+      name: { file: 'markdown with broken url.md', fileName: 'markdown with broken url' },
       title: 'markdown with broken url',
       content:
       '## Remote markdown files\n' +
@@ -29,7 +29,7 @@ describe('module embedRemoteMarkdown', () => {
 
   test('Throw an error when a URL is rejected by validation', async () => {
     let markdownWithInvalidRemoteURLs = [{
-      name: 'markdown with broken url',
+      name: { file: 'markdown with broken url.md', fileName: 'markdown with broken url' },
       title: 'markdown with broken url',
       content:
       '## Remote markdown files\n' +
@@ -45,7 +45,7 @@ describe('module embedRemoteMarkdown', () => {
 
   test('Embed remote content from GitHub into the doc', async () => {
     let markdownWithSuitableGitHubURL = [{
-      name: 'remote-github',
+      name: { file: 'remote-github.md', fileName: 'remote-github' },
       title: 'remote-github',
       content:
       '## Remote content from GitHub\n' +
@@ -58,7 +58,7 @@ describe('module embedRemoteMarkdown', () => {
       'The main idea behind creating Antmarky was to have a generator with zero configuration that can serve your Markdown files in the documentation directory.'
     }];
     let expectedGitHubContent = [{
-      name: 'remote-github',
+      name: { file: 'remote-github.md', fileName: 'remote-github' },
       title: 'remote-github',
       content:
       '## Remote content from GitHub\n' +
@@ -92,7 +92,7 @@ describe('module embedRemoteMarkdown', () => {
 
   test('Embed remote content from BitBucket into the doc', async () => {
     let markdownWithSuitableBitBucketURL = [{
-      name: 'remote-bitbucket',
+      name: { file: 'remote-bitbucket.md', fileName: 'remote-bitbucket' },
       title: 'remote-bitbucket',
       content:
       '## Remote content from Bitbucket\n' +
@@ -104,7 +104,7 @@ describe('module embedRemoteMarkdown', () => {
       '!!+ https://bitbucket.org/stephendeutsch/confluence-user-macros/raw/master/README.md'
     }];
     let expectedBitBucketContent = [{
-      name: 'remote-bitbucket',
+      name: { file: 'remote-bitbucket.md', fileName: 'remote-bitbucket' },
       title: 'remote-bitbucket',
       content:
       '## Remote content from Bitbucket\n' +
@@ -129,7 +129,7 @@ describe('module embedRemoteMarkdown', () => {
 
   test('Pass content "as is" if no remote content found (URLs skipped)', async () => {
     let markdownWithGeneralURLs = [{
-      name: 'text-with-random-valid-urls',
+      name: { file: 'text-with-random-valid-urls.md', fileName: 'text-with-random-valid-urls' },
       title: 'text-with-random-valid-urls',
       content:
       '## Faveas et conveniet oblitus ima properatis libet\n' +

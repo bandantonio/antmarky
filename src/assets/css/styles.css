@@ -396,6 +396,62 @@ blockquote p {
   margin:.5em;
 }
 
+/* AsciiDoctor-specific styling (start) */
+.admonitionblock > table {border-collapse:separate;border:0;background:none;width:100%;position: relative;}
+.admonitionblock > table td.icon {position:absolute; top:0;left:0;padding:.2rem .5rem;}
+.admonitionblock > table td.icon i::after {content:attr(title);padding-left: .5rem;}
+.admonitionblock > table td.icon img {max-width:none}
+.admonitionblock > table td.icon .title {font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock > table td.content {padding: 2rem 1rem .75rem;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock > table td.content > :last-child > :last-child{margin-bottom:0}
+.admonitionblock td.icon [class^="fa icon-"] {font-family: 'unicons';font-size: 20px;}
+.admonitionblock td.icon .icon-note::before{content:"\e9ad";color: rgb(51, 153, 255);}
+.admonitionblock td.icon .icon-tip::before{content:"\e90b";color: rgb(14, 181, 70);}
+.admonitionblock td.icon .icon-warning::before{content:"\e9b1";color: rgb(249, 177, 21);}
+.admonitionblock td.icon .icon-caution::before{content:"\eafb";color: rgb(222, 22, 22);}
+.admonitionblock td.icon .icon-important::before{content:"\e905";color:#bf0000}
+
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+/* AsciiDoctor-specific styling (end) */
+  
 @media (max-width: 576px) {
   .h-anchor {
     scroll-margin-top: 60px;

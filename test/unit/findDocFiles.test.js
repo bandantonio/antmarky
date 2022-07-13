@@ -1,38 +1,38 @@
 const mock = require('mock-fs');
-const { findMdFiles } = require('../../src/common/prepare-content');
+const { findDocFiles } = require('../../src/common/prepare-content');
 
 describe('module findMdFiles', () => {
 
   test('Ensure the module outputs an array (default `docs` directory)', async () => {
-    const files = await findMdFiles();
+    const files = await findDocFiles();
     expect(files).toBeInstanceOf(Array);
   })
   
   test.todo('Ensure the module outputs an array (custom `docs` directory');
   
   test('Ensure the module outputs an array (root directory)', async () => {
-    const files = await findMdFiles('/');
+    const files = await findDocFiles('/');
     expect(files).toBeInstanceOf(Array);
   });
 
   test('Ensure the module outputs an array of expected format (default `docs` directory)', async () => {
-    const files = await findMdFiles();
+    const files = await findDocFiles();
     files.map(obj => expect(Object.keys(obj)).toEqual(['dirLevel', 'basePath', 'dirPath', 'dirClass', 'dirName', 'files']));
   });
 
   test.todo('Ensure the module outputs an array of expected format (custom `docs` directory)');
 
   test('Ensure the module outputs an array of expected format (root directory)', async () => {
-    const files = await findMdFiles('/');
+    const files = await findDocFiles('/');
     files.map(obj => expect(Object.keys(obj)).toEqual(['dirLevel', 'basePath', 'dirPath', 'dirClass', 'dirName', 'files']))
   });
 
   test('Throw an error when docs directory name is invalid', async () => {
-    await expect(findMdFiles(123)).rejects.toThrow(Error, 'Invalid docs directory');
+    await expect(findDocFiles(123)).rejects.toThrow(Error, 'Invalid docs directory');
   });
 
   test(`Throw an error when the specified docs directory doesn't exist`, async () => {
-    await expect(findMdFiles('nonexistentdirectory')).rejects.toThrow(Error, 'The specified directory does not exist');
+    await expect(findDocFiles('nonexistentdirectory')).rejects.toThrow(Error, 'The specified directory does not exist');
   });
 
   describe('module findMdFiles - working with files', () => {
@@ -43,8 +43,11 @@ describe('module findMdFiles', () => {
         'fake-root-two.md': `# Title\nHello world from the fake-root-two file`,
       });
 
-      let result = await findMdFiles('/');
-      expect(result.map(obj => obj.files)).toContainEqual(['fake-root-one', 'fake-root-two'])
+      let result = await findDocFiles('/');
+      expect(result.map(obj => obj.files)).toContainEqual([
+        { file: 'fake-root-one.md', fileName: 'fake-root-one' },
+        { file: 'fake-root-two.md', fileName: 'fake-root-two' }
+      ])
       
       mock.restore();
     });
@@ -61,15 +64,21 @@ describe('module findMdFiles', () => {
         }
       });
 
-      let result = await findMdFiles();
+      let result = await findDocFiles();
 
       expect(result).toBeInstanceOf(Array);
       expect(result).toHaveLength(2);
       expect(result[0].dirName).toEqual('Home');
       expect(result[1].dirName).toEqual('Child-directory');
 
-      expect(result[0].files).toEqual(expect.arrayContaining(['Fake-docs-dir-one', 'Fake-docs-dir-two']));
-      expect(result[1].files).toEqual(expect.arrayContaining(['Fake-docs-child-dir-one', 'Fake-docs-child-dir-two']));
+      expect(result[0].files).toEqual(expect.arrayContaining([
+        { file: 'Fake-docs-dir-one.md', fileName: 'Fake-docs-dir-one' },
+        { file: 'Fake-docs-dir-two.md', fileName: 'Fake-docs-dir-two' }
+      ]));
+      expect(result[1].files).toEqual(expect.arrayContaining([
+        { file: 'Fake-docs-child-dir-one.md', fileName: 'Fake-docs-child-dir-one' },
+        { file: 'Fake-docs-child-dir-two.md', fileName: 'Fake-docs-child-dir-two' }
+      ]));
 
       mock.restore();
     });
@@ -84,7 +93,7 @@ describe('module findMdFiles', () => {
         }
       });
 
-      await expect(findMdFiles()).rejects.toThrow(Error, 'Filename is invalid. Valid characters are: letters (A-Z, a-z), numbers (0-9), dashes (-), underscores (_), dots (.)');
+      await expect(findDocFiles()).rejects.toThrow(Error, 'Filename is invalid. Valid characters are: letters (A-Z, a-z), numbers (0-9), dashes (-), underscores (_), dots (.)');
 
       mock.restore();
     });

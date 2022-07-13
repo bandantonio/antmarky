@@ -2,11 +2,11 @@ const ejs = require('ejs');
 const fs = require('fs');
 const fse = require('fs-extra');
 const path = require('path');
-const { md } = require('./md-parser');
+const { md, adoc } = require('./parsers');
 const {
-  findMdFilesSchema,
+  findDocFilesSchema,
   filesContentSchema,
-  convertMdToHtmlSchema,
+  convertDocToHtmlSchema,
   saveHtmlContentSchemaFile,
   saveHtmlContentSchemaContent,
   compileTemplateSchemaTemplatesPath,
@@ -17,15 +17,15 @@ const {
 } = require('../schemas/schemas');
 const { embedRemoteMarkdown } = require('./embed-remote-markdown');
 const checkForChildrenFolders = require('../helpers/checkForChildrenFolders');
-const getMarkdownFiles = require('../helpers/getMarkdownFiles');
+const getDocFiles = require('../helpers/getDocFiles');
 const { buildToc } = require('../toc');
 const { errorPage } = require('../data/defaults');
 
 /**
  * Find all Markdown files within the specified directory
  */
-const findMdFiles = async (docsDirectoryName = 'docs') => {
-  await findMdFilesSchema.validateAsync(docsDirectoryName).catch(() => {
+const findDocFiles = async (docsDirectoryName = 'docs') => {
+  await findDocFilesSchema.validateAsync(docsDirectoryName).catch(() => {
     throw new Error('Invalid docs directory');
   });
 
@@ -38,7 +38,7 @@ const findMdFiles = async (docsDirectoryName = 'docs') => {
   const resultingFilesTree = [];
 
   // Find all the Markdown files in the documentation directory and keep track of the child hierarchy
-  const markdownFilesFilder = async (dir = docsDirectoryPath) => {
+  const docFilesFilder = async (dir = docsDirectoryPath) => {
     // dirLevel is used to calculate hierarchy and children
     // 0 - docsDirectoryName, 1 - child dir for docsDirectoryName, etc
     // dirLevel is calculated via relative path
@@ -52,29 +52,28 @@ const findMdFiles = async (docsDirectoryName = 'docs') => {
     const dirName = dirClass[0].toUpperCase() + dirClass.substring(1, dirClass.length);
 
     // Directory traversal logic
-    const markdownFilesInFolder = getMarkdownFiles(dir);
-
-    if (markdownFilesInFolder.length > 0) {
+    const docFilesInFolder = getDocFiles(dir);
+    if (docFilesInFolder.length > 0) {
       resultingFilesTree.push({
         dirLevel: dirLevel,
         basePath: docsDirectoryPath,
         dirPath: relativePath,
         dirClass: dirClass,
         dirName: dirName,
-        files: markdownFilesInFolder
+        files: docFilesInFolder
       });
     }
 
     const anyFolderInside = checkForChildrenFolders(dir);
     if (anyFolderInside.length > 0) {
       for (const directory of anyFolderInside) {
-        await markdownFilesFilder(path.join(dir, directory));
+        await docFilesFilder(path.join(dir, directory));
       }
     }
 
     return resultingFilesTree;
   };
-  const mdFiles = await markdownFilesFilder();
+  const mdFiles = await docFilesFilder();
   return mdFiles;
 };
 
@@ -85,17 +84,17 @@ const getFilesContent = async (fileDetails) => {
   try {
     await filesContentSchema.validateAsync(fileDetails);
   } catch (error) {
-    throw new Error('Can\'t get content from Markdown files');
+    throw new Error('Can\'t get content from files');
   }
 
   const mdFileContent = [];
   for (const details of fileDetails) {
     const absolutePath = path.join(details.basePath, details.dirPath);
     details.files.forEach(file => {
-      const content = fs.readFileSync(path.join(absolutePath, `${file}.md`), { encoding: 'utf-8' });
+      const content = fs.readFileSync(path.join(absolutePath, file.file), { encoding: 'utf-8' });
       mdFileContent.push({
         name: file,
-        title: file,
+        title: file.fileName,
         content: content
       });
     });
@@ -106,18 +105,25 @@ const getFilesContent = async (fileDetails) => {
 /**
  * Convert Markdown files to HTML
  */
-const convertMdToHtml = (mdTextArray) => {
-  const validation = convertMdToHtmlSchema.validate(mdTextArray);
+const convertDocToHtml = (docTextArray) => {
+  const validation = convertDocToHtmlSchema.validate(docTextArray);
 
   if (validation.error) {
     throw new Error('Can\'t convert. Input data is invalid');
   }
-  return mdTextArray.map(mdText => {
-    const html = md.makeHtml(mdText.content);
+  return docTextArray.map(docText => {
+    let html = '';
+    const fileName = docText.name.file;
+    const fileTitle = docText.title;
+    if (path.extname(fileName) === '.md') {
+      html = md.makeHtml(docText.content);
+    } else {
+      html = adoc.convert(docText.content, { safe: 'safe', attributes: { icons: 'font' } });
+    }
     const tableOfCOntents = buildToc(html);
     return {
-      name: mdText.name,
-      title: mdText.title,
+      name: fileName.substring(0, fileName.lastIndexOf('.')),
+      title: fileTitle.substring(0, fileTitle.lastIndexOf('.')),
       html,
       toc: tableOfCOntents
     };
@@ -143,11 +149,11 @@ const saveHtmlContent = async (filename, htmlContent, outputDirectory = 'public'
  * - an array of objects with all pages and corresponding HTML content
  */
 const buildContent = async (docsDirectoryName = 'docs') => {
-  const locatedMdFiles = await findMdFiles(docsDirectoryName);
-  const allPages = locatedMdFiles;
-  const mdFilesContent = await getFilesContent(locatedMdFiles);
-  const mdFilesWithRemoteContent = await embedRemoteMarkdown(mdFilesContent);
-  const htmlContent = convertMdToHtml(mdFilesWithRemoteContent);
+  const locatedDocFiles = await findDocFiles(docsDirectoryName);
+  const allPages = locatedDocFiles;
+  const docFilesContent = await getFilesContent(locatedDocFiles);
+  const mdFilesWithRemoteContent = await embedRemoteMarkdown(docFilesContent);
+  const htmlContent = convertDocToHtml(mdFilesWithRemoteContent);
   return {
     allPages: allPages,
     htmlContent: htmlContent
@@ -265,8 +271,8 @@ const buildStaticFiles = async (docsDirectoryName = 'docs', outputDirectory = 'p
 };
 
 module.exports = {
-  findMdFiles: findMdFiles,
+  findDocFiles: findDocFiles,
   getFilesContent: getFilesContent,
-  convertMdToHtml: convertMdToHtml,
+  convertDocToHtml: convertDocToHtml,
   buildStaticFiles: buildStaticFiles
 };
