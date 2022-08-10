@@ -17,7 +17,17 @@ describe('module getFilesContent', () => {
         'markdown.md': `# Title\nHello world from the fake-root-two file\n[link to Antmarky](https://github.com/bandantonio/antmarky)`,
       }
     });
-    let content = [{ dirLevel: 0, basePath: `${process.cwd()}/docs`, dirPath: '', dirClass: 'home', dirName: 'Home', files: [ 'unit-tests', 'markdown' ] }]
+    let content = [{
+      dirLevel: 0,
+      basePath: `${process.cwd()}/docs`,
+      dirPath: '',
+      dirClass: 'home',
+      dirName: 'Home',
+      files: [
+        { file: 'unit-tests.md', fileName: 'unit-tests' },
+        { file: 'markdown.md', fileName: 'markdown' }
+      ]
+    }]
     
     let result = await getFilesContent(content);
 
@@ -25,12 +35,12 @@ describe('module getFilesContent', () => {
 
     result.forEach(obj => expect(Object.keys(obj)).toEqual(['name', 'title', 'content']));
     expect(result[0]).toEqual({
-      name: 'unit-tests',
+      name: { file: 'unit-tests.md', fileName: 'unit-tests' },
       title: 'unit-tests',
       content: '# Title\n' + 'Hello world from the fake-root-one file\n' + '[link to GitHub](https://github.com/bandantonio)'
     });
     expect(result[1]).toEqual({
-      name: 'markdown',
+      name: { file: 'markdown.md', fileName: 'markdown' },
       title: 'markdown',
       content: '# Title\n' + 'Hello world from the fake-root-two file\n' + '[link to Antmarky](https://github.com/bandantonio/antmarky)'
     });
