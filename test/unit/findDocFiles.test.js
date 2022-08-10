@@ -1,7 +1,7 @@
 const mock = require('mock-fs');
 const { findDocFiles } = require('../../src/common/prepare-content');
 
-describe('module findMdFiles', () => {
+describe('module findDocFiles', () => {
 
   test('Ensure the module outputs an array (default `docs` directory)', async () => {
     const files = await findDocFiles();
@@ -35,18 +35,18 @@ describe('module findMdFiles', () => {
     await expect(findDocFiles('nonexistentdirectory')).rejects.toThrow(Error, 'The specified directory does not exist');
   });
 
-  describe('module findMdFiles - working with files', () => {
+  describe('module findDocFiles - working with files', () => {
 
     test('Output files from the root docs directory', async () => {
       mock({
-        'fake-root-one.md': `# Title\nHello world from the fake-root-one file`,
-        'fake-root-two.md': `# Title\nHello world from the fake-root-two file`,
+        'fake-root-one.adoc': `= Title\nHello world from the fake-root-one file`,
+        'fake-root-two.adoc': `= Title\nHello world from the fake-root-two file`,
       });
 
       let result = await findDocFiles('/');
       expect(result.map(obj => obj.files)).toContainEqual([
-        { file: 'fake-root-one.md', fileName: 'fake-root-one' },
-        { file: 'fake-root-two.md', fileName: 'fake-root-two' }
+        { file: 'fake-root-one.adoc', fileName: 'fake-root-one' },
+        { file: 'fake-root-two.adoc', fileName: 'fake-root-two' }
       ])
       
       mock.restore();
@@ -55,11 +55,11 @@ describe('module findMdFiles', () => {
     test(`Output files from the default docs directory (with child directories)`, async () => {
       mock({
         'docs': {
-          'Fake-docs-dir-one.md': `# Title\nHello world from the fake-docs-dir-one file`,
-          'Fake-docs-dir-two.md': `# Title\nHello world from the fake-docs-dir-two file`,
+          'Fake-docs-dir-one.adoc': `= Title\nHello world from the fake-docs-dir-one file`,
+          'Fake-docs-dir-two.adoc': `= Title\nHello world from the fake-docs-dir-two file`,
           'child-directory': {
-            'Fake-docs-child-dir-one.md': `# Title\nHello world from the fake-child-dir-one file`,
-            'Fake-docs-child-dir-two.md': `# Title\nHello world from the fake-child-dir-two file`,
+            'Fake-docs-child-dir-one.adoc': `= Title\nHello world from the fake-child-dir-one file`,
+            'Fake-docs-child-dir-two.adoc': `= Title\nHello world from the fake-child-dir-two file`,
           }
         }
       });
@@ -72,12 +72,12 @@ describe('module findMdFiles', () => {
       expect(result[1].dirName).toEqual('Child-directory');
 
       expect(result[0].files).toEqual(expect.arrayContaining([
-        { file: 'Fake-docs-dir-one.md', fileName: 'Fake-docs-dir-one' },
-        { file: 'Fake-docs-dir-two.md', fileName: 'Fake-docs-dir-two' }
+        { file: 'Fake-docs-dir-one.adoc', fileName: 'Fake-docs-dir-one' },
+        { file: 'Fake-docs-dir-two.adoc', fileName: 'Fake-docs-dir-two' }
       ]));
       expect(result[1].files).toEqual(expect.arrayContaining([
-        { file: 'Fake-docs-child-dir-one.md', fileName: 'Fake-docs-child-dir-one' },
-        { file: 'Fake-docs-child-dir-two.md', fileName: 'Fake-docs-child-dir-two' }
+        { file: 'Fake-docs-child-dir-one.adoc', fileName: 'Fake-docs-child-dir-one' },
+        { file: 'Fake-docs-child-dir-two.adoc', fileName: 'Fake-docs-child-dir-two' }
       ]));
 
       mock.restore();
@@ -86,9 +86,9 @@ describe('module findMdFiles', () => {
     test(`Should throw an error when passing invalid filename`, async () => {
       mock({
         'docs': {
-          'Fake-docs-dir-one.md': `# Title\nHello world from the fake-docs-dir-one file`,
+          'Fake-docs-dir-one.adoc': `= Title\nHello world from the fake-docs-dir-one file`,
           'child-directory': {
-            'Very¢£«±Ÿ÷_bad&*()\/<> file-!@#$%^ name.md': `# Title\nHello world from the fake-child-dir-one file`
+            'Very¢£«±Ÿ÷_bad&*()\/<> file-!@#$%^ name.adoc': `= Title\nHello world from the fake-child-dir-one file`
           }
         }
       });

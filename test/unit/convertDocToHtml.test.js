@@ -10,13 +10,13 @@ describe('module convertDocToHtml', () => {
 
   test('Convert content without remote inclusion', () => {
     let content = [{
-      name: { file: 'features.md', fileName: 'features' },
+      name: { file: 'features.adoc', fileName: 'features' },
       title: 'features',
-      content: '# Title\nHello world from the fake-root-one file\n[link to GitHub](https://github.com/bandantonio)'
+      content: '== Title\nHello world from the fake-root-one file\nhttps://github.com/bandantonio[link to GitHub]'
     },{
-      name: { file: 'markdown.md', fileName: 'markdown' },
-      title: 'markdown',
-      content: '# Title\nHello world from the fake-root-two file\n[link to Antmarky](https://github.com/bandantonio/antmarky)'
+      name: { file: 'test-file.adoc', fileName: 'test-file' },
+      title: 'test-file',
+      content: '== Title\nHello world from the fake-root-two file\nhttps://github.com/bandantonio/antmarky[link to Antmarky]'
     }];
 
     let result = convertDocToHtml(content);
