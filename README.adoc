@@ -1,0 +1,64 @@
+== Antmarky
+
+Antmarky is a static-site generator for https://docs.asciidoctor.org/asciidoc/latest[`Asciidoctor`^] based on Node.js and EJS.
+
+https://github.com/bandantonio/antmarky/actions/workflows/antmarky.yml[image:https://github.com/bandantonio/antmarky/actions/workflows/antmarky.yml/badge.svg?branch=main[antmarky]^]
+https://coveralls.io/github/bandantonio/antmarky?branch=main[image:https://coveralls.io/repos/github/bandantonio/antmarky/badge.svg?branch=main[Coverage
+Status]^]
+image:https://img.shields.io/docker/pulls/bandantonio/antmarky[Docker
+Pulls]
+https://github.com/standard/semistandard[image:https://img.shields.io/badge/code%20style-semistandard-f7df1e.svg[js-semistandard-style]^]
+
+The main idea behind creating Antmarky was to have a generator with _zero configuration_ that can serve your Asciidoctor files
+in the documentation directory.
+
+Consider Antmarky as a lightweight alternative to https://docs.antora.org/antora/latest/[Antora^].
+
+Currently, Antmarky flattens out the directory structure and displays all the files at the root level under the
+corresponding directory.
+
+=== Features
+
+* Zero configuration
+* Fully responsive layout
+* Fully static (doesn't require a web server to work)
+* No language frameworks included
+* Support of major Asciidoctor features:
+** https://docs.asciidoctor.org/asciidoc/latest/directives/include/[Includes^]
+** https://docs.asciidoctor.org/asciidoc/latest/directives/conditionals/[Conditionals^]
+** https://docs.asciidoctor.org/asciidoc/latest/tables/build-a-basic-table/[Tables^]
+** https://docs.asciidoctor.org/asciidoc/latest/blocks/admonitions/[Admonitions^]
+* xref:features.adoc#fontawesome[FontAwesome]
+* Copy code block
+
+=== Quickstart
+
+==== Prerequisites
+
+* https://docs.docker.com/get-docker/[Docker^]
+
+==== Serve content
+
+[source,sh]
+----
+docker run --rm \
+  --name antmarky-ssg \
+  -v ${PWD}/docs:/antmarky/docs \
+  -p 8000:8000 \
+  bandantonio/antmarky
+----
+
+Local server will be launched at http://localhost:8000[^]
+
+==== Build content
+
+[source,sh]
+----
+docker run --rm \
+  --name antmarky-ssg \
+  -v ${PWD}/docs:/antmarky/docs \
+  -v ${PWD}/public:/antmarky/public \
+  bandantonio/antmarky build
+----
+
+Website static files will be generated in the `public` directory.

@@ -121,11 +121,3 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
-
-      - name: 🐋 📝 DockerHub description
-        uses: peter-evans/dockerhub-description@v3
-        with:
-          username: ${{ secrets.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_ALT_TOKEN }}
-          repository: bandantonio/antmarky
-          short-description: ${{ github.event.repository.description }}

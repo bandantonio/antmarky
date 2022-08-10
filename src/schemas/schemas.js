@@ -5,12 +5,17 @@ const stringOrPath = joi.string();
 const directoryNumberHierarchy = joi.number().min(0).max(4);
 const stringWithCapitalLetter = stringOrPath.pattern(/^[A-Z][\w]*/);
 const lowercasedString = stringOrPath.case('lower');
-const arrayOfStrings = joi.array().items(joi.string());
 const fullHtmlDocument = stringOrPath.pattern(/<!DOCTYPE [html|HTML][\s\S]*<html[\s\S]*<head>[\s\S]*<title>[\s\S]*<\/title>[\s\S]*<\/head>[\s\S]*<body[\s\S]*<\/body>[\s\S]*<\/html>/);
 const htmlDocumentBody = stringOrPath.pattern(/<\/?[^>]+>/); // just matches HTML tags, should be improved later
+const arrayOfObjects = joi.array().min(1).items(
+  joi.object({
+    file: joi.string(),
+    fileName: joi.string()
+  })
+);
 
 // Schemas
-const findMdFilesSchema = stringOrPath.allow('/', stringOrPath).required();
+const findDocFilesSchema = stringOrPath.allow('/', stringOrPath).required();
 
 const filesContentSchema = joi.array().min(1).items(
   joi.object({
@@ -19,22 +24,22 @@ const filesContentSchema = joi.array().min(1).items(
     dirPath: stringOrPath.allow('').required(),
     dirName: stringWithCapitalLetter.required(),
     dirClass: lowercasedString.required(),
-    files: arrayOfStrings.required()
+    files: arrayOfObjects.required()
   }).required()
 ).required();
 
 const nameTitleContent = joi.array().min(1).items(
   joi.object({
-    name: stringOrPath.required(),
+    name: joi.object().required(),
     title: stringOrPath.required(),
     content: stringOrPath.required()
   }).required()
 ).required();
 
 // Validate raw URLs for Markdown files within GitHub and BitBucket
-const fileInclusionSchema = stringOrPath.pattern(/https:\/\/(?:github.com|bitbucket.org)\/([\s\S]*?\/){2}raw\/([\s\S])*?\/([\s\S])*?.md/).required();
+const fileInclusionSchema = stringOrPath.pattern(/include::(https:\/\/raw.githubusercontent.com\/([\s\S]*?.adoc)\[\])/).required();
 
-const convertMdToHtmlSchema = nameTitleContent.required();
+const convertDocToHtmlSchema = nameTitleContent.required();
 
 const filenameSchema = stringOrPath.pattern(/^([\w-.])*?$/).required();
 const saveHtmlContentSchemaFile = stringOrPath.pattern(/^([\w-.])*?\.html$/).required();
@@ -56,12 +61,12 @@ const buildTocSchema = htmlDocumentBody.required();
 const embedRemoteMarkdownSchema = nameTitleContent.required();
 
 module.exports = {
-  findMdFilesSchema,
+  findDocFilesSchema,
   filenameSchema,
   filesContentSchema,
   fileInclusionSchema,
   embedRemoteMarkdownSchema,
-  convertMdToHtmlSchema,
+  convertDocToHtmlSchema,
   saveHtmlContentSchemaFile,
   saveHtmlContentSchemaContent,
   compileTemplateSchemaTemplatesPath,
