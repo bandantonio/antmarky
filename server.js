@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 const PORT = 8000;
 const { serveContent } = require('./src/commands/serve');
-const { md } = require('./src/common/parsers');
+const { adoc, asciidoctorDefaultConfig } = require('./src/common/parsers');
 const { errorPage } = require('./src/data/defaults');
 app.use(serveContent);
 
@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
   const specificPageData = res.locals.files_data.find(page => page.name === 'README');
   renderData.name = (specificPageData) ? specificPageData.name : '/';
   renderData.title = (specificPageData) ? specificPageData.title : 'Home';
-  renderData.content = (specificPageData) ? specificPageData.html : md.makeHtml(fs.readFileSync(path.resolve('README.md'), 'utf-8'));
+  renderData.content = (specificPageData) ? specificPageData.html : adoc.convert(fs.readFileSync(path.resolve('README.adoc'), 'utf-8'), asciidoctorDefaultConfig);
   renderData.pages = res.locals.all_pages.filter(page => page.name !== 'README');
   res.render('index', renderData);
 });

@@ -3,11 +3,11 @@ const path = require('path');
 const { filenameSchema } = require('../schemas/schemas');
 
 /**
-* Find all Markdown files in directory
+* Find all Asciidoctor files in directory
 */
 const getDocFiles = (dir) => {
   return fs.readdirSync(dir)
-    .filter(file => path.extname(file) === '.md' || path.extname(file) === '.adoc')
+    .filter(file => path.extname(file) === '.adoc')
     .map(file => {
       const validation = filenameSchema.validate(file);
 

@@ -7,7 +7,7 @@ const buildToc = (htmlContent) => {
     throw new Error('Can\'t build table of contents, the provided content is invalid');
   }
 
-  return [...htmlContent.matchAll(/<h(?<id>[2-6]) id="(?<link>.*)">(?<name>.*)<\/h[2-6]>/g)].map(item => {
+  return [...htmlContent.matchAll(/<h(?<id>[2-6]) id="(?<link>.*)"><a[\s\S]*?><\/a>(?<name>.*)<\/h[2-6]>/g)].map(item => {
     return {
       id: item.groups.id,
       link: item.groups.link,

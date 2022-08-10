@@ -1,10 +1,9 @@
 {
   "name": "antmarky",
   "version": "1.0.0-alpha.1",
-  "description": "Antmarky is a static-site generator for Markdown based on Node.js/EJS",
+  "description": "Antmarky is a static-site generator for Asciidoctor based on Node.js and EJS",
   "main": "server.js",
   "scripts": {
-    "ascii": "node src/parsers/asciidoctor.js",
     "build": "node src/commands/build.js",
     "serve": "node server.js",
     "lint": "semistandard",
@@ -44,7 +43,6 @@
     "jest": "^28.1.2",
     "joi": "^17.6.0",
     "mock-fs": "^5.1.2",
-    "semistandard": "^16.0.1",
-    "showdown": "^2.1.0"
+    "semistandard": "^16.0.1"
   }
 }

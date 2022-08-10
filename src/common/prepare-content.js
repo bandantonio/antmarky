@@ -2,7 +2,7 @@ const ejs = require('ejs');
 const fs = require('fs');
 const fse = require('fs-extra');
 const path = require('path');
-const { md, adoc } = require('./parsers');
+const { adoc, asciidoctorDefaultConfig } = require('./parsers');
 const {
   findDocFilesSchema,
   filesContentSchema,
@@ -15,14 +15,13 @@ const {
   buildStaticFilesSchema,
   copyStaticAssetsSchema
 } = require('../schemas/schemas');
-const { embedRemoteMarkdown } = require('./embed-remote-markdown');
 const checkForChildrenFolders = require('../helpers/checkForChildrenFolders');
 const getDocFiles = require('../helpers/getDocFiles');
 const { buildToc } = require('../toc');
 const { errorPage } = require('../data/defaults');
 
 /**
- * Find all Markdown files within the specified directory
+ * Find all Asciidoctor files within the specified directory
  */
 const findDocFiles = async (docsDirectoryName = 'docs') => {
   await findDocFilesSchema.validateAsync(docsDirectoryName).catch(() => {
@@ -32,12 +31,12 @@ const findDocFiles = async (docsDirectoryName = 'docs') => {
   const docsDirectoryPath = path.join(process.cwd() + `/${docsDirectoryName}`);
 
   if (!fs.existsSync(docsDirectoryPath)) {
-    throw new Error('The specified directory does not exist');
+    throw new Error(`Looks like the specified directory ${docsDirectoryName} does not exist`);
   }
 
   const resultingFilesTree = [];
 
-  // Find all the Markdown files in the documentation directory and keep track of the child hierarchy
+  // Find all the Asciidoctor files in the documentation directory and keep track of the child hierarchy
   const docFilesFilder = async (dir = docsDirectoryPath) => {
     // dirLevel is used to calculate hierarchy and children
     // 0 - docsDirectoryName, 1 - child dir for docsDirectoryName, etc
@@ -73,37 +72,40 @@ const findDocFiles = async (docsDirectoryName = 'docs') => {
 
     return resultingFilesTree;
   };
-  const mdFiles = await docFilesFilder();
-  return mdFiles;
+  const docFiles = await docFilesFilder();
+  return docFiles;
 };
 
 /**
- * Get content of Markdown files
+ * Get content of Asciidoctor files
  */
 const getFilesContent = async (fileDetails) => {
+  if (!fileDetails.length) {
+    throw new Error('Looks like you forgot to add files to your documentation directory');
+  }
   try {
     await filesContentSchema.validateAsync(fileDetails);
   } catch (error) {
     throw new Error('Can\'t get content from files');
   }
 
-  const mdFileContent = [];
+  const docFileContent = [];
   for (const details of fileDetails) {
     const absolutePath = path.join(details.basePath, details.dirPath);
     details.files.forEach(file => {
       const content = fs.readFileSync(path.join(absolutePath, file.file), { encoding: 'utf-8' });
-      mdFileContent.push({
+      docFileContent.push({
         name: file,
         title: file.fileName,
         content: content
       });
     });
   }
-  return mdFileContent;
+  return docFileContent;
 };
 
 /**
- * Convert Markdown files to HTML
+ * Convert Asciidoctor files to HTML
  */
 const convertDocToHtml = (docTextArray) => {
   const validation = convertDocToHtmlSchema.validate(docTextArray);
@@ -112,14 +114,9 @@ const convertDocToHtml = (docTextArray) => {
     throw new Error('Can\'t convert. Input data is invalid');
   }
   return docTextArray.map(docText => {
-    let html = '';
     const fileName = docText.name.file;
     const fileTitle = docText.title;
-    if (path.extname(fileName) === '.md') {
-      html = md.makeHtml(docText.content);
-    } else {
-      html = adoc.convert(docText.content, { safe: 'safe', attributes: { icons: 'font' } });
-    }
+    const html = adoc.convert(docText.content, asciidoctorDefaultConfig);
     const tableOfCOntents = buildToc(html);
     return {
       name: fileName.substring(0, fileName.lastIndexOf('.')),
@@ -143,7 +140,7 @@ const saveHtmlContent = async (filename, htmlContent, outputDirectory = 'public'
 };
 
 /**
- * Wrapper function to find Markdown files and convert content to HTML
+ * Wrapper function to find Asciidoctor files and convert content to HTML
  * Returns an object containing two arrays:
  * - an array of objects with hierarchy of all pages
  * - an array of objects with all pages and corresponding HTML content
@@ -152,8 +149,7 @@ const buildContent = async (docsDirectoryName = 'docs') => {
   const locatedDocFiles = await findDocFiles(docsDirectoryName);
   const allPages = locatedDocFiles;
   const docFilesContent = await getFilesContent(locatedDocFiles);
-  const mdFilesWithRemoteContent = await embedRemoteMarkdown(docFilesContent);
-  const htmlContent = convertDocToHtml(mdFilesWithRemoteContent);
+  const htmlContent = convertDocToHtml(docFilesContent);
   return {
     allPages: allPages,
     htmlContent: htmlContent
@@ -251,7 +247,7 @@ const buildStaticFiles = async (docsDirectoryName = 'docs', outputDirectory = 'p
         const readyHtml = compiledTemplate({
           name: '/',
           title: 'Home',
-          content: md.makeHtml(fs.readFileSync(path.resolve('README.md'), 'utf-8')),
+          content: adoc.convert(fs.readFileSync(path.resolve('README.adoc'), 'utf-8'), asciidoctorDefaultConfig),
           pages: sidebarListOfPages
         });
         await saveHtmlContent('index.html', readyHtml);

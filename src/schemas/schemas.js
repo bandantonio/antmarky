@@ -37,7 +37,7 @@ const nameTitleContent = joi.array().min(1).items(
 ).required();
 
 // Validate raw URLs for Markdown files within GitHub and BitBucket
-const fileInclusionSchema = stringOrPath.pattern(/https:\/\/(?:github.com|bitbucket.org)\/([\s\S]*?\/){2}raw\/([\s\S])*?\/([\s\S])*?.md/).required();
+const fileInclusionSchema = stringOrPath.pattern(/include::(https:\/\/raw.githubusercontent.com\/([\s\S]*?.adoc)\[\])/).required();
 
 const convertDocToHtmlSchema = nameTitleContent.required();
 
