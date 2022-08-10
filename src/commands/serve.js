@@ -1,12 +1,10 @@
-const { findMdFiles, getFilesContent, convertMdToHtml } = require('../common/prepare-content');
-const { embedRemoteMarkdown } = require('../common/embed-remote-markdown');
+const { findDocFiles, getFilesContent, convertDocToHtml } = require('../common/prepare-content');
 
 const serveContent = async (req, res, next) => {
-  const locatedMdFiles = await findMdFiles();
-  const allPages = locatedMdFiles;
-  const mdFilesContent = await getFilesContent(locatedMdFiles);
-  const mdFilesWithRemoteContent = await embedRemoteMarkdown(mdFilesContent);
-  const htmlContent = convertMdToHtml(mdFilesWithRemoteContent);
+  const locatedDocFiles = await findDocFiles();
+  const allPages = locatedDocFiles;
+  const docFilesContent = await getFilesContent(locatedDocFiles);
+  const htmlContent = convertDocToHtml(docFilesContent);
   res.locals.files_data = htmlContent;
   res.locals.all_pages = allPages;
   next();

@@ -1,0 +1,58 @@
+== Features
+
+=== Admonitions
+
+Supported admonitions: `NOTE`, `TIP`, `IMPORTANT`, `CAUTION`, `WARNING`.
+
+[NOTE]
+====
+[source, md]
+----
+NOTE: Note admonition body
+----
+====
+
+[TIP]
+====
+[source, md]
+----
+TIP: Tip admonition body
+----
+====
+
+[IMPORTANT]
+====
+[source, md]
+----
+IMPORTANT: Important admonition body
+----
+====
+
+[CAUTION]
+====
+[source, md]
+----
+CAUTION: Caution admonition body
+----
+====
+
+[WARNING]
+====
+[source, md]
+----
+WARNING: Warning admonition body
+----
+====
+
+=== FontAwesome
+
+Antmarky supports https://fontawesome.com/v4/cheatsheet/[FontAwesome v4.7^] for compatibility reasons.
+
+To use icons in the document, use the following syntax:
+
+[source, plaintext]
+----
+icon:bicycle[] is good for your icon:heart[]
+----
+
+This will be rendered as: icon:bicycle[] is good for your icon:heart[]

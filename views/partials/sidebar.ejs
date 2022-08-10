@@ -1,4 +1,4 @@
-<div class="list_title"><i class="fas fa-list"></i> Table of contents</div>
+<div class="list_title"><i class="fa fa-list"></i> Table of contents</div>
 <ul class="sidebar_list">
   <% pages.forEach(page => { %>
     <div class="sidebar_list_item">
@@ -12,10 +12,10 @@
       </button>
         <ul id="<%= page.dirClass %>" class="list_files collapse show">
         <% page.files.forEach(file => { %>
-          <% if (file == name) { %>
-            <li class="list_item"><a class="nav-link active" href="<%= file %>.html"><%= file %></a></li>
+          <% if (file.fileName == name) { %>
+            <li class="list_item"><a class="nav-link active" href="<%= file.fileName %>.html"><%= file.fileName %></a></li>
           <% } else { %>
-            <li class="list_item"><a class="nav-link" href="<%= file %>.html"><%= file %></a></li>
+            <li class="list_item"><a class="nav-link" href="<%= file.fileName %>.html"><%= file.fileName %></a></li>
           <% } %>
         <% }) %>
       </ul>

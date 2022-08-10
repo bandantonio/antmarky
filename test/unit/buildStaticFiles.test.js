@@ -15,15 +15,15 @@ describe('module buildStaticFiles', () => {
   test('Ensure the output directory contains generated static files (root README)', async () => {
     mock({
       'docs': {
-        'unit-test.md': '## Unit test 1\nUnit test 1 file content',
-        'unit-test-2.md': '## Unit test 2\nUnit test 2 file content'
+        'unit-test.adoc': '== Unit test 1\nUnit test 1 file content',
+        'unit-test-2.adoc': '== Unit test 2\nUnit test 2 file content'
       },
       'docs/unit-sub-dir': {
-        'unit-test-3.md': '## Unit test 3\nUnit test 3 file content'
+        'unit-test-3.adoc': '== Unit test 3\nUnit test 3 file content'
       },
       'views': mock.load(path.resolve(process.cwd(), 'views')),
       'src/assets': mock.load(path.resolve(process.cwd(), 'src/assets')),
-      'README.md': mock.load(path.resolve(process.cwd(), 'README.md')),
+      'README.adoc': mock.load(path.resolve(process.cwd(), 'README.adoc')),
       
       'public': {}
     });
@@ -41,12 +41,12 @@ describe('module buildStaticFiles', () => {
   test('Ensure the output directory contains generated static files (README in the default docs directory)', async () => {
     mock({
       'docs': {
-        'unit-test.md': '## Unit test 1\nUnit test 1 file content',
-        'unit-test-2.md': '## Unit test 2\nUnit test 2 file content',
-        'README.md': mock.load(path.resolve(process.cwd(), 'README.md'))
+        'unit-test.adoc': '== Unit test 1\nUnit test 1 file content',
+        'unit-test-2.adoc': '== Unit test 2\nUnit test 2 file content',
+        'README.adoc': mock.load(path.resolve(process.cwd(), 'README.adoc'))
       },
       'docs/unit-sub-dir': {
-        'unit-test-3.md': '## Unit test 3\nUnit test 3 file content'
+        'unit-test-3.adoc': '== Unit test 3\nUnit test 3 file content'
       },
       'views': mock.load(path.resolve(process.cwd(), 'views')),
       'src/assets': mock.load(path.resolve(process.cwd(), 'src/assets')),
@@ -71,7 +71,7 @@ describe('module buildStaticFiles', () => {
   test('Ensure assets in the default docs directory are copied to the output directory', async () => {
     mock({
       'docs': {
-        'unit-test.md': '## Unit test 1\nUnit test 1 file content',
+        'unit-test.adoc': '== Unit test 1\nUnit test 1 file content',
       },
       'docs/assets': {
         'dummy.json': '{ "userId": 1, "title": "delectus aut autem", "completed": false }',
@@ -79,7 +79,7 @@ describe('module buildStaticFiles', () => {
       },
       'views': mock.load(path.resolve(process.cwd(), 'views')),
       'src/assets': mock.load(path.resolve(process.cwd(), 'src/assets')),
-      'README.md': mock.load(path.resolve(process.cwd(), 'README.md')),
+      'README.adoc': mock.load(path.resolve(process.cwd(), 'README.adoc')),
       
       'public': {}
     });
