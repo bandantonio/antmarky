@@ -5,22 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Antmarky | Home </title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/shades-of-purple.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/shades-of-purple.min.css">
 <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.11/css/unicons.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
-<script>hljs.highlightAll();</script>
 <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
 <header>
   <nav class="navbar navbar-expand-sm mb-2 fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="./"><i class="fas fa-check-square"></i> Antmarky</a>
+    <a class="navbar-brand" href="./"><i class="fa fa-check-square"></i> Antmarky</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarToggler" aria-controls="sidebarToggler" aria-expanded="false" aria-label="Toggle sidebar">
     </button>
     <div class="collapse navbar-collapse" id="sidebarToggler">
-      <div class="list_title"><i class="fas fa-list"></i> Table of contents</div>
+      <div class="list_title"><i class="fa fa-list"></i> Table of contents</div>
 <ul class="sidebar_list">
   
     <div class="sidebar_list_item">
@@ -38,17 +36,13 @@
             <li class="list_item"><a class="nav-link" href="features.html">features</a></li>
           
         
-          
-            <li class="list_item"><a class="nav-link" href="markdown.html">markdown</a></li>
-          
-        
       </ul>
     </div>
   
 </ul>
 <div class="powered-by">
   <span>
-    <a href="https://github.com/bandantonio/antmarky">Powered by <i class="fas fa-check-square"></i> Antmarky</a>
+    <a href="https://github.com/bandantonio/antmarky">Powered by <i class="fa fa-check-square"></i> Antmarky</a>
   </span>
 </div>
     </div>
@@ -59,7 +53,7 @@
 <div class="container-fluid">
   <div class="full_content row">
     <div class="sidebar col-2">
-      <div class="list_title"><i class="fas fa-list"></i> Table of contents</div>
+      <div class="list_title"><i class="fa fa-list"></i> Table of contents</div>
 <ul class="sidebar_list">
   
     <div class="sidebar_list_item">
@@ -77,84 +71,137 @@
             <li class="list_item"><a class="nav-link" href="features.html">features</a></li>
           
         
-          
-            <li class="list_item"><a class="nav-link" href="markdown.html">markdown</a></li>
-          
-        
       </ul>
     </div>
   
 </ul>
 <div class="powered-by">
   <span>
-    <a href="https://github.com/bandantonio/antmarky">Powered by <i class="fas fa-check-square"></i> Antmarky</a>
+    <a href="https://github.com/bandantonio/antmarky">Powered by <i class="fa fa-check-square"></i> Antmarky</a>
   </span>
 </div>
     </div>
     <div class="content_area col-8">
-      <h1 id="antmarky">Antmarky</h1>
-<p>Antmarky is a static-site generator for Markdown based on Node.js/EJS.</p>
-<p><a href="https://github.com/bandantonio/antmarky/actions/workflows/antmarky.yml"><img src="https://github.com/bandantonio/antmarky/actions/workflows/antmarky.yml/badge.svg?branch=main" alt="antmarky" /></a> <a href="https://coveralls.io/github/bandantonio/antmarky?branch=main"><img src="https://coveralls.io/repos/github/bandantonio/antmarky/badge.svg?branch=main" alt="Coverage Status" /></a> <img src="https://img.shields.io/docker/pulls/bandantonio/antmarky" alt="Docker Pulls" /> <a href="https://github.com/standard/semistandard"><img src="https://img.shields.io/badge/code%20style-semistandard-f7df1e.svg" alt="js-semistandard-style" /></a></p>
-<p>The main idea behind creating Antmarky was to have a generator with <em>zero configuration</em> that can serve your Markdown files in the documentation directory. Currently, Antmarky flattens out the directory structure and displays all the files at the root level under the corresponding directory.</p>
-<h2 id="features">Features</h2>
+      <div class="sect1">
+<h2 id="antmarky"><a class="anchor" href="#antmarky"></a>Antmarky</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Antmarky is a static-site generator for <a href="https://docs.asciidoctor.org/asciidoc/latest" target="_blank" rel="noopener"><code>Asciidoctor</code></a> based on Node.js and EJS.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/bandantonio/antmarky/actions/workflows/antmarky.yml" target="_blank" rel="noopener"><span class="image"><img src="https://github.com/bandantonio/antmarky/actions/workflows/antmarky.yml/badge.svg?branch=main" alt="antmarky"></span></a>
+<a href="https://coveralls.io/github/bandantonio/antmarky?branch=main" target="_blank" rel="noopener"><span class="image"><img src="https://coveralls.io/repos/github/bandantonio/antmarky/badge.svg?branch=main" alt="Coverage Status"></span></a>
+<span class="image"><img src="https://img.shields.io/docker/pulls/bandantonio/antmarky" alt="Docker Pulls"></span>
+<a href="https://github.com/standard/semistandard" target="_blank" rel="noopener"><span class="image"><img src="https://img.shields.io/badge/code%20style-semistandard-f7df1e.svg" alt="js-semistandard-style"></span></a></p>
+</div>
+<div class="paragraph">
+<p>The main idea behind creating Antmarky was to have a generator with <em>zero configuration</em> that can serve your Asciidoctor files
+in the documentation directory.</p>
+</div>
+<div class="paragraph">
+<p>Consider Antmarky as a lightweight alternative to <a href="https://docs.antora.org/antora/latest/" target="_blank" rel="noopener">Antora</a>.</p>
+</div>
+<div class="paragraph">
+<p>Currently, Antmarky flattens out the directory structure and displays all the files at the root level under the
+corresponding directory.</p>
+</div>
+<div class="sect2">
+<h3 id="features"><a class="anchor" href="#features"></a>Features</h3>
+<div class="ulist">
 <ul>
-<li>Zero configuration</li>
-<li>Fully responsive layout</li>
-<li>Fully static (doesn't require a web server to work)</li>
-<li>No language frameworks included</li>
-<li><a href="features.html#remote-markdown-files">Include remote Markdown files from GitHub and BitBucket</a></li>
-<li><a href="markdown.html">Markdown</a> flavor: <code>GitHub</code>. Supported syntax:<ul>
-<li>Heading ids</li>
-<li>Emojis 🎉</li>
-<li>Images with inline dimensions attributes</li>
-<li>Reference links</li>
-<li>Strikethrough</li>
-<li>Tables</li></ul></li>
-<li><a href="features.html#admonitions">Admonitions</a></li>
-<li><a href="features.html#syntax-highlighting">Syntax highlighting</a></li>
-<li><a href="features.html#fontawesome">FontAwesome</a></li>
-<li><a href="features.html#task-lists">Task lists</a></li>
-</ul>
-<h2 id="quickstart">Quickstart</h2>
-<h3 id="prerequisites">Prerequisites</h3>
+<li>
+<p>Zero configuration</p>
+</li>
+<li>
+<p>Fully responsive layout</p>
+</li>
+<li>
+<p>Fully static (doesn&#8217;t require a web server to work)</p>
+</li>
+<li>
+<p>No language frameworks included</p>
+</li>
+<li>
+<p>Support of major Asciidoctor features:</p>
+<div class="ulist">
 <ul>
-<li><a href="https://docs.docker.com/get-docker/">Docker</a></li>
+<li>
+<p><a href="https://docs.asciidoctor.org/asciidoc/latest/directives/include/" target="_blank" rel="noopener">Includes</a></p>
+</li>
+<li>
+<p><a href="https://docs.asciidoctor.org/asciidoc/latest/directives/conditionals/" target="_blank" rel="noopener">Conditionals</a></p>
+</li>
+<li>
+<p><a href="https://docs.asciidoctor.org/asciidoc/latest/tables/build-a-basic-table/" target="_blank" rel="noopener">Tables</a></p>
+</li>
+<li>
+<p><a href="https://docs.asciidoctor.org/asciidoc/latest/blocks/admonitions/" target="_blank" rel="noopener">Admonitions</a></p>
+</li>
 </ul>
-<h3 id="serve-content">Serve content</h3>
-<pre data-language="sh"><code class="sh language-sh">docker run --rm \
+</div>
+</li>
+<li>
+<p><a href="features.html#fontawesome">FontAwesome</a></p>
+</li>
+<li>
+<p>Copy code block</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="quickstart"><a class="anchor" href="#quickstart"></a>Quickstart</h3>
+<div class="sect3">
+<h4 id="prerequisites"><a class="anchor" href="#prerequisites"></a>Prerequisites</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="serve-content"><a class="anchor" href="#serve-content"></a>Serve content</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">docker run --rm \
   --name antmarky-ssg \
   -v ${PWD}/docs:/antmarky/docs \
   -p 8000:8000 \
-  bandantonio/antmarky
-</code></pre>
-<p>Local server will be launched at <code>http://localhost:8000</code>.</p>
-<h3 id="build-content">Build content</h3>
-<pre data-language="sh"><code class="sh language-sh">docker run --rm \
+  bandantonio/antmarky</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Local server will be launched at <a href="http://localhost:8000" class="bare" target="_blank" rel="noopener">http://localhost:8000</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="build-content"><a class="anchor" href="#build-content"></a>Build content</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">docker run --rm \
   --name antmarky-ssg \
   -v ${PWD}/docs:/antmarky/docs \
   -v ${PWD}/public:/antmarky/public \
-  bandantonio/antmarky build
-</code></pre>
+  bandantonio/antmarky build</code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>Website static files will be generated in the <code>public</code> directory.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
     </div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-<script>
-  document.querySelectorAll('.content_area h2, .content_area h3, .content_area h4, .content_area h5, .content_area h6').forEach(heading => {
-    let id = heading.getAttribute('id');
-    heading.classList.add('h-anchor');
-    
-    let anchor = document.createElement('a');
-    anchor.className = 'anchor-link';
-    anchor.href = '#' + id;
-    anchor.innerText = '#';
-    
-    heading.appendChild(anchor);
-  });
-</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+<script defer src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/languages/asciidoc.min.js"></script>
+<script>hljs.highlightAll();</script>
 <script>
   const clipboardIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
     <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
