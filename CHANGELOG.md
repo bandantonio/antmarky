@@ -2,6 +2,25 @@
 
 This document outlines the summary of all notable changes to the project.
 
+## [v1.0.0-beta.1](https://github.com/bandantonio/antmarky/compare/v0.10.0...v1.0.0-beta.1) - 13 August 2022
+
+### Breaking Changes ⚠️
+
+feat!: add Asciidoctor and remove Markdown support ([`bf38496`](https://github.com/bandantonio/antmarky/commit/bf38496a9df2702da37e3980fe6fe56a4910c596))
+
+### New ✨
+
+- feat: add functionality to copy code block content ([`70b1065`](https://github.com/bandantonio/antmarky/commit/70b1065e86e5d38d53cd4381e8209d1e6ae83593))
+
+### Improvements 📈
+
+- ✅ test: migrate to jest ([`c562d1f`](https://github.com/bandantonio/antmarky/commit/c562d1f1fcaeca57a12295821bc6c0e35cd08bac))
+- 🎨 style: change style of lang badges in code blocks ([`c475d7f`](https://github.com/bandantonio/antmarky/commit/c475d7f4f6dc7047debefbeaba050fa008af8192))
+- ℹ️ chore: add dependabot config ([`f247ba3`](https://github.com/bandantonio/antmarky/commit/f247ba3d64d4ec00a6af393d1fa9508191efa576))
+- ℹ️ chore(deps-dev): bump jest and @types/jest ([`f990f0f`](https://github.com/bandantonio/antmarky/commit/f990f0fcfdb3f69853c259f9e5358ca77b56c090))
+
+----
+
 ## [v0.10.0](https://github.com/bandantonio/antmarky/compare/v0.9.0...v0.10.0) - 30 April 2022
 
 ### Improvements 📈
