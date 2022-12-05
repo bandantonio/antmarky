@@ -33,7 +33,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@fastify/static": "^6.5.0",
+    "@fastify/static": "^6.6.0",
     "@fastify/view": "^7.1.0",
     "@types/jest": "^28.1.4",
     "asciidoctor": "^2.2.6",
