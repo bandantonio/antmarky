@@ -1,0 +1,19 @@
+{
+  "include": [ "src" ],
+  "exclude": [ "node_modules",  ],
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./public",
+
+    "lib": [ "es2021" ],
+    "module": "commonjs",
+    "target": "es6",
+    "moduleResolution": "node",
+
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "strict": true, 
+    "strictNullChecks": true
+  }
+}

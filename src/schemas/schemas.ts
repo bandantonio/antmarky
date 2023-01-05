@@ -1,4 +1,4 @@
-const joi = require('joi');
+import * as joi from 'joi';
 
 // Components
 const stringOrPath = joi.string();
@@ -60,7 +60,7 @@ const buildTocSchema = htmlDocumentBody.required();
 
 const embedRemoteMarkdownSchema = nameTitleContent.required();
 
-module.exports = {
+export {
   findDocFilesSchema,
   filenameSchema,
   filesContentSchema,

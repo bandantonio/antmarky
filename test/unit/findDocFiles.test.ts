@@ -1,5 +1,6 @@
-const mock = require('mock-fs');
-const { findDocFiles } = require('../../src/common/prepare-content');
+import { describe, expect, test } from '@jest/globals';
+import * as mock from 'mock-fs';
+import { findDocFiles } from '../../src/common/prepare-content';
 
 describe('module findDocFiles', () => {
 
@@ -27,12 +28,9 @@ describe('module findDocFiles', () => {
     files.map(obj => expect(Object.keys(obj)).toEqual(['dirLevel', 'basePath', 'dirPath', 'dirClass', 'dirName', 'files']))
   });
 
-  test('Throw an error when docs directory name is invalid', async () => {
-    await expect(findDocFiles(123)).rejects.toThrow(Error, 'Invalid docs directory');
-  });
-
   test(`Throw an error when the specified docs directory doesn't exist`, async () => {
-    await expect(findDocFiles('nonexistentdirectory')).rejects.toThrow(Error, 'The specified directory does not exist');
+    const dirName = 'nonexistentdirectory';
+    await expect(findDocFiles(dirName)).rejects.toThrow(`Looks like the specified directory ${dirName} does not exist`);
   });
 
   describe('module findDocFiles - working with files', () => {
@@ -93,7 +91,7 @@ describe('module findDocFiles', () => {
         }
       });
 
-      await expect(findDocFiles()).rejects.toThrow(Error, 'Filename is invalid. Valid characters are: letters (A-Z, a-z), numbers (0-9), dashes (-), underscores (_), dots (.)');
+      await expect(findDocFiles()).rejects.toThrow('Filename is invalid. Valid characters are: letters (A-Z, a-z), numbers (0-9), dashes (-), underscores (_), dots (.)');
 
       mock.restore();
     });

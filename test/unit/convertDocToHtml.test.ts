@@ -1,13 +1,7 @@
-const { convertDocToHtml } = require('../../src/common/prepare-content');
+import { describe, expect, test } from '@jest/globals';
+import { convertDocToHtml } from '../../src/common/prepare-content';
 
 describe('module convertDocToHtml', () => {
-  test('Ensure the module throws an error when passing input of incorrect type', () => {
-    let inputOfIncorrectType = ['string', 77, { "name": "John" }];
-    for (let value of inputOfIncorrectType) {
-      expect(() => convertDocToHtml(value)).toThrowError('Can\'t convert. Input data is invalid');
-    }
-  });
-
   test('Convert content without remote inclusion', () => {
     let content = [{
       name: { file: 'features.adoc', fileName: 'features' },

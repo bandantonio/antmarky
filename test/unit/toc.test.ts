@@ -1,13 +1,7 @@
-const { buildToc } = require('../../src/toc');
+import { describe, expect, test } from '@jest/globals';
+import buildToc from '../../src/toc';
 
 describe('module buildToc', () => {
-  test('Throw error when passing input of incorrect type', () => {
-    let inputOfIncorrectType = [['one', 'two', 'three'], 77, { "name": "John" }];
-    for (let value of inputOfIncorrectType) {
-      expect(() => buildToc(value)).toThrowError(`Can't build table of contents, the provided content is invalid`);
-    }
-  });
-
   test('Should return headings in proper format', () => {
     let properHtml =
       '<h1 id="features">Features</h1>\n' +

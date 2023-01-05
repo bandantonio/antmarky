@@ -1,11 +1,15 @@
-const fs = require('fs');
-const path = require('path');
-const { filenameSchema } = require('../schemas/schemas');
+import * as fs from 'fs';
+import * as path from 'path';
+import { filenameSchema } from '../schemas/schemas';
 
+export interface FileData {
+  file: string,
+  fileName: string
+}
 /**
 * Find all Asciidoctor files in directory
 */
-const getDocFiles = (dir) => {
+export const getDocFiles = (dir:string):FileData[] => {
   return fs.readdirSync(dir)
     .filter(file => path.extname(file) === '.adoc')
     .map(file => {
@@ -21,5 +25,3 @@ const getDocFiles = (dir) => {
       };
     });
 };
-
-module.exports = getDocFiles;
