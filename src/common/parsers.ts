@@ -1,4 +1,4 @@
-const Asciidoctor = require('asciidoctor');
+import Asciidoctor from 'asciidoctor';
 const asciidoctor = Asciidoctor();
 
 const asciidoctorDefaultConfig = {
@@ -6,12 +6,13 @@ const asciidoctorDefaultConfig = {
     icons: 'font',
     idprefix: '',
     idseparator: '-',
-    sectanchors: ''
+    sectanchors: '',
+    imagesdir: ''
   },
   safe: 'safe'
 };
 
-module.exports = {
-  adoc: asciidoctor,
+export {
+  asciidoctor as adoc,
   asciidoctorDefaultConfig
-};
+}

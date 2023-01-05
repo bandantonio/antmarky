@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: '16'
 
-      - name: ✅ Run code style linter          
+      - name: ✅ Run code style linter
         id: linter
         run: npm run lint
           
@@ -68,7 +68,7 @@ jobs:
       - name: 📚 Generate documentation
         id: build_docs
         if: steps.cache-node-modules.outcome == 'success'
-        run: npm run build
+        run: npm start
 
       - name: 🚀 Deploy to GitHub Pages 
         if: steps.build_docs.outcome == 'success' && github.ref == 'refs/heads/main'

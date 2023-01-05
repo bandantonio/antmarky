@@ -1,10 +1,10 @@
-const ejs = require('ejs');
-const fs = require('fs');
-const fse = require('fs-extra');
-const path = require('path');
-const { adoc, asciidoctorDefaultConfig } = require('./parsers');
-const {
-  findDocFilesSchema,
+import * as fs from 'fs';
+import * as fse from 'fs-extra';
+import * as path from 'path';
+import * as ejs from 'ejs';
+import { adoc, asciidoctorDefaultConfig } from './parsers';
+import {
+  // findDocFilesSchema,
   filesContentSchema,
   convertDocToHtmlSchema,
   saveHtmlContentSchemaFile,
@@ -14,30 +14,45 @@ const {
   removeOutputDirectorySchema,
   buildStaticFilesSchema,
   copyStaticAssetsSchema
-} = require('../schemas/schemas');
-const checkForChildrenFolders = require('../helpers/checkForChildrenFolders');
-const getDocFiles = require('../helpers/getDocFiles');
-const { buildToc } = require('../toc');
-const { errorPage } = require('../data/defaults');
+} from '../schemas/schemas';
+import checkForChildrenFolders from '../helpers/checkForChildrenFolders';
+import { FileData, getDocFiles } from '../helpers/getDocFiles';
+import buildToc from '../toc'
+import errorPage from '../data/defaults';
+
+const defaultDocsDirectory = 'docs';
+const defaultOutputDirectory = 'public';
+const defaultAssetsDirectory = 'assets';
+export interface FileInfo {
+  dirLevel: number,
+  basePath: string,
+  dirPath: string,
+  dirClass: string,
+  dirName: string,
+  files: FileData[]
+}
+
+export interface FileContent {
+  name: FileData,
+  title: string,
+  content: string
+}
 
 /**
  * Find all Asciidoctor files within the specified directory
  */
-const findDocFiles = async (docsDirectoryName = 'docs') => {
-  await findDocFilesSchema.validateAsync(docsDirectoryName).catch(() => {
-    throw new Error('Invalid docs directory');
-  });
+const findDocFiles = async (docsDirectoryName:string = defaultDocsDirectory):Promise<FileInfo[]> => {
 
   const docsDirectoryPath = path.join(process.cwd() + `/${docsDirectoryName}`);
 
   if (!fs.existsSync(docsDirectoryPath)) {
-    throw new Error(`Looks like the specified directory ${docsDirectoryName} does not exist`);
+    throw new Error(`Looks like the specified directory ${ docsDirectoryName } does not exist`);
   }
 
-  const resultingFilesTree = [];
+  const resultingFilesTree:FileInfo[] = [];
 
   // Find all the Asciidoctor files in the documentation directory and keep track of the child hierarchy
-  const docFilesFilder = async (dir = docsDirectoryPath) => {
+  const docFilesFilder = async (dir = docsDirectoryPath):Promise<FileInfo[]> => {
     // dirLevel is used to calculate hierarchy and children
     // 0 - docsDirectoryName, 1 - child dir for docsDirectoryName, etc
     // dirLevel is calculated via relative path
@@ -52,6 +67,7 @@ const findDocFiles = async (docsDirectoryName = 'docs') => {
 
     // Directory traversal logic
     const docFilesInFolder = getDocFiles(dir);
+
     if (docFilesInFolder.length > 0) {
       resultingFilesTree.push({
         dirLevel: dirLevel,
@@ -64,6 +80,7 @@ const findDocFiles = async (docsDirectoryName = 'docs') => {
     }
 
     const anyFolderInside = checkForChildrenFolders(dir);
+
     if (anyFolderInside.length > 0) {
       for (const directory of anyFolderInside) {
         await docFilesFilder(path.join(dir, directory));
@@ -72,6 +89,7 @@ const findDocFiles = async (docsDirectoryName = 'docs') => {
 
     return resultingFilesTree;
   };
+  
   const docFiles = await docFilesFilder();
   return docFiles;
 };
@@ -79,17 +97,13 @@ const findDocFiles = async (docsDirectoryName = 'docs') => {
 /**
  * Get content of Asciidoctor files
  */
-const getFilesContent = async (fileDetails) => {
+const getFilesContent = async (fileDetails:FileInfo[]):Promise<FileContent[]> => {
   if (!fileDetails.length) {
     throw new Error('Looks like you forgot to add files to your documentation directory');
   }
-  try {
-    await filesContentSchema.validateAsync(fileDetails);
-  } catch (error) {
-    throw new Error('Can\'t get content from files');
-  }
 
-  const docFileContent = [];
+  const docFileContent:FileContent[] = [];
+
   for (const details of fileDetails) {
     const absolutePath = path.join(details.basePath, details.dirPath);
     details.files.forEach(file => {
@@ -101,23 +115,21 @@ const getFilesContent = async (fileDetails) => {
       });
     });
   }
+  
   return docFileContent;
 };
 
 /**
  * Convert Asciidoctor files to HTML
  */
-const convertDocToHtml = (docTextArray) => {
-  const validation = convertDocToHtmlSchema.validate(docTextArray);
-
-  if (validation.error) {
-    throw new Error('Can\'t convert. Input data is invalid');
-  }
+const convertDocToHtml = (docTextArray:FileContent[]) => {
   return docTextArray.map(docText => {
     const fileName = docText.name.file;
     const fileTitle = docText.title;
     const html = adoc.convert(docText.content, asciidoctorDefaultConfig);
-    const tableOfCOntents = buildToc(html);
+    
+    const tableOfCOntents = buildToc(html as string);
+
     return {
       name: fileName.substring(0, fileName.lastIndexOf('.')),
       title: fileTitle.substring(0, fileTitle.lastIndexOf('.')),
@@ -130,7 +142,7 @@ const convertDocToHtml = (docTextArray) => {
 /**
  * Save HTML content to a file
  */
-const saveHtmlContent = async (filename, htmlContent, outputDirectory = 'public') => {
+const saveHtmlContent = async (filename:string, htmlContent:string, outputDirectory = defaultOutputDirectory) => {
   await saveHtmlContentSchemaFile.validateAsync(filename);
   await saveHtmlContentSchemaContent.validateAsync(htmlContent);
   const basePath = path.join(process.cwd(), outputDirectory);
@@ -145,13 +157,13 @@ const saveHtmlContent = async (filename, htmlContent, outputDirectory = 'public'
  * - an array of objects with hierarchy of all pages
  * - an array of objects with all pages and corresponding HTML content
  */
-const buildContent = async (docsDirectoryName = 'docs') => {
+const buildContent = async (docsDirectoryName = defaultDocsDirectory) => {
   const locatedDocFiles = await findDocFiles(docsDirectoryName);
-  const allPages = locatedDocFiles;
   const docFilesContent = await getFilesContent(locatedDocFiles);
   const htmlContent = convertDocToHtml(docFilesContent);
+  
   return {
-    allPages: allPages,
+    allPages: locatedDocFiles,
     htmlContent: htmlContent
   };
 };
@@ -159,13 +171,12 @@ const buildContent = async (docsDirectoryName = 'docs') => {
 /**
  * Compile EJS partials into a working template
  */
-const compileTemplate = (templatesPath, template) => {
+const compileTemplate = (templatesPath:string, template:string) => {
   const validateTemplatesPath = compileTemplateSchemaTemplatesPath.validate(templatesPath);
   const validateTemplate = compileTemplateSchemaTemplate.validate(template);
 
   if (!validateTemplatesPath.error || !validateTemplate.error) {
     const compiledTemplate = ejs.compile(fs.readFileSync(templatesPath + '/' + template, 'utf-8'), {
-      encoding: 'utf-8',
       views: [path.resolve(templatesPath)]
     });
     return compiledTemplate;
@@ -175,7 +186,7 @@ const compileTemplate = (templatesPath, template) => {
 /**
  * Remove output directory before generating files
  */
-const removeOutputDirectory = (outputDirectory = 'public') => {
+const removeOutputDirectory = (outputDirectory = defaultOutputDirectory) => {
   const validateOutputDirectory = removeOutputDirectorySchema.validate(outputDirectory);
 
   if (validateOutputDirectory.error) {
@@ -187,15 +198,15 @@ const removeOutputDirectory = (outputDirectory = 'public') => {
 /**
  * Copy source and docs assets to the corresponding directories
  */
-const copyStaticAssets = (staticFolder = 'assets', docsDirectoryName = 'docs') => {
+const copyStaticAssets = (staticFolder = defaultAssetsDirectory, docsDirectoryName = defaultDocsDirectory) => {
   const validateStaticAssets = copyStaticAssetsSchema.validate(staticFolder);
 
   if (!validateStaticAssets.error) {
-    fse.copySync(path.resolve(path.join(process.cwd() + '/src/' + staticFolder)), path.resolve('public'));
+    fse.copySync(path.resolve(path.join(process.cwd() + '/src/' + staticFolder)), path.resolve(defaultOutputDirectory));
   }
 
   const docsStaticFolderPath = path.join(path.resolve(docsDirectoryName), staticFolder);
-  const publicStaticFolderPath = path.join(path.resolve('public'), staticFolder);
+  const publicStaticFolderPath = path.join(path.resolve(defaultOutputDirectory), staticFolder);
 
   if (fs.existsSync(docsStaticFolderPath)) {
     fse.copySync(docsStaticFolderPath, publicStaticFolderPath);
@@ -205,23 +216,19 @@ const copyStaticAssets = (staticFolder = 'assets', docsDirectoryName = 'docs') =
 /**
  * Do the magic :)
  */
-const buildStaticFiles = async (docsDirectoryName = 'docs', outputDirectory = 'public') => {
-  try {
-    await buildStaticFilesSchema.validateAsync(docsDirectoryName);
-  } catch (error) {
-    throw new Error('Error when building static files');
-  }
+const buildStaticFiles = async (docsDirectoryName = defaultDocsDirectory, outputDirectory = defaultOutputDirectory) => {
   removeOutputDirectory(outputDirectory);
-  const templatesPath = path.join(process.cwd() + '/views');
+  const templatesPath = path.join(process.cwd() + '/src/views');
   const generatedContent = await buildContent(docsDirectoryName);
+  // @ts-ignore
   const sidebarListOfPages = generatedContent.allPages.filter(page => page.name !== 'README');
-
   const items = await fs.promises.readdir(templatesPath);
   items.filter(item => path.extname(item) === '.ejs').forEach(async template => {
     if (template === 'page.ejs') {
       const compiledTemplate = compileTemplate(templatesPath, template);
       const pageContent = generatedContent.htmlContent.filter(content => content.name !== 'README');
       pageContent.forEach(async page => {
+        // @ts-ignore
         const readyHtml = compiledTemplate({
           name: page.name,
           title: page.title,
@@ -235,6 +242,7 @@ const buildStaticFiles = async (docsDirectoryName = 'docs', outputDirectory = 'p
       const compiledTemplate = compileTemplate(templatesPath, template);
       const indexPage = generatedContent.htmlContent.find(content => content.name === 'README');
       if (indexPage) {
+        // @ts-ignore
         const readyHtml = compiledTemplate({
           name: indexPage.name,
           title: indexPage.title,
@@ -244,6 +252,7 @@ const buildStaticFiles = async (docsDirectoryName = 'docs', outputDirectory = 'p
         await saveHtmlContent('index.html', readyHtml);
       } else {
         const compiledTemplate = compileTemplate(templatesPath, template);
+        // @ts-ignore
         const readyHtml = compiledTemplate({
           name: '/',
           title: 'Home',
@@ -254,6 +263,7 @@ const buildStaticFiles = async (docsDirectoryName = 'docs', outputDirectory = 'p
       }
     } else if (template === '404.ejs') {
       const compiledTemplate = compileTemplate(templatesPath, template);
+      // @ts-ignore
       const readyHtml = compiledTemplate({
         name: '404',
         text: errorPage.text,
@@ -266,9 +276,9 @@ const buildStaticFiles = async (docsDirectoryName = 'docs', outputDirectory = 'p
   copyStaticAssets();
 };
 
-module.exports = {
-  findDocFiles: findDocFiles,
-  getFilesContent: getFilesContent,
-  convertDocToHtml: convertDocToHtml,
-  buildStaticFiles: buildStaticFiles
+export {
+  findDocFiles,
+  getFilesContent,
+  convertDocToHtml,
+  buildStaticFiles
 };

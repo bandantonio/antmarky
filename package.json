@@ -1,27 +1,31 @@
 {
   "name": "antmarky",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Antmarky is a static-site generator for Asciidoctor based on Node.js and EJS",
   "main": "server.js",
   "scripts": {
-    "build": "node src/commands/build.js",
-    "serve": "node server.js",
+    "build": "tsc -p tsconfig.json",
+    "dev": "nodemon src/server.ts",
+    "start": "ts-node src/commands/build.ts",
     "lint": "semistandard",
     "test": "jest",
     "bump": "node bump-version.js",
     "changelog": "auto-changelog --handlebars-setup .changelog/helper.js --template .changelog/changelog-template.hbs --commit-limit false"
   },
   "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "src/**/*.js"
+      "src/**/*.ts"
     ],
     "coverageReporters": [
       "lcov",
       "text"
     ],
     "coveragePathIgnorePatterns": [
-      "src/commands"
+      "src/commands",
+      "src/server.ts"
     ]
   },
   "semistandard": {
@@ -35,15 +39,24 @@
   "devDependencies": {
     "@fastify/static": "^6.5.0",
     "@fastify/view": "^7.1.0",
-    "@types/jest": "^28.1.4",
+    "@jest/globals": "^29.3.1",
+    "@types/ejs": "^3.1.1",
+    "@types/fs-extra": "^9.0.13",
+    "@types/jest": "^28.1.8",
+    "@types/mock-fs": "^4.13.1",
+    "@types/node": "^18.11.17",
     "asciidoctor": "^2.2.6",
     "auto-changelog": "^2.4.0",
     "ejs": "^3.1.6",
     "fastify": "^4.5.2",
     "fs-extra": "^10.0.0",
-    "jest": "^28.1.2",
+    "jest": "^29.3.1",
     "joi": "^17.6.0",
     "mock-fs": "^5.1.2",
-    "semistandard": "^16.0.1"
+    "nodemon": "^2.0.20",
+    "semistandard": "^16.0.1",
+    "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4"
   }
 }

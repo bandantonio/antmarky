@@ -1,14 +1,8 @@
-const mock = require('mock-fs');
-const { getFilesContent } = require('../../src/common/prepare-content');
+import { describe, expect, test } from '@jest/globals';
+import * as mock from 'mock-fs';
+import { getFilesContent, buildStaticFiles } from '../../src/common/prepare-content';
 
-describe('module getFilesContent', () => {
-  test('Throw an error when passing input of incorrect type', async () => {
-    let inputOfIncorrectType = ['string', 77, { "name": "John" }];
-    for (let value of inputOfIncorrectType) {
-      await expect(getFilesContent(value)).rejects.toThrow(Error, `Can't get content from files`);
-    }
-  });
-  
+describe('module getFilesContent', () => {  
   test('Get file details from default docs directory', async () => {
     // Merge this test later with the one below
     mock({
@@ -44,6 +38,16 @@ describe('module getFilesContent', () => {
       title: 'asciidoctor',
       content: '= Title\n' + 'Hello world from the fake-root-two file\n' + 'https://github.com/bandantonio/antmarky[link to Antmarky]'
     });
+
+    mock.restore();
+  });
+  
+  test('Show error when the default docs directory is empty', async () => {
+    mock({
+      'docs': { }
+    });
+    
+    await expect(buildStaticFiles()).rejects.toThrow();
 
     mock.restore();
   });
