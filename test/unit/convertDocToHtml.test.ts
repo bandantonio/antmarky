@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import { convertDocToHtml } from '../../src/common/prepare-content';
+import convertDocToHtml from '../../src/adoc-to-html';
 
 describe('module convertDocToHtml', () => {
   test('Convert content without remote inclusion', () => {

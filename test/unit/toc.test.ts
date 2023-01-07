@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import buildToc from '../../src/toc';
+import buildToc from '../../src/build-toc';
 
 describe('module buildToc', () => {
   test('Should return headings in proper format', () => {

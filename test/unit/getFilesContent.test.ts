@@ -1,8 +1,9 @@
 import { describe, expect, test } from '@jest/globals';
 import * as mock from 'mock-fs';
-import { getFilesContent, buildStaticFiles } from '../../src/common/prepare-content';
+import getFileContent from '../../src/parse-content';
+import buildStaticFiles from '../../src/build-content';
 
-describe('module getFilesContent', () => {  
+describe('module getFileContent', () => {  
   test('Get file details from default docs directory', async () => {
     // Merge this test later with the one below
     mock({
@@ -23,7 +24,7 @@ describe('module getFilesContent', () => {
       ]
     }]
     
-    let result = await getFilesContent(content);
+    let result = await getFileContent(content);
 
     expect(result).toHaveLength(2);
 

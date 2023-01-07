@@ -2,7 +2,7 @@ import { describe, expect, test } from '@jest/globals';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as mock from 'mock-fs';
-import { buildStaticFiles } from '../../src/common/prepare-content';
+import buildStaticFiles from '../../src/build-static-files';
 
 describe('module buildStaticFiles', () => {  
   test('Ensure the output directory contains generated static files (root README)', async () => {
@@ -21,7 +21,7 @@ describe('module buildStaticFiles', () => {
       'public': {}
     });
     
-    // Refactor expectations below (await-related)
+    // // Refactor expectations below (await-related)
     await buildStaticFiles();
     await expect(fs.promises.readdir('public')).resolves.toBeInstanceOf(Array);
     await expect(fs.promises.readdir('public')).resolves.toEqual(expect.arrayContaining(['css', 'index.html', 'unit-test.html', 'unit-test-2.html', 'unit-test-3.html', '404.html']));

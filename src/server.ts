@@ -1,11 +1,13 @@
-import fastify, { FastifyReply, FastifyRequest, RequestGenericInterface } from 'fastify';
+import fastify, { RequestGenericInterface } from 'fastify';
 import * as fs from 'fs';
 import * as path from 'path';
-import { FileInfo, FileContent, findDocFiles, getFilesContent, convertDocToHtml } from './common/prepare-content';
-import { adoc, asciidoctorDefaultConfig } from './common/parsers';
-import errorPage from './data/defaults';
+import FileInfo from './interfaces/fileInfo';
+import findDocFiles from './find-files';
+import getFileContent from './parse-content';
+import convertDocToHtml from './adoc-to-html';
+import { adoc, asciidoctorDefaultConfig } from './asciidoc-parser';
+import defaultSettings from './default-settings';
 import fastifyStatic from '@fastify/static';
-import { FileData } from './helpers/getDocFiles';
 import { Asciidoctor } from 'asciidoctor/types';
 const PORT = process.env.PORT || 8000;
 const assetsDir = 'public';
@@ -57,7 +59,7 @@ server.register(require('@fastify/view'), {
 
 server.addHook('preHandler', async (req, res) => {
   let locatedDocFiles = await findDocFiles();
-  const docFilesContent = await getFilesContent(locatedDocFiles);
+  const docFilesContent = await getFileContent(locatedDocFiles);
   let htmlContent = convertDocToHtml(docFilesContent);
   
   req.all_pages = locatedDocFiles;
@@ -100,8 +102,8 @@ server.get<requestGeneric>('/:pageName.html', (req, res) => {
     // @ts-ignore
     res.status(404).view('404', {
       name: '404',
-      text: errorPage.text,
-      title: errorPage.title,
+      text: defaultSettings.errorPage.text,
+      title: defaultSettings.errorPage.title,
       // @ts-ignore
       pages: req.all_pages.filter(page => page.name !== 'README')
     });

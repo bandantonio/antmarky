@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "nodemon src/server.ts",
-    "start": "ts-node src/commands/build.ts",
+    "start": "ts-node src/index.ts",
     "lint": "semistandard",
     "test": "jest",
     "bump": "node bump-version.js",
@@ -25,7 +25,8 @@
     ],
     "coveragePathIgnorePatterns": [
       "src/commands",
-      "src/server.ts"
+      "src/server.ts",
+      "src/index.ts"
     ]
   },
   "semistandard": {

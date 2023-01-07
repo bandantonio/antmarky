@@ -1,6 +1,6 @@
 import { describe, expect, test } from '@jest/globals';
 import * as mock from 'mock-fs';
-import { findDocFiles } from '../../src/common/prepare-content';
+import findDocFiles from '../../src/find-files';
 
 describe('module findDocFiles', () => {
 
