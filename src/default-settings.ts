@@ -1,24 +1,14 @@
-interface ErrorPage {
-  text: string,
-  title: string
-}
-
-interface DefaultSettings {
-  docsDirectory: string,
-  outputDirectory: string
-  assetsDirectory: string,
-  viewsDirectory: string,
-  errorPage: ErrorPage
-}
+import DefaultSettings from "./interfaces/DefaultSettings";
 
 const defaultSettings: DefaultSettings = {
   docsDirectory: 'docs',
   outputDirectory: 'public',
-  assetsDirectory: 'assets',
+  assetsDirectory: 'src/assets',
+  userStaticAssetsDirectory: 'static',
   viewsDirectory: 'src/views',
   errorPage: {
-    text: 'Oops, no content found',
-    title: 'Not Found'
+    title: 'Not Found',
+    html: '<p>Oops, no content found</p>'
   }
 }
 export default defaultSettings;

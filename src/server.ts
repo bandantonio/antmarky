@@ -1,119 +1,72 @@
 import fastify, { RequestGenericInterface } from 'fastify';
-import * as fs from 'fs';
-import * as path from 'path';
-import FileInfo from './interfaces/fileInfo';
-import findDocFiles from './find-files';
-import getFileContent from './parse-content';
-import convertDocToHtml from './adoc-to-html';
-import { adoc, asciidoctorDefaultConfig } from './asciidoc-parser';
-import defaultSettings from './default-settings';
 import fastifyStatic from '@fastify/static';
-import { Asciidoctor } from 'asciidoctor/types';
-const PORT = process.env.PORT || 8000;
-const assetsDir = 'public';
-asciidoctorDefaultConfig.attributes.imagesdir = assetsDir;
+import * as view from '@fastify/view';
+import * as ejs from 'ejs';
+import * as path from 'path';
+import { processContent, getItemData } from './process-content';
+import { ItemsWithHtml } from './interfaces/ItemDetails';
+import defaultSettings from './default-settings';
 
 const server = fastify({ logger: true });
 
-interface TableOfCOntents {
-  id: string,
-  link: string
-  title: string
-}
-
-interface Converted {
-  name: string
-  title: string
-  html: string | Asciidoctor.Document
-  toc: TableOfCOntents[]
-}
-
 declare module 'fastify' {
-  interface FastifyRequest {
-    all_pages: FileInfo[],
-    files_data: Converted[],
-  }
-}
-interface requestGeneric extends RequestGenericInterface {
-  Params: {
-    pageName: string
+  interface FastifyRequest extends RequestGenericInterface {
+    processed_content: ItemsWithHtml[]
   }
 }
 
-server.register(fastifyStatic, {
-  root: path.join(__dirname, 'assets')
-});
+interface IParams {
+  pageName: string;
+};
 
+// serve static files from the static folder inside the public directory
 server.register(fastifyStatic, {
-  root: path.join(process.cwd(), 'docs'),
-  prefix: `/${assetsDir}`,
+  root: path.resolve(defaultSettings.docsDirectory, defaultSettings.userStaticAssetsDirectory),
+  prefix: '/static/',
   decorateReply: false
 });
 
-server.register(require('@fastify/view'), {
-  engine: {
-    ejs: require('ejs')
-  },
+server.register(fastifyStatic, {
+  root: path.join(__dirname, 'assets'),
+  decorateReply: false
+});
+
+server.register(view, {
+  engine: { ejs: ejs },
   root: path.join(__dirname, 'views')
 });
 
 server.addHook('preHandler', async (req, res) => {
-  let locatedDocFiles = await findDocFiles();
-  const docFilesContent = await getFileContent(locatedDocFiles);
-  let htmlContent = convertDocToHtml(docFilesContent);
-  
-  req.all_pages = locatedDocFiles;
-  req.files_data = htmlContent;
+  const processedContent = await processContent();
+  req.processed_content = processedContent;
 });
 
-interface RenderData {
-  [key: string]: any;
-}
-
-server.get('/', (req, res) => {
+server.get('/', async (req, res) => {
+  let pageName = 'index.html';
   
-  let renderData:RenderData = {};
-  const specificPageData = req.files_data.find(page => page.name === 'README');
-  renderData.name = (specificPageData) ? specificPageData.name : '/';
-  renderData.title = (specificPageData) ? specificPageData.title : 'Home';
-  renderData.content = (specificPageData) ? specificPageData.html : adoc.convert(fs.readFileSync(path.resolve('README.adoc'), 'utf-8'), asciidoctorDefaultConfig);
+  let { title, html, sidebarPages, tableOfContents } = await getItemData('index.html', req.processed_content);
   // @ts-ignore
-  renderData.pages = req.all_pages.filter(page => page.name !== 'README');
-  // @ts-ignore
-  res.view('index', renderData);
+  await res.view('page', { pageName, title, html, sidebarPages, tableOfContents }, { async: true });
 });
 
-server.get<requestGeneric>('/:pageName.html', (req, res) => { 
-  const pageTitle = req.params.pageName;
-  const specificPageData = req.files_data.find(page => page.name === pageTitle);
+server.get<{ Params:IParams }>('/:pageName.html', async (req, res) => {
+  let pageName = `${req.params.pageName}.html`;
+  let itemData = await getItemData(pageName, req.processed_content);
   
-  if (specificPageData) {
-    const content = specificPageData.html;
+  if (itemData.status === 404) {
     // @ts-ignore
-    res.view('page', {
-      name: specificPageData.name,
-      title: pageTitle,
-      content,
-      toc: specificPageData.toc,
-      // @ts-ignore
-      pages: req.all_pages.filter(page => page.name !== 'README')
-    });
-  } else {
-    // @ts-ignore
-    res.status(404).view('404', {
-      name: '404',
-      text: defaultSettings.errorPage.text,
-      title: defaultSettings.errorPage.title,
-      // @ts-ignore
-      pages: req.all_pages.filter(page => page.name !== 'README')
-    });
+    await res.status(404).view('error', { pageName, title: itemData.title, text: itemData.html }, { async: true });
   }
+  
+  let { title, html, sidebarPages, tableOfContents } = itemData;
+  
+  // @ts-ignore
+  await res.view('page', { pageName, title, html, sidebarPages, tableOfContents }, { async: true });
 });
 
 const start = async () => {
   try {
-    // @ts-ignore
-    await server.listen({ port: PORT, host: '0.0.0.0' });
+    await server.listen({ port: 8000 });
   } catch (err) {
     server.log.error(err);
     process.exit(1);
