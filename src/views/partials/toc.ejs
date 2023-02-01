@@ -1,6 +1,8 @@
-<div class="list_title"><i class="fa fa-align-justify"></i> On this page</div>
-<ul class="toc_list">
-  <% toc.forEach(heading => { %>
-    <li class="list_item ind-<%= heading.id %>"><a class="nav-link" href="#<%- heading.link %>"><%= heading.title %></a></li>
-  <% }) %>
+<div class="list_title">On this page</div>
+<ul class="list">
+  <% if (tableOfContents) { %>
+    <% tableOfContents.forEach(heading => { %>
+      <li class="list_item ind-<%= heading.id %>"><a class="nav-link" href="#<%- heading.link %>"><%= heading.title %></a></li>
+    <% }) %>
+  <% } %>
 </ul>
