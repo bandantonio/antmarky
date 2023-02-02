@@ -4,9 +4,9 @@
   "description": "Antmarky is a static-site generator for Asciidoctor based on Node.js and EJS",
   "main": "server.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build:tsc": "tsc -p tsconfig.json",
     "dev": "nodemon src/server.ts",
-    "start": "ts-node src/index.ts",
+    "build": "ts-node src/index.ts",
     "lint": "semistandard",
     "test": "jest",
     "bump": "node bump-version.js",
@@ -16,9 +16,6 @@
     "preset": "ts-jest",
     "testEnvironment": "node",
     "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/*.ts"
-    ],
     "coverageReporters": [
       "lcov",
       "text"
@@ -33,6 +30,9 @@
     "ignore": [
       "test/"
     ]
+  },
+  "engines": {
+    "node": ">=16.7.0"
   },
   "keywords": [],
   "author": "",
