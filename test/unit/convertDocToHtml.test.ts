@@ -21,7 +21,6 @@ describe('module convertDocToHtml', () => {
     let result = convertDocToHtml(content);
     expect(result).toHaveLength(3);
     result.forEach(obj => expect(Object.keys(obj)).toEqual(['name', 'title', 'href', 'html']));
-    // check that each object has the correct values
     expect(result[0]).toEqual({
       name: 'features.html',
       title: 'Title',

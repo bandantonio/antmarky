@@ -102,10 +102,6 @@ describe('module findDocFiles', () => {
     
   });
   
-  
-  
-  
-  
   //   describe.skip('module findDocFiles - working with files', () => {
   
   //     test('Output files from the root docs directory', async () => {

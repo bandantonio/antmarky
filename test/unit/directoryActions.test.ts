@@ -12,7 +12,6 @@ import {
 describe('module directoryActions', () => {
     describe('function createDirectory', () => {
         test('Successfully create a directory', async () => {
-            // create a mock with files in the docs/static directory
             mock({
                 'docs': {
                     'README.adoc': '= Title\nHello world from the README.adoc file',
@@ -28,7 +27,6 @@ describe('module directoryActions', () => {
         });
         
         test('Throw an error when a directory cannot be created', async () => {
-            // create a mock with files in the docs/static directory
             mock({
                 'docs': mock.directory({
                     // mode read-only
@@ -91,7 +89,6 @@ describe('module directoryActions', () => {
 
             await copyDirectoryContentsToDestination(path.resolve(source), path.resolve(destination));
             let res = await fs.promises.readdir(path.resolve(destination));
-            console.log('res after copy', res);
             
             await expect(fs.promises.readdir(path.resolve('public'))).resolves.toContain('README.adoc');
 
@@ -112,6 +109,4 @@ describe('module directoryActions', () => {
     //         mock.restore();
     //     });
     // });
-
-
 });

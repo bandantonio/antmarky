@@ -5,7 +5,6 @@ import { ItemsList } from '../../src/interfaces/ItemDetails';
 
 describe('module getFileContent', () => {  
   test('Get file details from default `docs` directory', async () => {
-    // Merge this test later with the one below
     mock({
       'docs': {
         'unit-tests.adoc': `= Title\nHello world from the fake-root-one file\nhttps://github.com/bandantonio[link to GitHub]`,
@@ -39,7 +38,6 @@ describe('module getFileContent', () => {
     
     expect(result).toHaveLength(3);
     result.forEach(obj => expect(Object.keys(obj)).toEqual(['name', 'href', 'content']));
-    // check that each object has the correct values
     expect(result[0]).toEqual({
       name: 'unit-tests.adoc',
       href: `${process.cwd()}/docs/unit-tests.adoc`,
