@@ -19,11 +19,6 @@
     "coverageReporters": [
       "lcov",
       "text"
-    ],
-    "coveragePathIgnorePatterns": [
-      "src/commands",
-      "src/server.ts",
-      "src/index.ts"
     ]
   },
   "semistandard": {
