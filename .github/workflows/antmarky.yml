@@ -68,7 +68,7 @@ jobs:
       - name: 📚 Generate documentation
         id: build_docs
         if: steps.cache-node-modules.outcome == 'success'
-        run: npm start
+        run: npm run build
 
       - name: 🚀 Deploy to GitHub Pages 
         if: steps.build_docs.outcome == 'success' && github.ref == 'refs/heads/main'
