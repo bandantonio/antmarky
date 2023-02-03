@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as fse from 'fs-extra';
 import * as path from 'path';
 
 async function createDirectory(dirPath:string) {
@@ -22,13 +23,15 @@ async function cleanDirectoryContents(dirPath:string) {
     }
 }
 /* istanbul ignore next */
-async function copyDirectoryContentsToDestination(sourceDirectory:string, destinationDirectory:string) {    
-    try {
-        await fs.promises.cp(sourceDirectory, destinationDirectory, { recursive: true });
-    } catch (err) {
-        console.log(err);
-        throw new Error(`Cannot copy the contents of the directory: '${sourceDirectory}' to '${destinationDirectory}'`);
-         
+// TODO: Rewrite the function so it can be properly tested by mock-fs
+// mock-fs cannot mock the fs.promises.cp. Issue: https://github.com/tschaub/mock-fs/issues/358
+// make sure fs-extra is necessary
+async function copyDirectoryContentsToDestination(sourceDirectory:string, destinationDirectory:string) {       
+    const resultingDestinationDirectory = path.join(destinationDirectory);  
+    try {        
+        await fse.copy(sourceDirectory, resultingDestinationDirectory);
+    } catch (err) {        
+        throw new Error(`Cannot copy the contents of the directory: '${sourceDirectory}' to '${resultingDestinationDirectory}'`);
     }
 }
 

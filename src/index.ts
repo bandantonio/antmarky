@@ -9,9 +9,9 @@ import copyStaticAssets from './copy-assets';
  */
 const buildContent = async () => {
 
-    let htmlContent = await processContent();
-    // await createHtmlPages(htmlContent);
     await copyStaticAssets();
+    let htmlContent = await processContent();    
+    await createHtmlPages(htmlContent);
 };
 
 buildContent();

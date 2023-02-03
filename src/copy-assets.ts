@@ -25,18 +25,19 @@ const copyStaticAssets = async () => {
   await cleanDirectoryContents(outputDirectoryPath);
 
   await copySystemAssets();
-  // await copyUserAssets();
+  await copyUserAssets();
 };
 
 async function copySystemAssets() {
   const outputDirectory = defaultSettings.outputDirectory;
   const outputDirectoryPath = path.resolve(outputDirectory);
-  const systemAssetsDirectoryPath = path.resolve(defaultSettings.assetsDirectory);
   
   // check if the system static assets directory corresponds to a valid path
   // if it does, copy it to the output directory
-  const validateStaticAssetsPath = copyStaticAssetsSchema.validate(systemAssetsDirectoryPath);
-  if (!validateStaticAssetsPath.error) {
+  const validateStaticAssets = copyStaticAssetsSchema.validate(defaultSettings.assetsDirectory);  
+  
+  if (!validateStaticAssets.error) {
+    const systemAssetsDirectoryPath = path.resolve(defaultSettings.assetsDirectory);
     try {
       await copyDirectoryContentsToDestination(systemAssetsDirectoryPath, outputDirectoryPath);
     } catch (err) {
