@@ -1,10 +1,14 @@
-<div class="list_title">Table of contents</div>
-<ul class="list">
-  <% sidebarPages.forEach(page => { %>
-    <% if (page.name === pageName) { %>
-      <li class="list_item"><a class="nav-link active" href="<%= page.name %>"><%= page.title %></a></li>
-      <% } else { %>
-        <li class="list_item"><a class="nav-link" href="<%= page.name %>"><%= page.title %></a></li>
-    <% } %>
-<% }) %>
-</ul>
+<nav class="navbar-expand-sm">
+  <div id="sidebarToggler" class="offcanvas offcanvas-end">
+    <div class="list_title">Table of contents</div>
+    <ul class="list">
+      <% sidebarPages.forEach(page => { %>
+        <% if (page.name === pageName) { %>
+          <li class="list_item"><a class="nav-link active" href="<%= page.name %>"><%= page.title %></a></li>
+          <% } else { %>
+            <li class="list_item"><a class="nav-link" href="<%= page.name %>"><%= page.title %></a></li>
+        <% } %>
+    <% }) %>
+    </ul>
+  </div>
+</nav>
