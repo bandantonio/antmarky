@@ -7,9 +7,10 @@ const asciidoctorDefaultConfig = {
     idprefix: '',
     idseparator: '-',
     sectanchors: '',
-    imagesdir: ''
+    imagesdir: 'static',
+    showtitle: ''
   },
-  safe: 'safe'
+  safe: 'unsafe',
 };
 
 export {

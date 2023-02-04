@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%- include('./partials/head'); %>
+  <!-- consumes 'title' variable -->
+  <%- await include('./partials/head'); %>
 </head>
-<body data-bs-spy="scroll" data-bs-target=".toc" data-bs-offset="120">
+<body>
 <header>
-  <%- include('./partials/nav'); %>
+  <%- await include('./partials/nav'); %>
 </header>
 
 <div class="container-fluid">
   <div class="full_content row">
     <div class="sidebar col-2">
-      <%- include('./partials/sidebar'); %>
+      <!-- consumes 'sidebarPages' variable -->
+      <%- await include('./partials/sidebar'); %>
     </div>
     <div class="content_area col-8">
-      <%- content %>
+      <!-- consumes 'content' variable -->
+      <%- await html %>
     </div>
     <div class="toc col-2">
-      <%- include('./partials/toc'); %>
+      <!-- consumes 'tableOfContents' variable -->
+      <%- await include('./partials/toc'); %> 
     </div>
   </div>
 </div>
-
-<%- include('./partials/scripts'); %>
+<%- await include('./partials/scripts'); %>
 </body>
 </html>

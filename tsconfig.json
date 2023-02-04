@@ -1,9 +1,9 @@
 {
   "include": [ "src" ],
-  "exclude": [ "node_modules" ],
+  "exclude": [ "node_modules", "src/server.ts" ],
   "compilerOptions": {
     "rootDir": "./src",
-    "outDir": "./public",
+    "outDir": "./dist",
 
     "lib": [ "es2021" ],
     "module": "commonjs",

@@ -52,7 +52,7 @@ const compileTemplateSchemaTemplate = stringOrPath.required();
 
 const removeOutputDirectorySchema = stringOrPath.valid('public').required();
 
-const copyStaticAssetsSchema = stringOrPath.valid('assets').required();
+const copyStaticAssetsSchema = stringOrPath.valid('src/assets').required();
 
 const buildStaticFilesSchema = stringOrPath.required();
 
