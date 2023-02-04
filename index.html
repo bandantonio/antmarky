@@ -16,10 +16,13 @@
   <nav class="navbar navbar-expand-sm mb-2 fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="./"><i class="fa fa-check-square"></i> Antmarky</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarToggler" aria-controls="sidebarToggler" aria-expanded="false" aria-label="Toggle sidebar">
+    <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebarToggler"
+            aria-controls="sidebarToggler"
+            aria-label="Toggle sidebar">
     </button>
-    <div class="collapse navbar-collapse" id="sidebarToggler">
-  </div>
 </nav>
 </header>
 
@@ -27,14 +30,18 @@
   <div class="full_content row">
     <div class="sidebar col-2">
       <!-- consumes 'sidebarPages' variable -->
-      <div class="list_title">Table of contents</div>
-<ul class="list">
-  
+      <nav class="navbar-expand-sm">
+  <div id="sidebarToggler" class="offcanvas offcanvas-end">
+    <div class="list_title">Table of contents</div>
+    <ul class="list">
+      
+        
+            <li class="list_item"><a class="nav-link" href="features.html">Features</a></li>
+        
     
-        <li class="list_item"><a class="nav-link" href="features.html">Features</a></li>
-    
-
-</ul>
+    </ul>
+  </div>
+</nav>
     </div>
     <div class="content_area col-8">
       <!-- consumes 'content' variable -->
