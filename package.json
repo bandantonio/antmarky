@@ -40,7 +40,7 @@
     "@types/fs-extra": "^11.0.1",
     "@types/jest": "^29.4.0",
     "@types/mock-fs": "^4.13.1",
-    "@types/node": "^18.11.17",
+    "@types/node": "^18.15.11",
     "asciidoctor": "^2.2.6",
     "auto-changelog": "^2.4.0",
     "ejs": "^3.1.6",
