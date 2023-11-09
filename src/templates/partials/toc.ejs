@@ -1,0 +1,8 @@
+<div class="list_title">On this page</div>
+<ul class="list">
+  <% for (let item of tableOfContents) { %>
+    <li class="list_item ind-<%= item.level %>">
+      <a class="nav-link" href="#<%= item.id %>"><%= item.title %></a>
+    </li>
+  <% } %>
+</ul>

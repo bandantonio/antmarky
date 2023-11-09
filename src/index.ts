@@ -1,19 +1,17 @@
-import { processContent } from './process-content';
-import createHtmlPages from './create-html-pages';
-import copyStaticAssets from './copy-assets';
-/**
- * Wrapper function to find Asciidoctor files and convert content to HTML
- * Returns an object containing two arrays:
- * - an array of objects with hierarchy of all pages
- * - an array of objects with all pages and corresponding HTML content
- */
-const buildContent = async () => {
+import findDocFiles from './findFiles';
+import getDocFileContent from './getContent';
+import saveHtmlPages from './saveHtml';
+import saveStaticAssets from './saveAssets';
+import { emptyDirectory } from './helpers/directoryActions';
+import config from './config/defaultConfiguration';
 
-    await copyStaticAssets();
-    let htmlContent = await processContent();    
-    await createHtmlPages(htmlContent);
-};
+export const buildDocs = async () => {
+    let files = await findDocFiles();
+    let content = await getDocFileContent(files);
 
-buildContent();
+    await emptyDirectory(config.outputDirectory);
+    await saveHtmlPages(content);
+    await saveStaticAssets();
+}
 
-export default buildContent;
+await buildDocs();

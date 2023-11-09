@@ -1,3 +1,4 @@
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Code:wght@400;700&display=swap');
 body{font-family:'Fira Sans',sans-serif;color:#3b454e;min-height:100vh;position:relative;padding:3em 0;overflow-x: initial;}
 .navbar-brand{margin-left:1em}
@@ -28,8 +29,10 @@ h6{font-size:.8em}
 .list_title::before{font-family:'FontAwesome';margin-right: 5px;}
 .sidebar .list_title::before {content: '\f00b';}
 .toc > .list_title::before {content: '\f039';}
-.sidebar ul, .toc ul{list-style-type:none;padding-left:1.5em}
+.sidebar ul,.toc ul{list-style-type:none;padding-left:1.5em}
 .sidebar .nav-link,.toc .nav-link {padding: 0 !important;}
+.ind-2{margin-left:1em}
+.ind-3{margin-left:2em}
 .sidebar a.active,.toc a.active{color:#DB504A;font-weight:700}
 code{color:#e3dfff;background-color:#2d2b57;padding:.1em .2em;border-radius:.2em}
 pre{border-radius:5px;position:relative;}
@@ -141,7 +144,7 @@ legend{border:0;padding:0}
 button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
 button,input{line-height:normal}
 button,select{text-transform:none}
-button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;appearance:button;cursor:pointer}
 button[disabled],html input[disabled]{cursor:default}
 input[type=checkbox],input[type=radio]{padding:0}
 button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
@@ -435,3 +438,4 @@ p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
 .sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
 .exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
 .print-only{display:none!important}
+</style>

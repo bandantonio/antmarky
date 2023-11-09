@@ -1,0 +1,34 @@
+import { glob } from 'glob';
+import path from 'path';
+import config from './config/defaultConfiguration';
+import { doesDirectoryExist } from './helpers/directoryActions';
+
+/**
+ * Find all Asciidoctor files within the specified directory
+ * @param dir Directory to search for Asciidoctor files. Default: 'docs
+ * @returns Promise<Array> File paths
+ */
+
+let findDocFiles = async (dir: string = config.docsDirectory): Promise<string[]> => {
+  const dirExists = await doesDirectoryExist(dir);
+
+  if (!dirExists) {
+    throw new Error(`Looks like the directory '${dir}' does not exist`);
+  }
+
+  const filePaths = await glob(path.join(dir, '/**/*.adoc'), { ignore: '**/node_modules/**' });
+
+  if (filePaths.length === 0) {
+    throw new Error(`Looks like the '${dir}' directory is empty`);
+  }
+
+  const doesReadmeExist = filePaths.includes(dir + '/README.adoc') || filePaths.includes(dir + '/readme.adoc');
+
+  if (!doesReadmeExist) {
+    throw new Error(`Please create a README.adoc file in your '${dir}' directory`);
+  }
+
+  return filePaths;
+};
+
+export default findDocFiles;

@@ -1,6 +1,9 @@
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+  crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/languages/asciidoc.min.js"></script>
+<script defer
+  src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/languages/asciidoc.min.js"></script>
 <script>hljs.highlightAll();</script>
 <script>
   const clipboardIcon = `<svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
@@ -28,21 +31,25 @@
       let copyCodeElement = document.createElement('div');
       copyCodeElement.classList.add('copy-block');
       copyCodeElement.innerHTML = clipboardIcon;
-      copyCodeElement.addEventListener('click', copyCode)
+      copyCodeElement.addEventListener('click', copyCode);
       el.appendChild(copyCodeElement);
     }
   });
-  
+
   async function copyCode(event) {
     let copyCodeElement = event.srcElement;
     let pre = copyCodeElement.parentElement.parentElement;
     let code = pre.querySelector('code');
     let text = code.innerText;
     await navigator.clipboard.writeText(text);
-    
+
     copyCodeElement.innerHTML = clipboardCopiedIcon;
     setTimeout(() => {
       copyCodeElement.innerHTML = clipboardIcon;
-    }, 3000)
+    }, 3000);
   }
+</script>
+
+<script>
+  new EventSource('/esbuild').addEventListener('change', () => location.reload())
 </script>
