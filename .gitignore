@@ -1,5 +1,4 @@
-public
+build
 dist
 coverage
 node_modules
-.nyc_output

@@ -1,19 +1,25 @@
 {
-  "include": [ "src" ],
-  "exclude": [ "node_modules", "src/server.ts" ],
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/server.ts"
+  ],
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
-
-    "lib": [ "es2021" ],
-    "module": "commonjs",
-    "target": "es6",
+    "lib": [
+      "es2021"
+    ],
+    "module": "ESNext",
+    "target": "ESNext",
     "moduleResolution": "node",
-
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
-    "strict": true, 
-    "strictNullChecks": true
+    "strict": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true
   }
 }
