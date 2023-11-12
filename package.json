@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "rm -rf bin/ && tsx ./esbuild.config.mjs -- development",
-    "bundle": "rm -rf bin/ && tsx ./esbuild.config.mjs -- production",
+    "bundle": "tsx ./esbuild.config.mjs -- production",
+    "build": "npm run bundle && node ./bin/index.cjs build",
     "lint": "semistandard",
     "test": "vitest",
     "bump": "node bump-version.js",
