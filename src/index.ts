@@ -1,17 +1,27 @@
-import findDocFiles from './findFiles';
-import getDocFileContent from './getContent';
-import saveHtmlPages from './saveHtml';
-import saveStaticAssets from './saveAssets';
-import { emptyDirectory } from './helpers/directoryActions';
-import config from './config/defaultConfiguration';
+#! /usr/bin/env node
 
-export const buildDocs = async () => {
-    let files = await findDocFiles();
-    let content = await getDocFileContent(files);
+import { Command } from 'commander';
+const pkg = require('../package.json');
+import buildDocs from './commands/build';
+import serveDocs from './commands/serve';
 
-    await emptyDirectory(config.outputDirectory);
-    await saveHtmlPages(content);
-    await saveStaticAssets();
-}
+const program = new Command();
 
-await buildDocs();
+program
+    .name(pkg.name)
+    .description(pkg.description)
+    .version(pkg.version)
+
+program.command('build')
+    .description('Build documentation from the default (docs) directory')
+    .action(async () => {
+        await buildDocs();
+    });
+
+program.command('serve')
+    .description('Serve documentation from the default (docs) directory')
+    .action(async () => {
+        await serveDocs();
+    });
+
+program.parse(process.argv);

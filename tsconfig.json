@@ -1,25 +1,27 @@
 {
   "include": [
-    "src"
+    "src",
+    "esbuild.config.*js",
+    "esbuild.config.ts"
   ],
   "exclude": [
     "node_modules",
-    "src/server.ts"
   ],
   "compilerOptions": {
     "rootDir": "./src",
-    "outDir": "./dist",
+    "outDir": "./bin",
     "lib": [
       "es2021"
     ],
-    "module": "ESNext",
-    "target": "ESNext",
+    "module": "ES6",
+    "target": "ES6",
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   }
 }

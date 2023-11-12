@@ -1,5 +1,5 @@
 export default {
-    buildDirectory: 'build',
+    buildDirectory: 'bin',
     docsDirectory: 'docs',
     outputDirectory: 'dist',
     templatesDirectory: 'src/templates'

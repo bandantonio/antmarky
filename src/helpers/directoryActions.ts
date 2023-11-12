@@ -8,7 +8,7 @@ import path from 'path';
 //         throw new Error(`Cannot create the directory: '${dirPath}'`);
 //     }
 // }
-async function emptyDirectory(dir: string): Promise<string | void> {
+const emptyDirectory = async (dir: string): Promise<string | void> => {
     try {
         await fse.emptyDir(path.resolve(dir));
     } catch (error) {
@@ -29,7 +29,7 @@ async function emptyDirectory(dir: string): Promise<string | void> {
 //     }
 // }
 
-async function doesDirectoryExist(dirPath: string) {
+const doesDirectoryExist = async (dirPath: string) => {
     const exists = await fse.pathExists(path.resolve(dirPath));
 
     return exists ? true : false;
