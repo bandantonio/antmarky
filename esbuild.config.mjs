@@ -1,27 +1,31 @@
 import { argv } from 'node:process';
 import * as esbuild from 'esbuild';
 
-const esbuildContext = {
+const bundleProject = async () => {
+  const esbuildContext = {
     entryPoints: ['src/index.ts'],
     external: ['esbuild', 'asciidoctor'],
-    outfile: `bin/index.cjs`,
+    outfile: 'bin/index.cjs',
     platform: 'node',
     logLevel: 'info',
     bundle: true,
     minify: true,
-    metafile: true,
-};
+    metafile: true
+  };
 
-const isProductionMode = (argv[3] === 'production');
+  const isProductionMode = (argv[3] === 'production');
 
-if (!isProductionMode) {
+  if (!isProductionMode) {
     const ctx = await esbuild.context(esbuildContext);
 
     await ctx.watch();
-} else {
+  } else {
     await esbuild.build(esbuildContext)
-        .then(() => {
-            console.log('Bundling completed successfully!');
-        })
-        .catch(() => process.exit(1));
-}
+      .then(() => {
+        console.log('Bundling completed successfully!');
+      })
+      .catch(() => process.exit(1));
+  }
+};
+
+bundleProject();
