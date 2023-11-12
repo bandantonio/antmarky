@@ -12,8 +12,6 @@
     "bundle": "rm -rf bin/ && tsx ./esbuild.config.mjs -- production",
     "lint": "semistandard",
     "test": "vitest",
-    "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage",
     "bump": "node bump-version.js",
     "changelog": "auto-changelog --handlebars-setup .changelog/helper.js --template .changelog/changelog-template.hbs --commit-limit false"
   },
@@ -30,7 +28,6 @@
     "@types/mock-fs": "^4.13.1",
     "@types/node": "^18.11.17",
     "@vitest/coverage-istanbul": "^0.34.6",
-    "@vitest/ui": "^0.34.6",
     "asciidoctor": "3.0.2",
     "auto-changelog": "^2.4.0",
     "ejs": "^3.1.6",
