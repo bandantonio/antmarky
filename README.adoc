@@ -1,6 +1,6 @@
 == Antmarky
 
-Antmarky is a static-site generator for https://docs.asciidoctor.org/asciidoc/latest[`Asciidoctor`^] based on Node.js and EJS.
+Antmarky is a static-site generator for https://docs.asciidoctor.org/asciidoc/latest[`Asciidoctor`^] based on Node.js and Handlebars.
 
 https://github.com/bandantonio/antmarky/actions/workflows/antmarky.yml[image:https://github.com/bandantonio/antmarky/actions/workflows/antmarky.yml/badge.svg?branch=main[antmarky]^]
 https://coveralls.io/github/bandantonio/antmarky?branch=main[image:https://coveralls.io/repos/github/bandantonio/antmarky/badge.svg?branch=main[Coverage

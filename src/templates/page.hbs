@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {{> head}}
+</head>
+<body>
+  <header>
+    {{> navbar}}
+  </header>
+  <div class="container-fluid">
+    <div class="full_content row">
+      <div class="sidebar col-2">
+        {{> sidebar}}
+      </div>
+      <div class="content_area col-8">
+        {{{html}}}
+      </div>
+      <div class="toc col-2">
+        {{> toc}}
+      </div>
+    </div>
+  </div>
+  {{> scripts}}
+</body>
+</html>

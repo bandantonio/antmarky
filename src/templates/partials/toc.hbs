@@ -1,0 +1,8 @@
+<div class="list_title">On this page</div>
+<ul class="list">
+  {{#each tableOfContents}}
+  <li class="list_item ind-{{level}}">
+    <a class="nav-link" href="#{{id}}">{{title}}</a>
+  </li>
+  {{/each}}
+</ul>

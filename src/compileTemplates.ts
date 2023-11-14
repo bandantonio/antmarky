@@ -1,26 +1,25 @@
-import ejs from 'ejs';
 import fs from 'fs';
+import { glob } from 'glob';
+import handlebars from 'handlebars';
 import path from 'path';
 import config from './config/defaultConfiguration';
 
 const compileTemplates = async () => {
     const templatesDirectoryPath = path.resolve(config.templatesDirectory);
 
-    const compilerOptions: ejs.Options = {
-        async: true,
-        views: [path.resolve(templatesDirectoryPath)]
-    }
-
-    // TODO: define the proper type for the object instead of any
-    let compiledTemplates: any = {};
-
-    const listOfTemplates = ['page', '404'];
-
+    let compiledTemplates: { [key: string]: any } = {};
+    
+    const listOfTemplates = await glob(path.join(templatesDirectoryPath, '/**/*.hbs'));
+    
     for await (let template of listOfTemplates) {
-        let templatePath = path.resolve(templatesDirectoryPath, `${template}.ejs`);
-        let templateContent = await fs.promises.readFile(templatePath, 'utf-8');
-
-        compiledTemplates[template] = ejs.compile(templateContent, compilerOptions);
+        let templateName = template.match(/\/(\w+?).hbs/)![1];
+        let templateContent = await fs.promises.readFile(template, 'utf-8');
+        
+        if (template.includes('partials')) {
+            handlebars.registerPartial(templateName, templateContent);
+        } else {
+            compiledTemplates[templateName] = handlebars.compile(templateContent);
+        }
     }
 
     return compiledTemplates;

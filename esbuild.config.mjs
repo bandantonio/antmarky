@@ -4,7 +4,7 @@ import * as esbuild from 'esbuild';
 const bundleProject = async () => {
   const esbuildContext = {
     entryPoints: ['src/index.ts'],
-    external: ['esbuild', 'asciidoctor'],
+    external: ['esbuild', 'asciidoctor', 'handlebars'],
     outfile: 'bin/index.cjs',
     platform: 'node',
     logLevel: 'info',

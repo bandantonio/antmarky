@@ -1,0 +1,13 @@
+<nav class="navbar-expand-sm">
+  <div id="sidebarToggler"
+    class="offcanvas offcanvas-end">
+    <div class="list_title">Table of contents</div>
+    <ul class="list">
+      {{#each sidebarPages}}
+      <li class="list_item">
+        <a class="nav-link" href="{{ name }}.html">{{ title }}</a>
+      </li>
+      {{/each }}
+    </ul>
+  </div>
+</nav>
