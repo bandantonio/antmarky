@@ -1,8 +1,6 @@
-import fse from 'fs-extra';
-import path from 'path';
 import compileTemplates from './compileTemplates';
-import config from './config/defaultConfiguration';
 import FileContent from './schemas/fileContent';
+import * as fileOperations from './helpers/fileOperations';
 
 // This function is located here (instead of getContent) because it should get all the pages that are available,
 // not just the ones that are being processed
@@ -14,7 +12,10 @@ const getSidebarPages = async (fileContent: FileContent[]) => {
 
     for await (let file of fileContent) {
         if (file.fileName !== 'index') {
+            const fileRelativePath = file.fileRelativeDir;
+
             sidebarPages.push({
+                path: fileRelativePath,
                 name: file.fileName,
                 title: file.fileTitle
             });
@@ -32,30 +33,19 @@ const saveHtmlPages = async (fileContent: FileContent[]) => {
     const sidebarPages = await getSidebarPages(fileContent);
 
     for await (let file of fileContent) {
-        let fileName = file.fileName;
+        const fileName = file.fileName;
+        const fileRelativePath = file.fileRelativeDir;
 
         const compiledHtmlPage = await compiledTemplates.page({
-            pageName: fileName,
+            pageName: file.fileName,
             title: file.fileTitle,
             html: file.fileHtmlContent,
             sidebarPages,
             tableOfContents: file.tableOfContents
         });
 
-        await saveToFile(fileName, compiledHtmlPage);
+        await fileOperations.write(fileRelativePath, fileName, compiledHtmlPage);
     }
 };
 
-/**
- * @private
- * @param filename 
- * @param htmlContent 
- */
-const saveToFile = async (filename: string, htmlContent: string) => {
-    const outputDirectory = config.outputDirectory;
-    const basePath = path.join(process.cwd(), outputDirectory);
-
-    await fse.writeFile(path.join(basePath, `${filename}.html`), htmlContent, 'utf-8');
-}
-
-export default saveHtmlPages;
+export { saveHtmlPages }

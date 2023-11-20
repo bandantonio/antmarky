@@ -13,7 +13,7 @@ let findDocFiles = async (dir: string = config.docsDirectory): Promise<string[]>
   const dirExists = await doesDirectoryExist(dir);
 
   if (!dirExists) {
-    throw new Error(`Looks like the directory '${dir}' does not exist`);
+    throw new Error(`Looks like the '${dir}' directory does not exist`);
   }
 
   const filePaths = await glob(path.join(dir, '/**/*.adoc'), { ignore: '**/node_modules/**' });
@@ -22,7 +22,11 @@ let findDocFiles = async (dir: string = config.docsDirectory): Promise<string[]>
     throw new Error(`Looks like the '${dir}' directory is empty`);
   }
 
-  const doesReadmeExist = filePaths.includes(dir + '/README.adoc') || filePaths.includes(dir + '/readme.adoc');
+  const doesReadmeExist = filePaths.some(filePath => {
+    const fileName = path.basename(filePath).toLowerCase();
+
+    return fileName === 'readme.adoc';
+  });
 
   if (!doesReadmeExist) {
     throw new Error(`Please create a README.adoc file in your '${dir}' directory`);

@@ -1,6 +1,6 @@
 import findDocFiles from '../findFiles';
 import getDocFileContent from '../getContent';
-import saveHtmlPages from '../saveHtml';
+import { saveHtmlPages } from '../saveHtml';
 import saveStaticAssets from '../saveAssets';
 import { emptyDirectory } from '../helpers/directoryActions';
 import config from '../config/defaultConfiguration';

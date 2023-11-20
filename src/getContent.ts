@@ -1,6 +1,8 @@
+import path from 'path';
 import { Document } from 'asciidoctor';
 import { asciidoctor, asciidoctorConfig } from './asciidoc-processor';
 import FileContent from './schemas/fileContent';
+import config from './config/defaultConfiguration';
 
 /**
  * Get the content of the Asciidoctor files
@@ -21,13 +23,17 @@ const getDocFileContent = async (filePaths: string[]): Promise<FileContent[]> =>
         const sanitizedFileName = fileName.replace(/ /g, '-').toLowerCase();
         const fileTitle = fileName.replace(/\b\w/g, (l: string) => l.toUpperCase());
         let fileDir = fileDetails.getBaseDir();
+        
+        const pathToSourceDocsDir = path.join(process.cwd(), config.docsDirectory);
+        let fileRelativeDir = path.relative(pathToSourceDocsDir, fileDir);
+
         let fileHtmlContent = fileDetails.getContent()!;
         let tableOfContents = await getTableOfContents(fileDetails);
 
         filesWithContent.push({
             fileName: sanitizedFileName,
             fileTitle,
-            fileDir,
+            fileRelativeDir,
             fileHtmlContent,
             tableOfContents
         });
@@ -35,6 +41,8 @@ const getDocFileContent = async (filePaths: string[]): Promise<FileContent[]> =>
 
     // Ensure items are sorted alphabetically based on fileName
     filesWithContent.sort((a, b) => (a.fileName > b.fileName) ? 1 : -1);
+
+    // fs.writeFile('contents.js', JSON.stringify(filesWithContent, null, 2), 'utf8');
 
     return filesWithContent;
 };

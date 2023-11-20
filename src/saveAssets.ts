@@ -9,7 +9,6 @@ const saveStaticAssets = async () => {
     try {
         for await (let asset of assetsList) {
             const relativePathToAsset = path.relative(config.docsDirectory, asset);
-            console.log('copying...');
 
             fse.copy(asset, path.join(config.outputDirectory, relativePathToAsset));
         }

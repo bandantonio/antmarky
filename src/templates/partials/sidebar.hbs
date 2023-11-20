@@ -5,7 +5,7 @@
     <ul class="list">
       {{#each sidebarPages}}
       <li class="list_item">
-        <a class="nav-link" href="{{ name }}.html">{{ title }}</a>
+        <a class="nav-link" href="{{#if path}}/{{path}}{{/if}}/{{name}}.html">{{ title }}</a>
       </li>
       {{/each }}
     </ul>
