@@ -1,93 +1,70 @@
-import mock from 'mock-fs';
-import { afterEach, describe, expect, test } from 'vitest';
+import path from 'path';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import getDocFileContent from '../../src/getContent';
+import expectedFileContent from '../snapshots/mockedFilesContents';
+import config from '../../src/config/defaultConfiguration';
 
 describe('getContent', () => {
-    afterEach(() => {
-        mock.restore();
+    beforeEach(() => {
+        vi.mock('../../src/config/defaultConfiguration', () => {
+            const actual = vi.importActual('../../src/config/defaultConfiguration');
+            return {
+                default: {
+                    ...actual,
+                    docsDirectory: path.join('test', 'snapshots', 'src')
+                }
+            };
+        });
     });
 
-    test.todo('Should check that a file do contain an asciidoctor-formatted content');
-    test('Should get file details from default `docs` directory', async () => {
-        mock({
-            'docs': {
-                'README.adoc': '= Just a README file',
-                'unit-tests.adoc': `= Title\n\n== Heading for toc\n\nHello world from the fake-root-one file\n\nhttps://github.com/bandantonio[link to GitHub]`,
-                'asciidoctor.adoc': `= Title\n\nHello world from the fake-root-two file\n\nhttps://github.com/bandantonio/antmarky[link to Antmarky]`,
-                'sub-folder': {
-                    'unit-tests2.adoc': `= Title\n\nHello world from the *fake-root-three file*\n\nhttps://github.com/bandantonio/antmarky[link to Antmarky]`
-                }
-            }
-        });
+    test('Should check that README file (if exists) becomes the index page', async () => {
 
-        let files: string[] = [
-            'docs/README.adoc',
-            'docs/unit-tests.adoc',
-            'docs/asciidoctor.adoc',
-            'docs/sub-folder/unit-tests2.adoc'
+        const expectedListOfFiles = [
+            path.join(config.docsDirectory, 'README.adoc'),
+            path.join(config.docsDirectory, 'apple1.adoc')
         ];
 
-        let result = await getDocFileContent(files);
+        let result = await getDocFileContent(expectedListOfFiles);
 
-        expect(result).toHaveLength(4);
-        result.forEach(obj => expect(Object.keys(obj)).toEqual([
-            'fileName',
-            'fileTitle',
-            'fileDir',
-            'fileHtmlContent',
-            'tableOfContents'
-        ]));
-        expect(result[0]).toEqual({
-            fileName: 'asciidoctor',
-            fileTitle: 'Asciidoctor',
-            fileDir: process.cwd() + '/docs',
-            fileHtmlContent: '<div class="paragraph">\n' +
-                '<p>Hello world from the fake-root-two file</p>\n' +
-                '</div>\n' +
-                '<div class="paragraph">\n' +
-                '<p><a href="https://github.com/bandantonio/antmarky">link to Antmarky</a></p>\n' +
-                '</div>',
-            tableOfContents: []
-        });
-        expect(result[1]).toEqual({
-            fileName: 'index',
-            fileTitle: 'Index',
-            fileDir: process.cwd() + '/docs',
-            fileHtmlContent: '',
-            tableOfContents: []
-        });
-        expect(result[2]).toEqual({
-            fileName: 'unit-tests',
-            fileTitle: 'Unit-Tests',
-            fileDir: process.cwd() + '/docs',
-            fileHtmlContent: '<div class="sect1">\n' +
-                '<h2 id="heading-for-toc"><a class="anchor" href="#heading-for-toc"></a>Heading for toc</h2>\n' +
-                '<div class="sectionbody">\n' +
-                '<div class="paragraph">\n' +
-                '<p>Hello world from the fake-root-one file</p>\n' +
-                '</div>\n' +
-                '<div class="paragraph">\n' +
-                '<p><a href="https://github.com/bandantonio">link to GitHub</a></p>\n' +
-                '</div>\n' +
-                '</div>\n' +
-                '</div>',
-            tableOfContents: [{
-                id: 'heading-for-toc',
-                level: 1,
-                title: 'Heading for toc'
-            }]
-        });
-        expect(result[3]).toEqual({
-            fileName: 'unit-tests2',
-            fileTitle: 'Unit-Tests2',
-            fileDir: process.cwd() + '/docs/sub-folder',
-            fileHtmlContent: '<div class="paragraph">\n' +
-                '<p>Hello world from the <strong>fake-root-three file</strong></p>\n' +
-                '</div>\n' +
-                '<div class="paragraph">\n' +
-                '<p><a href="https://github.com/bandantonio/antmarky">link to Antmarky</a></p>\n' +
-                '</div>',
-            tableOfContents: []
-        });
+        expect(result).toHaveLength(2);
+        // result[0] will be apple1 based on alphabetical order
+        expect(result[1].fileName).toEqual('index');
+        expect(result[1].fileTitle).toEqual('Index');
+    });
+
+    test('Should check that file titles are properly converted to title case', async () => {
+
+        const expectedListOfFiles = [
+            path.join(config.docsDirectory, 'README.adoc'),
+            path.join(config.docsDirectory, 'apple1.adoc'),
+            path.join(config.docsDirectory, 'sub', 'google-two.adoc'),
+            path.join(config.docsDirectory, 'sub', 'sub-folder', 'microsoft_three.adoc'),
+            path.join(config.docsDirectory, 'sub', 'sub-folder', 'sub-sub-folder', 'netflix.four.adoc')
+        ];
+
+        let result = await getDocFileContent(expectedListOfFiles);
+
+        expect(result).toHaveLength(5);
+        expect(result[0].fileName).toEqual(expectedFileContent[0].fileName);
+        expect(result[1].fileName).toEqual(expectedFileContent[1].fileName);
+        expect(result[2].fileName).toEqual(expectedFileContent[2].fileName);
+        expect(result[3].fileName).toEqual(expectedFileContent[3].fileName);
+        expect(result[4].fileName).toEqual(expectedFileContent[4].fileName);
+    });
+
+    test('Should get file details from default `docs` directory', async () => {
+
+        const expectedListOfFiles = [
+            path.join(config.docsDirectory, 'README.adoc'),
+            path.join(config.docsDirectory, 'apple1.adoc'),
+            path.join(config.docsDirectory, 'sub', 'google-two.adoc'),
+            path.join(config.docsDirectory, 'sub', 'sub-folder', 'microsoft_three.adoc'),
+            path.join(config.docsDirectory, 'sub', 'sub-folder', 'sub-sub-folder', 'netflix.four.adoc')
+        ];
+
+        let result = await getDocFileContent(expectedListOfFiles);
+
+        expect(result).toHaveLength(5);
+        expect(result).toEqual(expect.arrayContaining(expectedFileContent));
     });
 });
