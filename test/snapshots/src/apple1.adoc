@@ -1,0 +1,36 @@
+= Sections and Lists
+Jane Smith
+:toc: left
+:sectnums:
+
+== Overview
+This is a sample AsciiDoc document with Sections and Lists
+
+* Point A
+* Point B
+* Point C
+
+=== Section 1
+
+This is the content of section 1.
+
+==== Subsection 1.1
+
+- Point 1
+- Point 2
+- Point 3
+
+=== Section 2
+
+This is the content of section 2.
+
+==== Subsection 2.1
+
+1. Point A
+2. Point B
+3. Point C
+
+[NOTE]
+====
+Testing different features.
+====

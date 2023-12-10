@@ -1,0 +1,22 @@
+= Code Blocks
+Alice Johnson
+:doctype: article
+:listing-caption: Code
+
+== Getting Started
+This document is a quick guide for testing.
+
+[source,java]
+----
+System.out.println("Hello, World!");
+----
+
+[source,javascript]
+----
+console.log("Hello, World!");
+----
+
+[IMPORTANT]
+====
+Code snippets included.
+====

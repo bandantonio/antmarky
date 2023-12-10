@@ -1,0 +1,17 @@
+= README Paragraph
+John Doe Doc Writer <doc@example.com>
+:revdate: 2023-11-17
+
+== Introduction
+This is a sample AsciiDoc document with a title and a paragraph of text.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+[TIP]
+====
+Keep it simple.
+====
+
+== Test Section
+
+Some random content
